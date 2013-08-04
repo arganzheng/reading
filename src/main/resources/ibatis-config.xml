@@ -17,6 +17,9 @@
 		lazyLoadingEnabled="false" maxRequests="3000" maxSessions="3000"
 		maxTransactions="3000" useStatementNamespaces="true" />
 
+	<typeAlias alias="User" type="me.arganzheng.project.reading.model.User"/>
+
 	<!-- Activity -->
 	<sqlMap resource="conf-sqlmap/t_reading_user_sqlmap.xml" />
+	
 </sqlMapConfig>

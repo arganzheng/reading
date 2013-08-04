@@ -2,4 +2,62 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
 <sqlMap namespace="t_reading_user">
 
+	<resultMap id="UserResultMap" class="User">
+		<result column="id" property="id" />
+		<result column="created_time" property="createdTime" />
+		<result column="modified_time" property="modifiedTime" />
+		<result column="username" property="username" />
+		<result column="email" property="email" />
+		<result column="password" property="password" />
+		<result column="role" property="role" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<sql id="UserColumnList">
+		id, created_time, modified_time, username, email, password,
+		role, status
+	</sql>
+
+	<select id="selectById" resultMap="UserResultMap"
+		parameterClass="java.lang.Integer">
+		select
+		<include refid="UserColumnList" />
+		from t_reading_user
+		where id = #id#
+	</select>
+
+	<select id="selectByUsername" resultMap="UserResultMap">
+		select
+		<include refid="UserColumnList" />
+		from t_reading_user
+		where username = #username#
+	</select>
+	<select id="selectByEmail" resultMap="UserResultMap">
+		select
+		<include refid="UserColumnList" />
+		from t_reading_user
+		where email = #email#
+	</select>
+
+	<insert id="insert" parameterClass="User">
+		insert into
+		t_reading_user
+		(
+		<include refid="UserColumnList" />
+		)
+		values
+		(null, now(), now(), #username#, #email#, #password#, #role#,
+		#status#)
+		<selectKey resultClass="int" keyProperty="id">
+			SELECT @@IDENTITY
+			AS ID
+		</selectKey>
+	</insert>
+
+	<delete id="delete" parameterClass="java.lang.Integer">
+		delete from
+		t_reading_user
+		where id = #id#
+	</delete>
+
 </sqlMap>

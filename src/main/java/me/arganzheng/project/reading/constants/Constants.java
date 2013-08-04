@@ -1,4 +1,4 @@
-package me.arganzheng.project.reading.common;
+package me.arganzheng.project.reading.constants;
 
 /**
  * 类Constants.java的实现描述：公用常量类
