@@ -3,6 +3,8 @@
 .project
 .settings
 
+.metadata
+
 *.class
 target
 
