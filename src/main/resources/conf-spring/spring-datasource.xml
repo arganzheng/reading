@@ -7,7 +7,7 @@
 	<bean
 		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location">
-			<value>classpath:reading_config_${config_env}.properties</value>
+			<value>classpath:reading_${env}.properties</value>
 		</property>
 	</bean>
 

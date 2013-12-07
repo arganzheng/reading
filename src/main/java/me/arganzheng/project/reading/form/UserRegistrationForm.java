@@ -2,13 +2,10 @@ package me.arganzheng.project.reading.form;
 
 import javax.validation.constraints.Size;
 
-import me.arganzheng.project.reading.common.FieldMatch;
-
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.ScriptAssert;
 
-@FieldMatch.List({ @FieldMatch(first = "password", second = "confirmPassword", message = "The password fields must match") })
 @ScriptAssert(lang = "javascript", script = "_this.confirmPassword.equals(_this.password)")
 public class UserRegistrationForm {
 

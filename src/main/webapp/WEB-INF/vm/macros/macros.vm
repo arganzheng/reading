@@ -1,0 +1,47 @@
+#** -------------------------------------------
+ * 显示标题，如果未提供标题，则使用默认值
+ * -------------------------------------------- *#
+#macro (showTitle $defaultTitle)
+
+#if( $page.title != "" )
+<title>$page.title</title>
+#else
+<title>$!defaultTitle</title>
+#end
+
+#end
+
+#** -------------------------------------------
+ * 显示select box
+ * -------------------------------------------- *#
+#macro (select $name $map $selected $hint)
+
+#set ($_map = $map)
+#set ($_selected = $selected)
+<select name="$name">
+  <option value="">$hint</option>
+
+#foreach ($_key in $_map.keySet())
+  <option value="$_key" #if ($_key == $_selected) selected #end>$_map.get($_key)</option>
+#end
+
+</select>
+
+#end
+
+#** -------------------------------------------
+ * 显示错误信息
+ * -------------------------------------------- *#
+ #macro (errorMessage $field)
+    #if (!$field.valid) <div style="color: red; font-weight: bold;">$field.message</div> #end
+ #end
+ 
+## 生成script的html代码
+## $target 目标js文件的相对路径，相对于scripts 
+#macro(importScript $target )
+<script src='$!{scriptsServer}$!{target}?v=$!{buildVersion.version}' type="text/javascript" charset="iso-8859-1"></script>
+#end
+
+#macro (renderTiming $parameter)
+   <script>window.RENDER_TIMING = window.RENDER_TIMING || {};window.RENDER_TIMING.RENDER_TIMING_$parameter = +new Date;</script>
+#end

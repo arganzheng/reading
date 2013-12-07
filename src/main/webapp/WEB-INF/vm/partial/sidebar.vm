@@ -1,0 +1,6 @@
+<!-- left sidebar ared-->
+<div class="span3" >
+	<div class="well sidebar-nav" style="min-width: 150px;">
+		sidebar
+	</div>
+</div>

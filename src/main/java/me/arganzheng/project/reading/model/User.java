@@ -5,6 +5,12 @@ import java.util.Date;
 import me.arganzheng.project.reading.constants.Role;
 import me.arganzheng.project.reading.constants.Status;
 
+/**
+ * 用户领域对象。
+ * 
+ * @author arganzheng
+ * @date 2013-12-7
+ */
 public class User {
 
     private Integer id;
@@ -22,6 +28,14 @@ public class User {
     private Status  status = Status.Activite;
 
     private String  password;
+
+    public User(){
+    }
+
+    public User(String username, String email){
+        this.username = username;
+        this.email = email;
+    }
 
     public Integer getId() {
         return id;

@@ -11,8 +11,8 @@
 	<context:annotation-config />
 
 	<context:component-scan base-package="me.arganzheng.project.reading">
-		<context:exclude-filter type="regex"
-			expression=".*Controller" />
+		<context:exclude-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
 
@@ -28,8 +28,7 @@
 		</tx:attributes>
 	</tx:advice>
 
-
-	<aop:config>
+	<aop:config proxy-target-class="true">
 		<aop:pointcut id="serviceOperation"
 			expression="execution(* me.arganzheng.project.reading..*.service.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
