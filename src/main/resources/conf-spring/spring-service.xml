@@ -40,13 +40,25 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
-		<property name="configLocation" value="classpath:ibatis-config.xml" />
+<!-- ibatis config -->
+<!-- 	<bean id="sqlMapClient" class="org.springframework.orm.ibatis.SqlMapClientFactoryBean"> -->
+<!-- 		<property name="configLocation" value="classpath:ibatis-config.xml" /> -->
+<!-- 		<property name="dataSource" ref="dataSource" /> -->
+<!-- 	</bean> -->
+
+<!-- 	<bean id="abstractSqlDaoBaseSupport" abstract="true"> -->
+<!-- 		<property name="sqlMapClient" ref="sqlMapClient" /> -->
+<!-- 	</bean> -->
+
+<!-- mybatis config -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
+		<property name="mapperLocations" value="classpath*:/*Mapper.xml" /> 
+		<property name="configLocation" value="classpath:mybatis-config.xml"/>
 	</bean>
-
-	<bean id="abstractSqlDaoBaseSupport" abstract="true">
-		<property name="sqlMapClient" ref="sqlMapClient" />
-	</bean>
-
+	
+	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean>
+    
 </beans>
