@@ -1,7 +1,7 @@
 package me.arganzheng.project.reading.service;
 
-import me.arganzheng.project.reading.dao.UserDao;
 import me.arganzheng.project.reading.exception.UserAlreadyExistException;
+import me.arganzheng.project.reading.mapper.UserMapper;
 import me.arganzheng.project.reading.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     @Autowired
-    private UserDao userDao;
+    private UserMapper userDao;
 
     public Integer addUser(User user) {
         if (userExist(user)) {

@@ -1,5 +1,8 @@
 package me.arganzheng.project.reading.common;
 
+import java.sql.CallableStatement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -7,10 +10,8 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
-
-import com.ibatis.sqlmap.client.extensions.ParameterSetter;
-import com.ibatis.sqlmap.client.extensions.ResultGetter;
-import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
+import org.apache.ibatis.type.JdbcType;
+import org.apache.ibatis.type.TypeHandler;
 
 /**
  * <pre>
@@ -19,17 +20,16 @@ import com.ibatis.sqlmap.client.extensions.TypeHandlerCallback;
  * 
  * </pre>
  */
-public class StringListTypeHandler implements TypeHandlerCallback {
+public class StringListTypeHandler implements TypeHandler {
 
-    @SuppressWarnings("unchecked")
     @Override
-    public void setParameter(ParameterSetter setter, Object parameter) throws SQLException {
-        if (null == parameter) {
-            setter.setNull(Types.VARCHAR);
+    public void setParameter(PreparedStatement ps, int index, Object obj, JdbcType type) throws SQLException {
+        if (obj == null) {
+            ps.setNull(index, Types.VARCHAR);
             return;
         }
 
-        List<String> paramList = (List<String>) parameter;
+        List<String> paramList = (List<String>) obj;
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < paramList.size(); i++) {
@@ -39,12 +39,17 @@ public class StringListTypeHandler implements TypeHandlerCallback {
                 sb.append(",");
             }
         }
-        setter.setString(sb.toString());
+
+        ps.setString(index, sb.toString());
     }
 
     @Override
-    public Object getResult(ResultGetter getter) throws SQLException {
-        String str = getter.getString();
+    public Object getResult(ResultSet rs, String col) throws SQLException {
+        String str = rs.getString(col);
+        return getListFromString(str);
+    }
+
+    private Object getListFromString(String str) {
         if (StringUtils.isBlank(str)) {
             return Collections.emptyList();
         }
@@ -62,17 +67,14 @@ public class StringListTypeHandler implements TypeHandlerCallback {
     }
 
     @Override
-    public Object valueOf(String s) {
-        List<String> paramList = new ArrayList<String>();
-
-        String[] values = s.split(",");
-        for (String c : values) {
-            if (StringUtils.isNotBlank(c)) {
-                paramList.add(c.trim());
-            }
-        }
-
-        return paramList;
+    public Object getResult(ResultSet rs, int col) throws SQLException {
+        String str = rs.getString(col);
+        return getListFromString(str);
     }
 
+    @Override
+    public Object getResult(CallableStatement cs, int col) throws SQLException {
+        String str = cs.getString(col);
+        return getListFromString(str);
+    }
 }
