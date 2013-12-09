@@ -1,8 +1,8 @@
-CREATE TABLE `t_reading_user` (
+CREATE TABLE `t_reading_account` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_time` datetime DEFAULT NULL,
   `modified_time` datetime DEFAULT NULL,
-  `username` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `password` varchar(45) DEFAULT NULL,
   `role` varchar(45) DEFAULT NULL,
