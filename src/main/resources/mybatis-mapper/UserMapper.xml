@@ -19,32 +19,32 @@
 		role, status
 	</sql>
 
-	<select id="selectByUsername" parameterClass="java.lang.String"
+	<select id="selectUserByUsername" parameterType="java.lang.String"
 		resultMap="UserResultMap">
 		select
 		<include refid="UserColumnList" />
 		from t_reading_user
-		where username = #username#
+		where username = #{username}
 	</select>
 
-	<insert id="insert" parameterClass="User">
+	<insert id="insert" parameterType="User">
 		insert into
 		t_reading_user
 		(
 		<include refid="UserColumnList" />
 		)
 		values
-		(null, now(), now(), #username#, #email#, #password#, #role#,
-		#status#)
-		<selectKey resultClass="int" keyProperty="id">
+		(null, now(), now(), #{username}, #{email}, #{password}, #{role},
+		#{status})
+		<selectKey resultType="int" keyProperty="id">
 			SELECT @@IDENTITY
 			AS ID
 		</selectKey>
 	</insert>
 
-	<delete id="delete" parameterClass="java.lang.Integer">
+	<delete id="delete" parameterType="java.lang.Integer">
 		delete from
 		t_reading_user
-		where id = #id#
+		where id = #{id}
 	</delete>
 </mapper>

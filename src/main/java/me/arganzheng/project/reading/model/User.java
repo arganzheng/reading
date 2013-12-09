@@ -101,4 +101,11 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", createdTime=" + createdTime + ", modifiedTime=" + modifiedTime + ", username="
+               + username + ", email=" + email + ", role=" + role + ", status=" + status + ", password=" + password
+               + "]";
+    }
+
 }

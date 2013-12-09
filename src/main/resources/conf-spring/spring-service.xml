@@ -40,17 +40,17 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<!-- mybatis config -->
+	<!-- MyBatis配置 -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
+		<!-- typeAliasesPackage，这样就不需要对每个DO进行typeAlias了 -->
+		<property name="typeAliasesPackage" value="me.arganzheng.project.reading.model" />
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
-		<property name='mapperLocations'
-			value='classpath*:mybatis-mapper/*.xml' />
-
+		<property name='mapperLocations' value='classpath*:mybatis-mapper/*.xml' />
 	</bean>
 
-	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg index='0' ref="sqlSessionFactory" />
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
 	</bean>
 
 	<bean class='org.mybatis.spring.mapper.MapperScannerConfigurer'>
