@@ -2,49 +2,54 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="me.arganzheng.project.reading.mapper.UserMapper">
-	<resultMap id="UserResultMap" type="User">
+<mapper namespace="me.arganzheng.project.reading.mapper.AccountMapper">
+	<resultMap id="AccountResultMap" type="Account">
 		<result column="id" property="id" />
 		<result column="created_time" property="createdTime" />
 		<result column="modified_time" property="modifiedTime" />
-		<result column="username" property="username" />
+		<result column="name" property="name" />
 		<result column="email" property="email" />
 		<result column="password" property="password" />
 		<result column="role" property="role" />
 		<result column="status" property="status" />
 	</resultMap>
 
-	<sql id="UserColumnList">
-		id, created_time, modified_time, username, email, password,
+	<sql id="AccountColumnList">
+		id, created_time, modified_time, name, email, password,
 		role, status
 	</sql>
 
-	<select id="selectUserByUsername" parameterType="java.lang.String"
-		resultMap="UserResultMap">
+	<sql id="AccountTableName">t_reading_account</sql>
+
+	<select id="selectAccountByName" parameterType="java.lang.String"
+		resultMap="AccountResultMap">
 		select
-		<include refid="UserColumnList" />
-		from t_reading_user
-		where username = #{username}
+		<include refid="AccountColumnList" />
+		from
+		<include refid="AccountTableName" />
+		where name = #{name}
 	</select>
 
-	<insert id="insert" parameterType="User">
+	<insert id="insert" parameterType="Account">
 		insert into
-		t_reading_user
+		<include refid="AccountTableName" />
 		(
-		<include refid="UserColumnList" />
+		<include refid="AccountColumnList" />
 		)
 		values
-		(null, now(), now(), #{username}, #{email}, #{password}, #{role},
+		(null, now(), now(), #{name}, #{email}, #{password},
+		#{role},
 		#{status})
 		<selectKey resultType="int" keyProperty="id">
 			SELECT @@IDENTITY
-			AS ID
+			AS
+			ID
 		</selectKey>
 	</insert>
 
 	<delete id="delete" parameterType="java.lang.Integer">
 		delete from
-		t_reading_user
+		<include refid="AccountTableName" />
 		where id = #{id}
 	</delete>
 </mapper>

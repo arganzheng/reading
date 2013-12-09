@@ -7,7 +7,7 @@ import java.util.Map;
 
 import me.arganzheng.project.reading.common.RestResponse;
 import me.arganzheng.project.reading.exception.UnknownResourceException;
-import me.arganzheng.project.reading.model.User;
+import me.arganzheng.project.reading.model.Account;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -22,22 +22,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/user")
 public class UserController {
 
-    private static Map<String, User> users = new HashMap<String, User>();
+    private static Map<String, Account> users = new HashMap<String, Account>();
 
     static {
-        users.put("argan", new User("Argan Zheng", "arganzheng@gmail.com"));
-        users.put("magi", new User("Magi Forrest", "magiforrest@qq.com"));
+        users.put("argan", new Account("Argan Zheng", "arganzheng@gmail.com"));
+        users.put("magi", new Account("Magi Forrest", "magiforrest@qq.com"));
     }
 
     @RequestMapping(value = "/{username}", method = GET)
     @ResponseBody
-    public RestResponse<User> getUser(@PathVariable
+    public RestResponse<Account> getUser(@PathVariable
     String username) {
-        User user = findUser(username);
-        return new RestResponse<User>(user);
+        Account user = findUser(username);
+        return new RestResponse<Account>(user);
     }
 
-    private User findUser(String username) throws UnknownResourceException {
+    private Account findUser(String username) throws UnknownResourceException {
         if (!StringUtils.hasText(username)) {
             throw new IllegalArgumentException("Username is required.");
         }
@@ -51,25 +51,25 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public RestResponse<User> addUser(@RequestBody
-    User user) {
-        users.put(user.getUsername(), user);
-        RestResponse<User> resp = new RestResponse<User>();
+    public RestResponse<Account> addUser(@RequestBody
+    Account user) {
+        users.put(user.getName(), user);
+        RestResponse<Account> resp = new RestResponse<Account>();
         resp.setData(user);
         return resp;
     }
 
     @RequestMapping(value = "{username}", method = RequestMethod.POST)
     @ResponseBody
-    public RestResponse<User> updateUser(@RequestBody
-    User user, @RequestParam("timestamp")
+    public RestResponse<Account> updateUser(@RequestBody
+    Account user, @RequestParam("timestamp")
     String timestamp, @RequestParam("noice")
     String noice, @RequestParam("signature")
     String signature) {
-        User thisUser = findUser(user.getUsername());
-        users.put(user.getUsername(), user);
+        Account thisUser = findUser(user.getName());
+        users.put(user.getName(), user);
 
-        return new RestResponse<User>(thisUser);
+        return new RestResponse<Account>(thisUser);
     }
 
 }

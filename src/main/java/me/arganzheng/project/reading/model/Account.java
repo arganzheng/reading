@@ -11,7 +11,7 @@ import me.arganzheng.project.reading.constants.Status;
  * @author arganzheng
  * @date 2013-12-7
  */
-public class User {
+public class Account {
 
     private Integer id;
 
@@ -19,21 +19,21 @@ public class User {
 
     private Date    modifiedTime;
 
-    private String  username;
+    private String  name;
 
     private String  email;
 
     private Role    role   = Role.User;
 
-    private Status  status = Status.Activite;
+    private Status  status = Status.Active;
 
     private String  password;
 
-    public User(){
+    public Account(){
     }
 
-    public User(String username, String email){
-        this.username = username;
+    public Account(String username, String email){
+        this.name = username;
         this.email = email;
     }
 
@@ -61,12 +61,12 @@ public class User {
         this.modifiedTime = modifiedTime;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -103,9 +103,8 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [id=" + id + ", createdTime=" + createdTime + ", modifiedTime=" + modifiedTime + ", username="
-               + username + ", email=" + email + ", role=" + role + ", status=" + status + ", password=" + password
-               + "]";
+        return "Account [id=" + id + ", createdTime=" + createdTime + ", modifiedTime=" + modifiedTime + ", name="
+               + name + ", email=" + email + ", role=" + role + ", status=" + status + ", password=" + password + "]";
     }
 
 }

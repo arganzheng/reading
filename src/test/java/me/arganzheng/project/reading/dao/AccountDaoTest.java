@@ -1,20 +1,20 @@
 package me.arganzheng.project.reading.dao;
 
 import me.arganzheng.project.reading.BaseSpringTestCase;
-import me.arganzheng.project.reading.model.User;
+import me.arganzheng.project.reading.model.Account;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 
-public class TestUserDao extends BaseSpringTestCase {
+public class AccountDaoTest extends BaseSpringTestCase {
 
     @Autowired
-    private UserDao userDao;
+    private AccountDao accountDao;
 
     @Test
-    public void testSelectUserByUsernameWithDao() {
-        User user = userDao.selectUserByUsername("arganzheng");
+    public void testSelectAccountByName() {
+        Account user = accountDao.selectAccountByName("arganzheng");
         Assert.notNull(user);
 
     }

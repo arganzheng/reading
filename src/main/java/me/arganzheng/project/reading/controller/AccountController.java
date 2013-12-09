@@ -3,8 +3,8 @@ package me.arganzheng.project.reading.controller;
 import javax.validation.Valid;
 
 import me.arganzheng.project.reading.form.UserRegistrationForm;
-import me.arganzheng.project.reading.model.User;
-import me.arganzheng.project.reading.service.UserService;
+import me.arganzheng.project.reading.model.Account;
+import me.arganzheng.project.reading.service.AccountService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AccountController {
 
     @Autowired
-    private UserService userService;
+    private AccountService accountService;
 
     @RequestMapping(value = "/signup", method = RequestMethod.GET)
     public ModelAndView signUp() {
@@ -34,21 +34,21 @@ public class AccountController {
             return "account/signup";
         }
 
-        User user = populateUser(userRegistrationForm);
-        userService.addUser(user);
+        Account account = populateUser(userRegistrationForm);
+        accountService.addAccount(account);
         return "redirect:account/success";
     }
 
-    private User populateUser(UserRegistrationForm userRegistrationForm) {
-        User user = new User();
-        user.setUsername(userRegistrationForm.getUsername());
-        user.setEmail(userRegistrationForm.getEmail());
-        user.setPassword(userRegistrationForm.getPassword());
-        return user;
+    private Account populateUser(UserRegistrationForm userRegistrationForm) {
+        Account account = new Account();
+        account.setName(userRegistrationForm.getUsername());
+        account.setEmail(userRegistrationForm.getEmail());
+        account.setPassword(userRegistrationForm.getPassword());
+        return account;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ModelAndView login(User user) {
+    public ModelAndView login(Account user) {
         return new ModelAndView("account/login");
     }
 }
