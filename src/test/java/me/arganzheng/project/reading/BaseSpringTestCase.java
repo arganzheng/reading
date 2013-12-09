@@ -8,5 +8,5 @@ import org.springframework.transaction.annotation.Transactional;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:conf-spring/spring-datasource.xml", "classpath:conf-spring/spring-service.xml" })
 @Transactional
-public abstract class ReadingTestBase {
+public abstract class BaseSpringTestCase {
 }
