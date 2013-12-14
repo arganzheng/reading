@@ -12,4 +12,14 @@ public class MyController {
     public String login() {
         return "index";
     }
+
+    @RequestMapping(value = "/book/share", method = RequestMethod.GET)
+    public String sharePage() {
+        return "share";
+    }
+    
+    @RequestMapping(value = "/book/share", method = RequestMethod.POST)
+    public String share() {
+        return "my_books";
+    }
 }

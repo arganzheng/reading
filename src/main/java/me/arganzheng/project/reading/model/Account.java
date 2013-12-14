@@ -2,8 +2,8 @@ package me.arganzheng.project.reading.model;
 
 import java.util.Date;
 
+import me.arganzheng.project.reading.constants.AccountStatus;
 import me.arganzheng.project.reading.constants.Role;
-import me.arganzheng.project.reading.constants.Status;
 
 /**
  * 用户领域对象。
@@ -13,21 +13,21 @@ import me.arganzheng.project.reading.constants.Status;
  */
 public class Account {
 
-    private Integer id;
+    private Integer       id;
 
-    private Date    createdTime;
+    private Date          createdTime;
 
-    private Date    modifiedTime;
+    private Date          modifiedTime;
 
-    private String  name;
+    private String        name;
 
-    private String  email;
+    private String        email;
 
-    private Role    role   = Role.User;
+    private Role          role   = Role.User;
 
-    private Status  status = Status.Active;
+    private AccountStatus status = AccountStatus.Active;
 
-    private String  password;
+    private String        password;
 
     public Account(){
     }
@@ -85,11 +85,11 @@ public class Account {
         this.role = role;
     }
 
-    public Status getStatus() {
+    public AccountStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(AccountStatus status) {
         this.status = status;
     }
 

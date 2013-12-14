@@ -19,6 +19,7 @@
 	 	  适用于Controller只是转发到页面的映射，比如到编辑页面，到上传页面, etc. -->
 	<mvc:view-controller path="/" view-name="index" />
 	<mvc:view-controller path="/about" view-name="about" />
+	<mvc:view-controller path="/my/book/share" view-name="share" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources/ directory -->

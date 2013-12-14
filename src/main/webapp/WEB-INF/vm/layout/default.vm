@@ -16,7 +16,6 @@
 		</div>
 
 	<!-- Load JS  -->
-	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
 	<script src="$request.getContextPath()/resources/jquery/jquery.cookie.js"></script>
 	<script src="$request.getContextPath()/resources/bootstrap/js/bootstrap.js"></script>	
 	<script src="$request.getContextPath()/resources/reading/js/reading.js"></script>

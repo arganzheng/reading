@@ -16,16 +16,15 @@ CREATE TABLE `t_reading_book` (
   `isbn10` char(10) DEFAULT NULL,
   `isbn13` char(13) DEFAULT NULL,
   `title` varchar(128) DEFAULT NULL,
-  `origin_title` varchar(128) DEFAULT NULL,
   `subtitle` varchar(256) DEFAULT NULL,
   `image` varchar(256) DEFAULT NULL,
-  `author` varchar(256) DEFAULT NULL COMMENT '作者。可能有多个，以逗号分割。',
+  `authors` varchar(256) DEFAULT NULL COMMENT '作者。可能有多个，以逗号分割。',
   `pubdate` date DEFAULT NULL,
   `tags` varchar(256) DEFAULT NULL,
-  `pages` int(11) DEFAULT NULL,
+  `page_count` int(11) DEFAULT NULL,
   `summary` varchar(1000) DEFAULT NULL COMMENT '简要描述，最长是1000个字符，存入时候截断。',
   `detail_link` varchar(256) DEFAULT NULL COMMENT '详情链接（目前是调整到豆瓣去，取自alt返回字段）',
-  `owner` varchar(256) DEFAULT NULL COMMENT '书的拥有者(冗余字段,逗号分割)',
+  `owners` varchar(256) DEFAULT NULL COMMENT '书的拥有者(冗余字段,逗号分割)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

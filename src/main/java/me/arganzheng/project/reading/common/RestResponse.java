@@ -5,7 +5,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * <pre>
  * REST 返回格式，这样可以利用@ResponseBody注解。
- * 这里使用errorCode和errorMessage，而不是Http Status Code。不是纯粹的RESTful规范，不过个人觉得简单一下。
+ * 这里使用errorCode和errorMessage，而不是Http BookStatus Code。不是纯粹的RESTful规范，不过个人觉得简单一下。
  * 
  * </pre>
  * 
