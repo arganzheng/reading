@@ -1,4 +1,7 @@
-<hr>
-<div class="footer">
+<hr class="featurette-divider">
+<!-- /END THE FEATURETTES -->
+<!-- FOOTER -->
+<footer>
 	<p>Copyright © 2013 <a href="mailto:arganzheng@gmail.com??subject=Reading">arganzheng</a></p>
-</div>
+	<p class="pull-right"><a href="#">Back to top</a></p>
+</footer>

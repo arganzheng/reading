@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import me.arganzheng.project.reading.common.WebUser;
+import me.arganzheng.project.reading.util.HttpServletRequestTool;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -47,7 +48,8 @@ public class SensitiveAuthInterceptor extends HandlerInterceptorAdapter {
 
         // STEP_2: Authorization
         // 这种不需要鉴权。这里简单使用url区分，粒度比较大，对URL也有倾入性，后续可以考虑使用anotation支持到handler级别的权限控制。
-        if (!request.getServletPath().startsWith("/my/")) {
+        String uri = HttpServletRequestTool.getRequestURIExcludeContextPath(request);
+        if (!uri.startsWith("/my/")) {
             return true;
         }
 

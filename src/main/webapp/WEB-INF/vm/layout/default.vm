@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
-	#parse("/partial/header.vm")
+    #parse("/partial/header.vm")
 	<body>
-		<!-- navigation area -->
-		#parse("/partial/navbar.vm")
-		<!-- End navigation area -->
+		<div class="container">
+			<!-- navigation area -->
+			#parse("/partial/navbar.vm")
+			<!-- End navigation area -->
 
-	<div class="container-fluid">
 			<!-- main area-->
-			<div class="row-fluid" >
-				$screen_content
-			</div>
+			$screen_content
 			<!-- End main area-->			
 			<!-- copyright area -->				    
 		    #parse("/partial/footer.vm")
@@ -19,8 +17,9 @@
 
 	<!-- Load JS  -->
 	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-	<script src="$request.getContextPath()/resources/reading/js/reading.js"></script>
+	<script src="$request.getContextPath()/resources/jquery/jquery.cookie.js"></script>
 	<script src="$request.getContextPath()/resources/bootstrap/js/bootstrap.js"></script>	
+	<script src="$request.getContextPath()/resources/reading/js/reading.js"></script>
 	</body>
 
 </html>

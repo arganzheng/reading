@@ -6,6 +6,11 @@
 		<class>me.arganzheng.project.reading.util.ConfigurationTool</class>
 	</tool>
 	<tool>
+		<key>requestTool</key>
+		<scope>application</scope>
+		<class>me.arganzheng.project.reading.util.HttpServletRequestTool</class>
+	</tool>
+	<tool>
 		<key>dateTool</key>
 		<scope>application</scope>
 		<class>org.apache.velocity.tools.generic.DateTool</class>

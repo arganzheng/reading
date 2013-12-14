@@ -1,0 +1,19 @@
+#set( $layout = "layout/default.vm" )
+
+<div class="container">
+    <div class="span5">
+        <img class="featurette-image pull-left" src="$request.getContextPath()/resources/reading/img/QGQM.png">
+	</div>
+    <div class="span5">    
+		<h2 class="featurette-heading muted">About arganzheng</h2>
+    	<p class="lead">天造之才，皆有其用；展翅高飞，无须在梦中！</p>
+		<ul>
+			<li><a href="http://blog.arganzheng.me" target="_blank">My Blog: http://blog.arganzheng.me</a></li>
+        	<li><a href="http://weibo.com/argan1985">My Weibo: http://weibo.com/arganzheng</a></li>
+        	<li><a href="https://github.com/arganzheng">My Github: https://github.com/arganzheng</a></li>
+        	<li><a href="https://github.com/arganzheng">My Eemail: arganzheng@gmail.com</a></li>
+		</ul>
+    </div>
+</div>
+
+
