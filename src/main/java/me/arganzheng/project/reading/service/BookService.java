@@ -1,7 +1,9 @@
 package me.arganzheng.project.reading.service;
 
+import me.arganzheng.project.reading.dao.BookDao;
 import me.arganzheng.project.reading.model.Book;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -11,9 +13,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class BookService {
 
+    @Autowired
+    private BookDao bookDao;
+
     public Book getBookByISBN(String isbn) {
-        // TODO Auto-generated method stub
-        return null;
+        return bookDao.selectBookByISBN(isbn);
     }
 
 }

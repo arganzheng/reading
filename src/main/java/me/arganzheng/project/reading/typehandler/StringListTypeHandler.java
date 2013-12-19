@@ -1,4 +1,4 @@
-package me.arganzheng.project.reading.common;
+package me.arganzheng.project.reading.typehandler;
 
 import java.sql.CallableStatement;
 import java.sql.PreparedStatement;

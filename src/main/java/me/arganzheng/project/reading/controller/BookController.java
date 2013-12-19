@@ -1,5 +1,6 @@
 package me.arganzheng.project.reading.controller;
 
+import me.arganzheng.project.reading.facade.BookFacade;
 import me.arganzheng.project.reading.gateway.BookGateway;
 import me.arganzheng.project.reading.model.Book;
 import me.arganzheng.project.reading.service.BookService;
@@ -20,16 +21,14 @@ public class BookController {
     @Autowired
     private BookGateway bookGateway;
 
+    @Autowired
+    private BookFacade  bookFacade;
+
     @RequestMapping(value = "/{isbn}", method = RequestMethod.GET)
     @ResponseBody
     public Book searchByISBN(@PathVariable
     String isbn) {
-        // search local DB to see if some has already share this book
-        Book book = bookService.getBookByISBN(isbn);
-        // if not, search the Douban
-        if (book == null) {
-            book = bookGateway.getBookByISBN(isbn);
-        }
+        Book book = bookFacade.searchByISBN(isbn);
         return book;
     }
 }

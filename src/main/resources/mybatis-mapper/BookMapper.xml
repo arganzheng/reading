@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 说明：这里用这么长的namespace，而且是AccountMapper.java的全路径名，其实是规范来的，如果要使用Mapper的话。 
+	see http://mybatis.github.io/mybatis-3/getting-started.html -->
+<mapper namespace="me.arganzheng.project.reading.mapper.BookMapper">
+	<resultMap id="BookResultMap" type="Book">
+		<result column="id" property="id" />
+		<result column="created_time" property="createdTime" />
+		<result column="modified_time" property="modifiedTime" />
+		<result column="isbn10" property="isbn10" />
+		<result column="isbn13" property="isbn13" />
+		<result column="title" property="title" />
+		<result column="subtitle" property="subtitle" />
+		<result column="image" property="image" />
+		<result column="authors" property="authors"
+			typeHandler="me.arganzheng.project.reading.typehandler.StringListTypeHandler" />
+		<result column="pubdate" property="pubdate" />
+		<result column="tags" property="tags"
+			typeHandler="me.arganzheng.project.reading.typehandler.StringListTypeHandler" />
+		<result column="page_count" property="pageCount" />
+		<result column="summary" property="summary" />
+		<result column="detail_link" property="detailLink" />
+		<result column="owners" property="owners"
+			typeHandler="me.arganzheng.project.reading.typehandler.StringListTypeHandler" />
+	</resultMap>
+
+	<sql id="BookColumnList">
+		id, created_time, modified_time, isbn10, isbn13, title,
+		subtitle, image, authors,
+		pubdate, tags, page_count, summary,
+		detail_link, owners
+	</sql>
+
+	<sql id="BookTableName">t_reading_book</sql>
+
+	<select id="selectBookByISBN" parameterType="java.lang.String"
+		resultMap="BookResultMap">
+		select
+		<include refid="BookColumnList" />
+		from
+		<include refid="BookTableName" />
+		where isbn10 = #{isbn10} or isbn13 = #{isbn13}
+	</select>
+
+	<insert id="insert" parameterType="Book">
+		insert into
+		<include refid="BookTableName" />
+		(
+		<include refid="BookColumnList" />
+		)
+		values
+		(null, now(), now(), #{isbn10}, #{isbn13}, #{title},
+		#{subtitle}, #{image},
+		#{authors,typeHandler=me.arganzheng.project.reading.typehandler.StringListTypeHandler},
+		#{pubdate},
+		#{tags,typeHandler=me.arganzheng.project.reading.typehandler.StringListTypeHandler},
+		#{pageCount},
+		#{summary},
+		#{detailLink}, #{owners,
+		typeHandler=me.arganzheng.project.reading.typehandler.StringListTypeHandler})
+		<selectKey resultType="int" keyProperty="id">
+			SELECT @@IDENTITY
+			AS
+			ID
+		</selectKey>
+	</insert>
+
+	<delete id="delete" parameterType="java.lang.Integer">
+		delete from
+		<include refid="BookTableName" />
+		where id = #{id}
+	</delete>
+</mapper>

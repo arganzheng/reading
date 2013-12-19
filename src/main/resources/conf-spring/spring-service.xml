@@ -45,6 +45,7 @@
 		<property name="dataSource" ref="dataSource" />
 		<!-- typeAliasesPackage，这样就不需要对每个DO进行typeAlias了 -->
 		<property name="typeAliasesPackage" value="me.arganzheng.project.reading.model" />
+		<property name="typeHandlersPackage" value="me.arganzheng.project.reading.typehandler" />
 		<property name="configLocation" value="classpath:mybatis-config.xml" />
 		<property name='mapperLocations' value='classpath*:mybatis-mapper/*.xml' />
 	</bean>

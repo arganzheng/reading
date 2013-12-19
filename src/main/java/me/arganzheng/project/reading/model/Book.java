@@ -10,6 +10,8 @@ import java.util.List;
 public class Book {
 
     private int          id;
+    private Date         createdTime;
+    private Date         modifiedTime;
 
     private String       isbn10;
     private String       isbn13;
@@ -19,7 +21,7 @@ public class Book {
 
     private String       image;
 
-    private String       authors;
+    private List<String> authors;
     private Date         pubdate;
     private String       summary;
     private int          pageCount;
@@ -78,14 +80,6 @@ public class Book {
         this.image = image;
     }
 
-    public String getAuthors() {
-        return authors;
-    }
-
-    public void setAuthors(String authors) {
-        this.authors = authors;
-    }
-
     public Date getPubdate() {
         return pubdate;
     }
@@ -132,6 +126,30 @@ public class Book {
 
     public void setOwners(List<String> owners) {
         this.owners = owners;
+    }
+
+    public Date getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Date createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Date getModifiedTime() {
+        return modifiedTime;
+    }
+
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
+    }
+
+    public List<String> getAuthors() {
+        return authors;
+    }
+
+    public void setAuthors(List<String> authors) {
+        this.authors = authors;
     }
 
 }

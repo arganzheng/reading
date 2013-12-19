@@ -13,6 +13,8 @@ CREATE TABLE `t_reading_account` (
 
 CREATE TABLE `t_reading_book` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_time` datetime DEFAULT NULL,
+  `modified_time` datetime DEFAULT NULL,
   `isbn10` char(10) DEFAULT NULL,
   `isbn13` char(13) DEFAULT NULL,
   `title` varchar(128) DEFAULT NULL,
