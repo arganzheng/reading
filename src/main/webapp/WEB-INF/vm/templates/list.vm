@@ -1,10 +1,5 @@
 #set( $layout = "layout/default.vm" )
 
-<div class="alert alert-success alert-block"">
-	<button type="button" class="close" data-dismiss="alert">×</button>
-	<p>如果你有一个苹果，我有一个苹果，彼此交换，我们每个人仍只有一个苹果；如果你有一个思想，我有一个思想，彼此交换，我们每个人都有两种思想，甚至多于两种思想。<i>&nbsp;-- by 萧伯纳</i></p>
-</div>
-
 <form class="form-search">
 	<fieldset>
     	<input type="text" id="isbn" name="isbn" placeholder="请输入你要分享的书的ISBN号码" class="input-large search-query" value="$!isbn"/>

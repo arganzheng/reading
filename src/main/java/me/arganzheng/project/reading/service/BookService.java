@@ -1,5 +1,7 @@
 package me.arganzheng.project.reading.service;
 
+import java.util.List;
+
 import me.arganzheng.project.reading.dao.BookDao;
 import me.arganzheng.project.reading.exception.ResourceAlreadyExistException;
 import me.arganzheng.project.reading.model.Book;
@@ -27,5 +29,9 @@ public class BookService {
             throw new ResourceAlreadyExistException(book.getIsbn() + " already exist!");
         }
         return bookDao.insert(book);
+    }
+
+    public List<Book> search(String searchText) {
+        return null;
     }
 }
