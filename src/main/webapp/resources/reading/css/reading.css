@@ -1,3 +1,12 @@
+body, td, th {
+	line-height: 1.62;
+}
+
+.indent {
+	word-break: break-all;
+	text-indent: 2em;
+}
+
 /* Footer
 -------------------------------------------------- */
 .footer {

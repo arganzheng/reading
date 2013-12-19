@@ -1,7 +1,6 @@
 package me.arganzheng.project.reading.exception;
 
 import me.arganzheng.project.reading.common.RestErrorCode;
-import me.arganzheng.project.reading.common.RestException;
 
 public class UnknownResourceException extends RestException {
 

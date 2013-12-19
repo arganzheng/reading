@@ -1,6 +1,6 @@
 package me.arganzheng.project.reading.service;
 
-import me.arganzheng.project.reading.exception.UserAlreadyExistException;
+import me.arganzheng.project.reading.exception.ResourceAlreadyExistException;
 import me.arganzheng.project.reading.mapper.AccountMapper;
 import me.arganzheng.project.reading.model.Account;
 
@@ -15,7 +15,7 @@ public class AccountService {
 
     public Integer addAccount(Account account) {
         if (accountExist(account)) {
-            throw new UserAlreadyExistException();
+            throw new ResourceAlreadyExistException(account.getName() + " aleardy exist!");
         }
 
         return accountDao.insertAccount(account);

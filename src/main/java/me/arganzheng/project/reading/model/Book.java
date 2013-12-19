@@ -3,6 +3,8 @@ package me.arganzheng.project.reading.model;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @author arganzheng
  * @date 2013-12-14
@@ -42,6 +44,15 @@ public class Book {
 
     public String getIsbn10() {
         return isbn10;
+    }
+
+    public String getIsbn() {
+        // 优先返回isbn13
+        if (StringUtils.isNotEmpty(isbn13)) {
+            return isbn13;
+        } else {
+            return isbn10;
+        }
     }
 
     public void setIsbn10(String isbn10) {

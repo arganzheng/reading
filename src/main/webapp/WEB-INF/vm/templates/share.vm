@@ -1,21 +1,43 @@
 #set( $layout = "layout/default.vm" )
 
-<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button>
-      如果你有一个苹果，我有一个苹果，彼此交换，我们每个人仍只有一个苹果；如果你有一个思想，我有一个思想，彼此交换，我们每个人都有两种思想，甚至多于两种思想。<span><i>&nbsp;-- by 萧伯纳<i></span>
+<div class="alert alert-success">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	<p>如果你有一个苹果，我有一个苹果，彼此交换，我们每个人仍只有一个苹果；如果你有一个思想，我有一个思想，彼此交换，我们每个人都有两种思想，甚至多于两种思想。<i>&nbsp;-- by 萧伯纳</i></p>
 </div>
 
 <form class="form-search">
 	<fieldset>
-    	<input type="text" id="isbn" name="isbn" placeholder="请输入你要分享的书的ISBN号码" class="input-large search-query">
+    	<input type="text" id="isbn" name="isbn" placeholder="请输入你要分享的书的ISBN号码" class="input-large search-query" value="$!isbn"/>
 		<button id="btn-share" type="submit" class="btn btn-success">分享 »</button>
 	</fieldset>
 </form>
 
 <hr />
 
-<div>
-	$book
+#if($book)
+
+<div class="media">
+  <a class="pull-left" href="$!book.detailLink" target="_blank">
+	<img class="media-object" data-src="" src="$book.image"></img>
+  </a>
+  <div class="media-body">
+	<input type="hidden" value="$book.id"></input>
+    <h4 class="media-heading">$book.title #if($book.subtitle) -- $!book.subtitle #end </h4>
+	作者 $book.authors<br>
+	出版日期 $dateTool.format($!book.pubdate)<br>
+	页数 $book.pageCount<br>
+	标签 $!book.tags<br>
+	谁拥有这本书 $!book.owners<br>
+  </div>
 </div>
+
+<hr />
+<div>
+	<h4>内容简介<a class="pull-right" href="$!book.detailLink" target="_blank">[更多信息..]</a></h4>
+	<p class="indent">$book.summary</p>
+</div>
+
+#end
 
 <div id="modal" class="modal hide fade">
     <div id="modal-content" class="modal-body">

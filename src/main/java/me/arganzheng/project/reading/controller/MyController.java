@@ -24,12 +24,14 @@ public class MyController {
     }
 
     @RequestMapping(value = "/book/share", method = RequestMethod.GET)
-    public String sharePage(@RequestParam
+    public String sharePage(@RequestParam(required = false)
     String isbn, Model model) {
         if (StringUtils.isNotEmpty(isbn)) {
             Book book = bookFacade.searchByISBN(isbn);
             model.addAttribute("book", book);
         }
+        model.addAttribute("isbn", isbn);
+
         return "share";
     }
 

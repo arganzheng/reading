@@ -1,4 +1,4 @@
-package me.arganzheng.project.reading.common;
+package me.arganzheng.project.reading.exception;
 
 /**
  * RestException，自定义异常基类。定义返回格式为：errorCode和errorMessage
@@ -6,7 +6,7 @@ package me.arganzheng.project.reading.common;
  * @author arganzheng
  * @date 2013-11-18
  */
-public class RestException extends RuntimeException {
+public class RestException extends ReadingException {
 
     private static final long serialVersionUID = -7670436661724456891L;
 
