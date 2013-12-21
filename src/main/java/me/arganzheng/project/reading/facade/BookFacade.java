@@ -2,6 +2,7 @@ package me.arganzheng.project.reading.facade;
 
 import me.arganzheng.project.reading.gateway.BookGateway;
 import me.arganzheng.project.reading.model.Book;
+import me.arganzheng.project.reading.model.BookOwnership;
 import me.arganzheng.project.reading.service.BookService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +23,28 @@ public class BookFacade {
     private BookGateway bookGateway;
 
     public Book searchByISBN(String isbn) {
+        return searchByISBN(isbn, true);
+    }
+
+    public Book searchByISBN(String isbn, boolean includeOwnership) {
         // search local DB to see if some has already share this book
-        Book book = bookService.getBookByISBN(isbn);
+        Book book = bookService.getBookByISBN(isbn, includeOwnership);
         // if not, search the Douban
         if (book == null) {
             book = bookGateway.getBookByISBN(isbn);
         }
         return book;
+    }
+
+    public boolean shareBook(String isbn, String username) {
+        Book book = searchByISBN(isbn, false);
+
+        BookOwnership ownership = new BookOwnership();
+        ownership.setBook(book);
+        ownership.setUsername(username);
+
+        int id = bookService.addBookOwnership(ownership);
+
+        return id > 0 ? true : false;
     }
 }

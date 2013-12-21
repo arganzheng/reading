@@ -12,40 +12,5 @@
 	</fieldset>
 </form>
 
-#if($book)
-<hr />
-<div class="media">
-  <a class="pull-left" href="$!book.detailLink" target="_blank">
-	<img class="media-object" data-src="" src="$book.image"></img>
-  </a>
-  <div class="media-body">
-	<input type="hidden" value="$book.id"></input>
-    <h4 class="media-heading">$book.title #if($book.subtitle) -- $!book.subtitle #end </h4>
-	<span class="label">作者</span> $book.authors<br>
-	<span class="label">出版日期</span> $dateTool.format($!book.pubdate)<br>
-	<span class="label">页数</span> $book.pageCount<br>
-	<span class="label">标签 </span>$!book.tags<br>
-	#if($book.owners)
-    	<span class="label">谁拥有这本书</span>
-    	#foreach( $owner in $book.owners)
-    	  <img class="img-rounded" width="20" height="20" src="http://dayu.oa.com/avatars/$owner/avatar.jpg" title="$owner" />
-		#end
-		<button id="btn-share" type="submit" class="btn btn-success">我也有哦，我也要分享 »
-	#else
-		目前还没有人分享:( <button id="btn-share" type="submit" class="btn btn-success">沙发，我要分享 »</button>
-	#end
-  </div>
-</div>
-<hr />
-<div>
-	<h4>内容简介<a class="pull-right" href="$!book.detailLink" target="_blank">More »</a></h4>
-	<p class="indent">$book.summary</p>
-</div>
-
-#end
-
-<div id="modal" class="modal hide fade">
-    <div id="modal-content" class="modal-body">
-    </div>
-</div>
+#parse("/partial/book.vm")
 

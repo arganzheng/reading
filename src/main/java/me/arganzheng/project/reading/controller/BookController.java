@@ -34,7 +34,7 @@ public class BookController {
     @RequestMapping(value = "/**", method = RequestMethod.GET)
     public String search(@RequestParam(value = "q", required = false)
     String searchText, Model model) {
-        List<Book> books = bookService.search(searchText);
+        List<Book> books = bookService.search(searchText, false);
         model.addAttribute("books", books);
         return "list";
     }

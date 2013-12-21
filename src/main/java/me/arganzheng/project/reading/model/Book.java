@@ -11,28 +11,31 @@ import org.apache.commons.lang.StringUtils;
  */
 public class Book {
 
-    private int          id;
-    private Date         createdTime;
-    private Date         modifiedTime;
+    private int                 id;
+    private Date                createdTime;
+    private Date                modifiedTime;
 
-    private String       isbn10;
-    private String       isbn13;
+    private String              isbn10;
+    private String              isbn13;
 
-    private String       title;
-    private String       subtitle;
+    private String              title;
+    private String              subtitle;
 
-    private String       image;
+    private String              image;
 
-    private List<String> authors;
-    private Date         pubdate;
-    private String       summary;
-    private int          pageCount;
+    private List<String>        authors;
+    private Date                pubdate;
+    private String              summary;
+    private int                 pageCount;
 
-    private List<String> tags;
+    private List<String>        tags;
 
-    private String       detailLink;
+    private String              detailLink;
 
-    private List<String> owners;
+    private List<String>        owners;
+
+    // One books may be owned by many user, refer to book_owner_ship table
+    private List<BookOwnership> ownerships;
 
     public int getId() {
         return id;
@@ -161,6 +164,14 @@ public class Book {
 
     public void setAuthors(List<String> authors) {
         this.authors = authors;
+    }
+
+    public List<BookOwnership> getOwnerships() {
+        return ownerships;
+    }
+
+    public void setOwnerships(List<BookOwnership> ownerships) {
+        this.ownerships = ownerships;
     }
 
 }

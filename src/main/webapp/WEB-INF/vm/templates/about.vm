@@ -2,7 +2,7 @@
 
 <div class="container">
     <div class="span5">
-        <img class="featurette-image pull-left" src="$request.getContextPath()/resources/reading/img/QGQM.png">
+        <img class="featurette-image pull-left img-polaroid" src="$request.getContextPath()/resources/reading/img/QGQM.png">
 	</div>
     <div class="span5">    
 		<h2 class="featurette-heading muted">About arganzheng</h2>

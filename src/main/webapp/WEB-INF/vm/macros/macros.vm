@@ -42,6 +42,16 @@
 <script src='$!{scriptsServer}$!{target}?v=$!{buildVersion.version}' type="text/javascript" charset="iso-8859-1"></script>
 #end
 
-#macro (renderTiming $parameter)
-   <script>window.RENDER_TIMING = window.RENDER_TIMING || {};window.RENDER_TIMING.RENDER_TIMING_$parameter = +new Date;</script>
+#macro (showBookOwnershipStatus $ownership)
+	#set($status = $ownership.status)
+	
+	#if($status == "OnShelf")
+		<span class="label label-success">可借阅</span>
+	#elseif($status == "OffShelf")
+		下架
+	#elseif($status == "Lent")
+		<span class="label label-danger">借出</span>
+	#else
+		未知状态
+	#end
 #end

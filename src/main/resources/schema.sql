@@ -32,10 +32,13 @@ CREATE TABLE `t_reading_book` (
 
 
 CREATE TABLE `t_reading_book_ownership` (
-  `username` varchar(45) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_time` datetime DEFAULT NULL,
+  `modified_time` datetime DEFAULT NULL,
+  `username` varchar(45) DEFAULT NULL,
   `book_id` int(11) DEFAULT NULL,
   `status` varchar(32) DEFAULT NULL COMMENT '拥有关系的状态：上架(正常)、下架、借出、已归还(默认就是上架)',
-  PRIMARY KEY (`username`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='书以作者的拥有关系，书与拥有者（user）是多对多的关系，所以需要一张映射表。';
 
 

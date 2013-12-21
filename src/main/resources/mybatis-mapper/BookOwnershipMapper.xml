@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 说明：这里用这么长的namespace，而且是BookOwnershipMapper.java的全路径名，其实是规范来的，如果要使用Mapper的话。 
+	see http://mybatis.github.io/mybatis-3/getting-started.html -->
+<mapper namespace="me.arganzheng.project.reading.mapper.BookOwnershipMapper">
+	<resultMap id="BookOwnershipResultMap" type="BookOwnership">
+		<result column="id" property="id" />
+		<result column="created_time" property="createdTime" />
+		<result column="modified_time" property="modifiedTime" />
+		<result column="username" property="username" />
+		<result column="book_id" property="book.id" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<sql id="BookOwnershipColumnList">
+		id, created_time, modified_time, username, book_id, status
+	</sql>
+
+	<sql id="BookOwnershipTableName">t_reading_book_ownership</sql>
+
+	<select id="selectBookOwnershipByBookId" parameterType="int"
+		resultMap="BookOwnershipResultMap">
+		select
+		<include refid="BookOwnershipColumnList" />
+		from
+		<include refid="BookOwnershipTableName" />
+		where book_id = #{bookId}
+	</select>
+
+	<insert id="insert" parameterType="BookOwnership">
+		insert into
+		<include refid="BookOwnershipTableName" />
+		(
+		<include refid="BookOwnershipColumnList" />
+		)
+		values
+		(null, now(), now(), #{username}, #{bookId}, #{status}
+		)
+		<selectKey resultType="int" keyProperty="id">
+			SELECT @@IDENTITY
+			AS
+			ID
+		</selectKey>
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete from
+		<include refid="BookOwnershipTableName" />
+		where id = #{id}
+	</delete>
+</mapper>

@@ -20,4 +20,9 @@ public class BookDao extends BaseDao {
     public int insert(Book book) {
         return sqlSession.insert("me.arganzheng.project.reading.mapper.BookMapper.insert", book);
     }
+
+    public Book selectBookById(int id) {
+        return (Book) sqlSession.selectOne("me.arganzheng.project.reading.mapper.BookMapper.selectBookById", id);
+
+    }
 }

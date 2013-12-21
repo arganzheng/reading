@@ -3,8 +3,8 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<!-- 说明：这里用这么长的namespace，而且是AccountMapper.java的全路径名，其实是规范来的，如果要使用Mapper的话。 
-	see http://mybatis.github.io/mybatis-3/getting-started.html -->
+<!-- 说明：这里用这么长的namespace，而且是BookMapper.java的全路径名，其实是规范来的，如果要使用Mapper的话。 see 
+	http://mybatis.github.io/mybatis-3/getting-started.html -->
 <mapper namespace="me.arganzheng.project.reading.mapper.BookMapper">
 	<resultMap id="BookResultMap" type="Book">
 		<result column="id" property="id" />
@@ -36,13 +36,20 @@
 
 	<sql id="BookTableName">t_reading_book</sql>
 
-	<select id="selectBookByISBN" parameterType="java.lang.String"
-		resultMap="BookResultMap">
+	<select id="selectBookByISBN" parameterType="String" resultMap="BookResultMap">
 		select
 		<include refid="BookColumnList" />
 		from
 		<include refid="BookTableName" />
 		where isbn10 = #{isbn10} or isbn13 = #{isbn13}
+	</select>
+
+	<select id="selectBookById" parameterType="int" resultMap="BookResultMap">
+		select
+		<include refid="BookColumnList" />
+		from
+		<include refid="BookTableName" />
+		where id = #{id}
 	</select>
 
 	<insert id="insert" parameterType="Book">
@@ -68,7 +75,7 @@
 		</selectKey>
 	</insert>
 
-	<delete id="delete" parameterType="java.lang.Integer">
+	<delete id="delete" parameterType="int">
 		delete from
 		<include refid="BookTableName" />
 		where id = #{id}

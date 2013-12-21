@@ -1,7 +1,9 @@
 package me.arganzheng.project.reading.controller;
 
+import me.arganzheng.project.reading.common.WebUser;
 import me.arganzheng.project.reading.facade.BookFacade;
 import me.arganzheng.project.reading.model.Book;
+import me.arganzheng.project.reading.service.BookService;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MyController {
 
     @Autowired
-    private BookFacade bookFacade;
+    private BookFacade  bookFacade;
+
+    @Autowired
+    private BookService bookService;
+
+    @Autowired
+    private WebUser     user;
 
     @RequestMapping(value = "/account/login", method = RequestMethod.GET)
     public String login() {
@@ -36,7 +44,11 @@ public class MyController {
     }
 
     @RequestMapping(value = "/book/share", method = RequestMethod.POST)
-    public String share() {
-        return "my_books";
+    public String share(@RequestParam(value = "isbn")
+    String isbn, @RequestParam(value = "bookId")
+    int bookId) {
+        bookFacade.shareBook(isbn, user.getUsername());
+
+        return "index";
     }
 }
