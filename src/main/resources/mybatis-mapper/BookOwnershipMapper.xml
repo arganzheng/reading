@@ -30,6 +30,32 @@
 		where book_id = #{bookId}
 	</select>
 
+	<select id="listBookOwnership"
+		parameterType="me.arganzheng.project.reading.criteria.PagingCriteria"
+		resultMap="BookOwnershipResultMap">
+		select
+		<include refid="BookOwnershipColumnList" />
+		from
+		<include refid="BookOwnershipTableName" />
+		where status = 'OnShelf' group by book_id order by max(modified_time)
+		desc
+		<include refid="SqlMapper.Pagination" />
+	</select>
+
+	<select id="countBookOwnership"
+		parameterType="me.arganzheng.project.reading.criteria.PagingCriteria"
+		resultType="int">
+		select count(0)
+		from(
+		select
+		<include refid="BookOwnershipColumnList" />
+		from
+		<include refid="BookOwnershipTableName" />
+		where status = 'OnShelf' group by book_id order by max(modified_time)
+		desc
+		)as bo
+	</select>
+
 	<insert id="insert" parameterType="BookOwnership">
 		insert into
 		<include refid="BookOwnershipTableName" />

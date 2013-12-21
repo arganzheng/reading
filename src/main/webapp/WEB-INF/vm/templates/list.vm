@@ -2,45 +2,12 @@
 
 <form class="form-search">
 	<fieldset>
-    	<input type="text" id="isbn" name="isbn" placeholder="请输入你要分享的书的ISBN号码" class="input-large search-query" value="$!isbn"/>
-		<button type="submit" class="btn btn-success">分享 »</button>
+    	<input type="text" name="q" placeholder="ISBN、作者、书名" class="input-large search-query" value="$!q"/>
+		<button type="submit" class="btn btn-success">搜索 »</button>
 	</fieldset>
 </form>
 
-#if($book)
-<hr />
-<div class="media">
-  <a class="pull-left" href="$!book.detailLink" target="_blank">
-	<img class="media-object" data-src="" src="$book.image"></img>
-  </a>
-  <div class="media-body">
-	<input type="hidden" value="$book.id"></input>
-    <h4 class="media-heading">$book.title #if($book.subtitle) -- $!book.subtitle #end </h4>
-	<span class="label">作者</span> $book.authors<br>
-	<span class="label">出版日期</span> $dateTool.format($!book.pubdate)<br>
-	<span class="label">页数</span> $book.pageCount<br>
-	<span class="label">标签 </span>$!book.tags<br>
-	#if($book.owners)
-    	<span class="label">谁拥有这本书</span>
-    	#foreach( $owner in $book.owners)
-    	  <img class="img-rounded" width="20" height="20" src="http://dayu.oa.com/avatars/$owner/avatar.jpg" title="$owner" />
-		#end
-		<button id="btn-share" type="submit" class="btn btn-success">我也有哦，我也要分享 »
-	#else
-		目前还没有人分享:( <button id="btn-share" type="submit" class="btn btn-success">沙发，我要分享 »</button>
-	#end
-  </div>
-</div>
-<hr />
-<div>
-	<h4>内容简介<a class="pull-right" href="$!book.detailLink" target="_blank">More »</a></h4>
-	<p class="indent">$book.summary</p>
-</div>
-
+#foreach($book in $books)
+	#parse("partial/book.vm")
 #end
-
-<div id="modal" class="modal hide fade">
-    <div id="modal-content" class="modal-body">
-    </div>
-</div>
 

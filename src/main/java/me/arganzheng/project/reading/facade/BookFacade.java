@@ -1,5 +1,6 @@
 package me.arganzheng.project.reading.facade;
 
+import me.arganzheng.project.reading.exception.ResourceNotFoundException;
 import me.arganzheng.project.reading.gateway.BookGateway;
 import me.arganzheng.project.reading.model.Book;
 import me.arganzheng.project.reading.model.BookOwnership;
@@ -38,6 +39,10 @@ public class BookFacade {
 
     public boolean shareBook(String isbn, String username) {
         Book book = searchByISBN(isbn, false);
+
+        if (book == null) {
+            throw new ResourceNotFoundException("Can not book with isbn: " + isbn);
+        }
 
         BookOwnership ownership = new BookOwnership();
         ownership.setBook(book);

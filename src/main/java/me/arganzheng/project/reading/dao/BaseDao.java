@@ -3,7 +3,7 @@ package me.arganzheng.project.reading.dao;
 import java.util.List;
 
 import me.arganzheng.project.reading.common.Page;
-import me.arganzheng.project.reading.common.PagingCriteria;
+import me.arganzheng.project.reading.criteria.PagingCriteria;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.log4j.Logger;
@@ -30,9 +30,9 @@ public abstract class BaseDao {
      * @param query
      * @return 分页结果
      */
-    protected Page queryForPagination(String countStatementName, String queryStatementName,
+    protected Page queryForPagination(String queryStatementName, String countStatementName,
                                       PagingCriteria pagingCriteria) {
-        int totalCount = ((Integer) sqlSession.selectOne(countStatementName, pagingCriteria)).intValue();
+        int totalCount = sqlSession.selectOne(countStatementName, pagingCriteria);
 
         if (totalCount > 0) {
             List items = sqlSession.selectList(queryStatementName, pagingCriteria);

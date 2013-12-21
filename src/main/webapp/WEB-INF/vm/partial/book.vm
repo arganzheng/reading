@@ -2,7 +2,7 @@
 	
 <hr />
 <div class="media">
-  <a class="pull-left" href="$!book.detailLink" target="_blank">
+  <a class="pull-left" #if($showDetail) href="$!book.detailLink" #else href="$request.getContextPath()/my/book/share?isbn=$book.isbn" #end target="_blank">
 	<img class="media-object" data-src="" src="$book.image"></img>
   </a>
   
@@ -26,7 +26,7 @@
 	
 	<div class="media">
     	<form action="/my/book/share" method="POST">
-    		<input type="hidden" name="isbn" value="$!isbn"/>
+    		<input type="hidden" name="isbn" value="$!book.isbn"/>
     		<input type="hidden" name="bookId" value="$book.id" />
     		<button class="btn btn-danger btn-small" id="btn-share" type="submit" onClick="confirm('确定要分享吗?')">我要分享</button>
     	</form>
@@ -34,10 +34,12 @@
   </div>
 </div>
 
+#if($showDetail)
 <hr />
 <div>
 	<h4>内容简介<a class="pull-right" href="$!book.detailLink" target="_blank">More »</a></h4>
 	<p class="indent">$book.summary</p>
 </div>
+#end
 
 #end

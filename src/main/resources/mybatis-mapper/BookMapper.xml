@@ -44,6 +44,18 @@
 		where isbn10 = #{isbn10} or isbn13 = #{isbn13}
 	</select>
 
+	<select id="listBook"
+		parameterType="me.arganzheng.project.reading.criteria.PagingCriteria"
+		resultMap="BookResultMap">
+		select
+		<include refid="BookColumnList" />
+		from
+		<include refid="BookTableName" />
+		where status = 'OnShelf' group by book_id order by max(modified_time)
+		desc
+		<include refid="SqlMapper.Pagination" />
+	</select>
+
 	<select id="selectBookById" parameterType="int" resultMap="BookResultMap">
 		select
 		<include refid="BookColumnList" />

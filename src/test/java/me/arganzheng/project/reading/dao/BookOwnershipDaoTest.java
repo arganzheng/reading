@@ -3,6 +3,8 @@ package me.arganzheng.project.reading.dao;
 import java.util.List;
 
 import me.arganzheng.project.reading.BaseSpringTestCase;
+import me.arganzheng.project.reading.common.Page;
+import me.arganzheng.project.reading.criteria.PagingCriteria;
 import me.arganzheng.project.reading.model.Book;
 import me.arganzheng.project.reading.model.BookOwnership;
 
@@ -29,6 +31,14 @@ public class BookOwnershipDaoTest extends BaseSpringTestCase {
         List<BookOwnership> bookOwnerships = bookOwnershipDao.selectBookOwnershipByBookId(5);
         Assert.notEmpty(bookOwnerships);
         System.out.println(bookOwnerships);
+    }
+
+    @Test
+    public void testListBookOwnership() {
+        PagingCriteria pagingCriteria = new PagingCriteria();
+        Page<BookOwnership> bookOwnerships = bookOwnershipDao.listBookOwnership(pagingCriteria);
+        Assert.isTrue(bookOwnerships.isNotEmpty());
+        System.out.println(bookOwnerships.getRecordCount());
     }
 
     @Test

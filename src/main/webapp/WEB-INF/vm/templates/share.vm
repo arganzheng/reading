@@ -12,5 +12,6 @@
 	</fieldset>
 </form>
 
+#set($showDetail=true)
 #parse("/partial/book.vm")
 

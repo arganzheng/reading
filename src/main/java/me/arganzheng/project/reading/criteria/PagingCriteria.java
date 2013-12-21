@@ -1,4 +1,4 @@
-package me.arganzheng.project.reading.common;
+package me.arganzheng.project.reading.criteria;
 
 public class PagingCriteria {
 
