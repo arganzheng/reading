@@ -1,13 +1,18 @@
 #if($book)
-	
-<hr />
-<div class="media">
+<div class="media" style="padding-bottom:15px; border-bottom: 1px solid #EBE8D5;">
   <a class="pull-left" #if($showDetail) href="$!book.detailLink" #else href="$request.getContextPath()/my/book/share?isbn=$book.isbn" #end target="_blank">
 	<img class="media-object" data-src="" src="$book.image"></img>
   </a>
   
   <div class="media-body">
-    <h4 class="media-heading">$book.title #if($book.subtitle) -- $!book.subtitle #end</h4>
+    <h4 class="media-heading">$book.title #if($book.subtitle) -- $!book.subtitle #end 
+    	<form class="pull-right" action="/my/book/share" method="POST">
+    		<input type="hidden" name="isbn" value="$!book.isbn"/>
+    		<input type="hidden" name="bookId" value="$book.id" />
+    		<button class="btn btn-danger btn-small" id="btn-share" type="submit" onClick="confirm('确定要分享吗?')">我要分享</button>
+    	</form>
+	</h4>
+	
 	<span class="label">作者</span> $book.authors<br>
 	<span class="label">出版日期</span> $dateTool.format($!book.pubdate)<br>
 	<span class="label">页数</span> $book.pageCount<br>
@@ -24,18 +29,10 @@
     	#end
 	#end
 	
-	<div class="media">
-    	<form action="/my/book/share" method="POST">
-    		<input type="hidden" name="isbn" value="$!book.isbn"/>
-    		<input type="hidden" name="bookId" value="$book.id" />
-    		<button class="btn btn-danger btn-small" id="btn-share" type="submit" onClick="confirm('确定要分享吗?')">我要分享</button>
-    	</form>
-	</div>
   </div>
 </div>
 
 #if($showDetail)
-<hr />
 <div>
 	<h4>内容简介<a class="pull-right" href="$!book.detailLink" target="_blank">More »</a></h4>
 	<p class="indent">$book.summary</p>
