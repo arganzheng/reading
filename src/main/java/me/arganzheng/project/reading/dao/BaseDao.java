@@ -32,9 +32,9 @@ public abstract class BaseDao {
      */
     protected Page queryForPagination(String queryStatementName, String countStatementName,
                                       PagingCriteria pagingCriteria) {
-        int totalCount = sqlSession.selectOne(countStatementName, pagingCriteria);
+        Integer totalCount = sqlSession.selectOne(countStatementName, pagingCriteria);
 
-        if (totalCount > 0) {
+        if (totalCount != null && totalCount.intValue() > 0) {
             List items = sqlSession.selectList(queryStatementName, pagingCriteria);
 
             if (items != null && !items.isEmpty()) {

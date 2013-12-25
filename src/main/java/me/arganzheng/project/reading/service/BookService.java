@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import me.arganzheng.project.reading.common.Page;
-import me.arganzheng.project.reading.criteria.PagingCriteria;
+import me.arganzheng.project.reading.criteria.BookPagingCriteria;
 import me.arganzheng.project.reading.dao.BookDao;
 import me.arganzheng.project.reading.dao.BookOwnershipDao;
 import me.arganzheng.project.reading.exception.ResourceAlreadyExistException;
@@ -63,35 +63,34 @@ public class BookService {
         return bookOwnershipDao.insert(ownership);
     }
 
-    public List<Book> search(String searchText, boolean includeOwnership) {
+    public Page<Book> search(BookPagingCriteria pagingCriteria) {
         // FIXME 迭代一先只支持ISBN搜索
-        if (StringUtils.isBlank(searchText)) {
-            return listBook(includeOwnership);
-        } else {
-            Book book = getBookByISBN(searchText, includeOwnership);
+        if (StringUtils.isNotBlank(pagingCriteria.getIsbn())) {
+            Book book = getBookByISBN(pagingCriteria.getIsbn(), pagingCriteria.isIncludeOwnership());
             List<Book> books = new ArrayList<Book>();
             if (book != null) {
                 books.add(book);
             }
-            return books;
+            return Page.createInstance(books, books.size(), 1, 10);
+        } else {
+            return listBook(pagingCriteria);
         }
     }
 
-    public List<Book> listBook(boolean includeOwnership) {
+    public Page<Book> listBook(BookPagingCriteria pagingCriteria) {
         // first get the bookownership
-        PagingCriteria pagingCriteria = new PagingCriteria();
         Page<BookOwnership> bookOwnerships = bookOwnershipDao.listBookOwnership(pagingCriteria);
 
         List<Book> books = new ArrayList<Book>();
         // get the bookinfo for the ownership
         for (BookOwnership ownership : bookOwnerships.getRecords()) {
-            Book book = getBookById(ownership.getBookId(), includeOwnership);
+            Book book = getBookById(ownership.getBookId(), pagingCriteria.isIncludeOwnership());
             if (book == null) {
                 logger.error("Can not find book by Id=" + ownership.getBookId());
             } else {
                 books.add(book);
             }
         }
-        return books;
+        return Page.createInstance(books, bookOwnerships.getRecordCount(), pagingCriteria);
     }
 }
