@@ -26,7 +26,7 @@ public class BookDaoTest extends BaseSpringTestCase {
 
     @Test
     public void testSelectBookByISBN() {
-        String isbn = "isbn10";
+        String isbn = "7505715666";
         Book book = bookDao.selectBookByISBN(isbn);
         Assert.notNull(book);
 

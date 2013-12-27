@@ -17,8 +17,6 @@
 	#parse("partial/book.vm")
 #end
 
-<div class="pagination pagination-right pagination-small"> 
-	<ul id="pages">
 <div id="paginator"></div>
 <script type='text/javascript'>
     var options = {
@@ -26,6 +24,7 @@
         totalPages: $books.getPageCount(),
 		numberOfPages:$!pageSize,
 		size: "small",
+		alignment: "right",
 		onPageClicked: function(e,originalEvent,type,page){
 			$('#pageIndex').val(page)
     		$('#pageSize').val($!pageSize)
