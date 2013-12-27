@@ -1,5 +1,7 @@
 package me.arganzheng.project.reading.facade;
 
+import java.io.IOException;
+
 import me.arganzheng.project.reading.exception.ResourceNotFoundException;
 import me.arganzheng.project.reading.gateway.BookGateway;
 import me.arganzheng.project.reading.model.Book;
@@ -32,7 +34,11 @@ public class BookFacade {
         Book book = bookService.getBookByISBN(isbn, includeOwnership);
         // if not, search the Douban
         if (book == null) {
-            book = bookGateway.getBookByISBN(isbn);
+            try {
+                book = bookGateway.getBookByISBN(isbn);
+            } catch (IOException e) {
+                throw new RuntimeException("Call Douban API get Book Info Failed!", e);
+            }
         }
         return book;
     }

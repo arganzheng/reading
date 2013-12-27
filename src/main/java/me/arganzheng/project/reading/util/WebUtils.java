@@ -3,9 +3,9 @@ package me.arganzheng.project.reading.util;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.Reader;
 import java.net.HttpURLConnection;
+import java.net.Proxy;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
@@ -35,7 +35,6 @@ import org.apache.commons.lang.StringUtils;
 public abstract class WebUtils {
 
     private static final String DEFAULT_CHARSET = Constants.CHARSET_UTF8;
-    private static final String METHOD_POST     = "POST";
     private static final String METHOD_GET      = "GET";
 
     private static class DefaultTrustManager implements X509TrustManager {
@@ -54,126 +53,20 @@ public abstract class WebUtils {
     private WebUtils(){
     }
 
-    /**
-     * 执行HTTP POST请求。
-     * 
-     * @param url 请求地址
-     * @param params 请求参数
-     * @return 响应字符串
-     * @throws IOException
-     */
-    public static String doPost(String url, Map<String, String> params, int connectTimeout, int readTimeout)
-                                                                                                            throws IOException {
-        return doPost(url, params, DEFAULT_CHARSET, connectTimeout, readTimeout);
-    }
-
-    /**
-     * 执行HTTP POST请求。
-     * 
-     * @param url 请求地址
-     * @param params 请求参数
-     * @param charset 字符集，如UTF-8, GBK, GB2312
-     * @return 响应字符串
-     * @throws IOException
-     */
-    public static String doPost(String url, Map<String, String> params, String charset, int connectTimeout,
-                                int readTimeout) throws IOException {
-        return doPost(url, params, charset, connectTimeout, readTimeout, null);
-    }
-
-    public static String doPost(String url, Map<String, String> params, String charset, int connectTimeout,
-                                int readTimeout, Map<String, String> headerMap) throws IOException {
-        String ctype = "application/x-www-form-urlencoded;charset=" + charset;
-        String query = buildQuery(params, charset);
-        byte[] content = {};
-        if (query != null) {
-            content = query.getBytes(charset);
-        }
-        return _doPost(url, ctype, content, connectTimeout, readTimeout, headerMap);
-    }
-
-    /**
-     * 执行HTTP POST请求。
-     * 
-     * @param url 请求地址
-     * @param ctype 请求类型
-     * @param content 请求字节数组
-     * @return 响应字符串
-     * @throws IOException
-     */
-    @Deprecated
-    public static String doPost(String url, String ctype, byte[] content, int connectTimeout, int readTimeout)
-                                                                                                              throws IOException {
-        return _doPost(url, ctype, content, connectTimeout, readTimeout, null);
-    }
-
-    private static String _doPost(String url, String ctype, byte[] content, int connectTimeout, int readTimeout,
-                                  Map<String, String> headerMap) throws IOException {
-        HttpURLConnection conn = null;
-        OutputStream out = null;
-        String rsp = null;
-        try {
-            try {
-                conn = getConnection(new URL(url), METHOD_POST, ctype, headerMap);
-                conn.setConnectTimeout(connectTimeout);
-                conn.setReadTimeout(readTimeout);
-            } catch (IOException e) {
-                Map<String, String> map = getParamsFromUrl(url);
-                throw e;
-            }
-            try {
-                out = conn.getOutputStream();
-                out.write(content);
-                rsp = getResponseAsString(conn);
-            } catch (IOException e) {
-                Map<String, String> map = getParamsFromUrl(url);
-                throw e;
-            }
-
-        } finally {
-            if (out != null) {
-                out.close();
-            }
-            if (conn != null) {
-                conn.disconnect();
-            }
-        }
-
-        return rsp;
-    }
-
-    private static byte[] getTextEntry(String fieldName, String fieldValue, String charset) throws IOException {
-        StringBuilder entry = new StringBuilder();
-        entry.append("Content-Disposition:form-data;name=\"");
-        entry.append(fieldName);
-        entry.append("\"\r\nContent-Type:text/plain\r\n\r\n");
-        entry.append(fieldValue);
-        return entry.toString().getBytes(charset);
-    }
-
-    private static byte[] getFileEntry(String fieldName, String fileName, String mimeType, String charset)
-                                                                                                          throws IOException {
-        StringBuilder entry = new StringBuilder();
-        entry.append("Content-Disposition:form-data;name=\"");
-        entry.append(fieldName);
-        entry.append("\";filename=\"");
-        entry.append(fileName);
-        entry.append("\"\r\nContent-Type:");
-        entry.append(mimeType);
-        entry.append("\r\n\r\n");
-        return entry.toString().getBytes(charset);
-    }
-
-    /**
-     * 执行HTTP GET请求。
-     * 
-     * @param url 请求地址
-     * @param params 请求参数
-     * @return 响应字符串
-     * @throws IOException
-     */
     public static String doGet(String url, Map<String, String> params) throws IOException {
-        return doGet(url, params, DEFAULT_CHARSET);
+        return doGet(url, params, DEFAULT_CHARSET, null);
+    }
+
+    /**
+     * 执行HTTP GET请求。
+     * 
+     * @param url 请求地址
+     * @param params 请求参数
+     * @return 响应字符串
+     * @throws IOException
+     */
+    public static String doGet(String url, Map<String, String> params, Proxy proxy) throws IOException {
+        return doGet(url, params, DEFAULT_CHARSET, proxy);
     }
 
     /**
@@ -185,7 +78,7 @@ public abstract class WebUtils {
      * @return 响应字符串
      * @throws IOException
      */
-    public static String doGet(String url, Map<String, String> params, String charset) throws IOException {
+    public static String doGet(String url, Map<String, String> params, String charset, Proxy proxy) throws IOException {
         HttpURLConnection conn = null;
         String rsp = null;
 
@@ -193,7 +86,7 @@ public abstract class WebUtils {
             String ctype = "application/x-www-form-urlencoded;charset=" + charset;
             String query = buildQuery(params, charset);
             try {
-                conn = getConnection(buildGetUrl(url, query), METHOD_GET, ctype, null);
+                conn = getConnection(buildGetUrl(url, query), METHOD_GET, ctype, null, proxy);
             } catch (IOException e) {
                 Map<String, String> map = getParamsFromUrl(url);
                 throw e;
@@ -215,8 +108,8 @@ public abstract class WebUtils {
         return rsp;
     }
 
-    private static HttpURLConnection getConnection(URL url, String method, String ctype, Map<String, String> headerMap)
-                                                                                                                       throws IOException {
+    private static HttpURLConnection getConnection(URL url, String method, String ctype, Map<String, String> headerMap,
+                                                   Proxy proxy) throws IOException {
         HttpURLConnection conn = null;
         if ("https".equals(url.getProtocol())) {
             SSLContext ctx = null;
@@ -226,7 +119,7 @@ public abstract class WebUtils {
             } catch (Exception e) {
                 throw new IOException(e);
             }
-            HttpsURLConnection connHttps = (HttpsURLConnection) url.openConnection();
+            HttpsURLConnection connHttps = (HttpsURLConnection) openConnection(url, proxy);
             connHttps.setSSLSocketFactory(ctx.getSocketFactory());
             connHttps.setHostnameVerifier(new HostnameVerifier() {
 
@@ -236,7 +129,7 @@ public abstract class WebUtils {
             });
             conn = connHttps;
         } else {
-            conn = (HttpURLConnection) url.openConnection();
+            conn = (HttpURLConnection) openConnection(url, proxy);
         }
 
         conn.setRequestMethod(method);
@@ -251,6 +144,19 @@ public abstract class WebUtils {
             }
         }
         return conn;
+    }
+
+    private static HttpURLConnection openConnection(URL url, Proxy proxy) throws IOException {
+        if (proxy == null) {
+            return (HttpURLConnection) url.openConnection();
+        } else {
+            return (HttpURLConnection) url.openConnection(proxy);
+        }
+    }
+
+    private static HttpURLConnection getConnection(URL url, String method, String ctype, Map<String, String> headerMap)
+                                                                                                                       throws IOException {
+        return getConnection(url, method, ctype, headerMap, null);
     }
 
     private static URL buildGetUrl(String strUrl, String query) throws IOException {

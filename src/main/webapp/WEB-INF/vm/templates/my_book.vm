@@ -1,0 +1,31 @@
+#set( $layout = "layout/default.vm" )
+
+<script src="$request.getContextPath()/resources/bootstrap/js/bootstrap-paginator.min.js"></script>
+
+#if($books.isNotEmpty())
+
+#foreach($book in $books.getRecords())
+	#parse("partial/book.vm")
+#end
+
+<div id="paginator"></div>
+<script type='text/javascript'>
+    var options = {
+        currentPage: $books.getPageIndex(),
+        totalPages: $books.getPageCount(),
+		numberOfPages:$!pageSize,
+		size: "small",
+		alignment: "right",
+		onPageClicked: function(e,originalEvent,type,page){
+			$('#pageIndex').val(page)
+    		$('#pageSize').val($!pageSize)
+    		$(".form-search").submit()
+        }
+    }
+
+    $('#paginator').bootstrapPaginator(options);
+	// 增加totalRecord信息
+	$("#paginator>ul").append('<li><a href="javascript:void(0);">共$books.getPageCount()页, $books.getRecordCount()本书</a></li>');
+</script>
+#end
+
