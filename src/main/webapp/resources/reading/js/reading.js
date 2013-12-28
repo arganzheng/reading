@@ -1,25 +1,25 @@
-function deleteEvent(id){
-	if(!confirm("确定要删除吗？")){
-		return;
+function deleteBook(id){
+        if(!confirm("确定要删除吗？")){
+            return;
+        }
+    
+        $.ajax(contextPath + "/my/book/" + id, {
+            type: "DELETE",
+            dataType: "json",
+            contentType: "application/json",
+            success: function(data, textStatus){
+                if(data==true){
+                    alert("删除成功！")
+                    setTimeout(window.location.href = contextPath + "/my/book", 2000);
+                }else{
+                    alert("删除失败！"+ data.errorMessage);
+                }
+            },
+            error: function(xhr, ts, e){
+                alert("系统错误！\n\n" + e);
+            }
+        });
 	}
-	
-	$.ajax(basePath + "/admin/event/" + id, {
-		type: "DELETE",
-		dataType: "json",
-		contentType: "application/json",
-		success: function(data, textStatus){
-		    if(data==true){
-				alert("删除成功！")
-				setTimeout(window.location.reload(), 2000);
-			}else{
-				alert("删除失败！"+ data.errorMessage);
-			}
-		},
-		error: function(xhr, ts, e){
-			alert("系统错误！\n\n" + e);
-		}
-	});
-}
 
 
 function addOrEditEvent(event, successCallback){

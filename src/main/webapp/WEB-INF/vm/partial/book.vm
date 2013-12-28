@@ -12,7 +12,7 @@
     		<button class="btn btn-danger btn-small" id="btn-share" type="submit" onClick="return confirm('确定要分享吗?')">我要分享</button>
     	</form>
 	</h4>
-	
+	<span class="label">ISBN</span> $!book.isbn<br>
 	<span class="label">作者</span> $book.authors<br>
 	<span class="label">出版日期</span> $dateTool.format($!book.pubdate)<br>
 	<span class="label">页数</span> $book.pageCount<br>

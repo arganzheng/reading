@@ -1,7 +1,9 @@
 package me.arganzheng.project.reading.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.arganzheng.project.reading.common.Page;
 import me.arganzheng.project.reading.criteria.BookPagingCriteria;
@@ -92,5 +94,48 @@ public class BookService {
             }
         }
         return Page.createInstance(books, bookOwnerships.getRecordCount(), pagingCriteria);
+    }
+
+    /**
+     * 列出我的分享
+     * 
+     * @param pagingCriteria
+     * @return
+     */
+    public Page<BookOwnership> listMyBookOwnership(BookPagingCriteria pagingCriteria) {
+        // first get the bookownership
+        Page<BookOwnership> bookOwnerships = bookOwnershipDao.listMyBookOwnership(pagingCriteria);
+
+        Map<Integer, Book> books = new HashMap<Integer, Book>();
+        // get the bookinfo for the ownership
+        for (BookOwnership ownership : bookOwnerships.getRecords()) {
+            if (books.containsKey(ownership.getBook())) {
+                ownership.setBook(books.get(ownership.getBookId()));
+            } else {
+                Book book = getBookById(ownership.getBookId(), false);
+                if (book == null) {
+                    logger.error("Can not find book by Id=" + ownership.getBookId());
+                } else {
+                    books.put(ownership.getBookId(), book);
+                    ownership.setBook(book);
+                }
+            }
+        }
+        return bookOwnerships;
+    }
+
+    public boolean deleteOwnership(int id, String owner) {
+        if (canManage(id, owner)) {
+            return bookOwnershipDao.delete(id);
+        }
+        return false;
+    }
+
+    public boolean canManage(int id, String owner) {
+        BookOwnership target = bookOwnershipDao.selectBookOwnershipById(id);
+        if (target != null && target.getUsername().equals(owner)) {
+            return true;
+        }
+        return false;
     }
 }

@@ -5,7 +5,7 @@
 <form class="form-search">
 	<fieldset>
     	<input type="text" name="q" placeholder="ISBN、作者、书名" class="input-large search-query" value="$!q"/>
-		<button type="submit" class="btn btn-success">搜索 »</button>
+		<button type="submit" class="btn btn-success">查找 »</button>
 		<input type="hidden" id="pageIndex" name="pageIndex" value="$!pageIndex"/>
 		<input type="hidden" id="pageSize" name="pageSize" value="$!pageSize"/>
 	</fieldset>
@@ -17,17 +17,19 @@
 	#parse("partial/book.vm")
 #end
 
+#end
+
 <div id="paginator"></div>
 <script type='text/javascript'>
     var options = {
         currentPage: $books.getPageIndex(),
         totalPages: $books.getPageCount(),
-		numberOfPages:$!pageSize,
+		numberOfPages:'$!pageSize' || 10,
 		size: "small",
 		alignment: "right",
 		onPageClicked: function(e,originalEvent,type,page){
 			$('#pageIndex').val(page)
-    		$('#pageSize').val($!pageSize)
+    		$('#pageSize').val('$!pageSize' || 10)
     		$(".form-search").submit()
         }
     }
@@ -36,4 +38,3 @@
 	// 增加totalRecord信息
 	$("#paginator>ul").append('<li><a href="javascript:void(0);">共$books.getPageCount()页, $books.getRecordCount()本书</a></li>');
 </script>
-#end

@@ -2,7 +2,7 @@ package me.arganzheng.project.reading.criteria;
 
 public class PagingCriteria {
 
-    public static final int DEFAUT_PAGE_SIZE = 20;
+    public static final int DEFAUT_PAGE_SIZE = 10;
     private int             pageIndex        = 1;
     private int             pageSize         = DEFAUT_PAGE_SIZE;
 

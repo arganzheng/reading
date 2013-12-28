@@ -48,10 +48,10 @@
 	#if($status == "OnShelf")
 		<span class="label label-success">可借阅</span>
 	#elseif($status == "OffShelf")
-		下架
+		<span class="label label-warning">下架</span>
 	#elseif($status == "Lent")
 		<span class="label label-danger">借出</span>
 	#else
-		未知状态
+		<span class="label label-danger">未知状态</span>
 	#end
 #end

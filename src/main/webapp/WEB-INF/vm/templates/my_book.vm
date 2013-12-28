@@ -2,30 +2,78 @@
 
 <script src="$request.getContextPath()/resources/bootstrap/js/bootstrap-paginator.min.js"></script>
 
-#if($books.isNotEmpty())
+<form class="form-search">
+	<fieldset>
+		<input type="hidden" id="pageIndex" name="pageIndex" value="$!pageIndex"/>
+		<input type="hidden" id="pageSize" name="pageSize" value="$!pageSize"/>
+	</fieldset>
+</form>
 
-#foreach($book in $books.getRecords())
-	#parse("partial/book.vm")
+<div class="row" style="margin:20px">
+	<div class="btn-group">
+		<a class="btn btn-success" href="$request.getContextPath()/my/book/share">分享新的书籍</a>
+		<a class="btn btn-success" href="$request.getContextPath()/my/book/share">我的借出</a>
+		<a class="btn btn-success" href="$request.getContextPath()/my/book/share">我的阅读</a>
+	</div>
+</div>
+
+#if($myBookOwnerships.isNotEmpty())
+
+<table class="table table-bordered table-hover table-condensed">
+    <thead >
+        <tr>
+			<th>ISBN</th>
+            <th>书名</th>
+            <th>分享时间</th>
+            <th>状态</th>
+            <th>操作</th>
+        </tr>
+    </thead>
+    <tbody>
+	#foreach($bookOwnership in $myBookOwnerships.getRecords())
+        <tr>
+			<td>${bookOwnership.book.isbn}</td>
+            <td>${bookOwnership.book.title}</td>
+            <td>$dateTool.format($bookOwnership.createdTime)</td>
+			<td>#showBookOwnershipStatus($bookOwnership)</td>
+            <td>
+				#set($status = $ownership.status)
+				#if($status == "OnShelf")
+					<a class="btn btn-small btn-success" onclick="lent({id: '${event.id}', topic: '${event.topic}', name: '${event.name}'});">借出</a>
+            		<a class="btn btn-small btn-warning" onclick="offShelf('$!{bookOwnership.id}');">下架 </a>
+					<a class="btn btn-small btn-danger" onclick="deleteBook('$!{bookOwnership.id}');">删除</a>
+            	#elseif($status == "OffShelf")
+            		<a class="btn btn-small btn-success" onclick="onShelf({id: '${event.id}', topic: '${event.topic}', name: '${event.name}'});">上架 </a>
+					<a class="btn btn-small btn-danger" onclick="deleteBook('$!{bookOwnership.id}');">删除</a>
+            	#elseif($status == "Lent")
+					<a class="btn btn-small btn-success" onclick="confirmReturn('$!{bookOwnership.id}');">确认归还 </a>
+            	#end
+            </td>
+        </tr>
+    </tbody>
+    #end
+</table>
+
 #end
 
 <div id="paginator"></div>
 <script type='text/javascript'>
     var options = {
-        currentPage: $books.getPageIndex(),
-        totalPages: $books.getPageCount(),
-		numberOfPages:$!pageSize,
+        currentPage: $myBookOwnerships.getPageIndex(),
+        totalPages: $myBookOwnerships.getPageCount(),
+		numberOfPages: '$!pageSize' || 10,
 		size: "small",
 		alignment: "right",
 		onPageClicked: function(e,originalEvent,type,page){
 			$('#pageIndex').val(page)
-    		$('#pageSize').val($!pageSize)
+    		$('#pageSize').val('$!pageSize' || 10)
     		$(".form-search").submit()
         }
     }
 
     $('#paginator').bootstrapPaginator(options);
 	// 增加totalRecord信息
-	$("#paginator>ul").append('<li><a href="javascript:void(0);">共$books.getPageCount()页, $books.getRecordCount()本书</a></li>');
+	$("#paginator>ul").append('<li><a href="javascript:void(0);">共$myBookOwnerships.getPageCount()页, $myBookOwnerships.getRecordCount()本书</a></li>');
+	
 </script>
-#end
 

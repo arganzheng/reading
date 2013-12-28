@@ -6,6 +6,8 @@ public class BookPagingCriteria extends PagingCriteria {
     private String  author;
     private String  name;
 
+    private String  owner;
+
     private boolean includeOwnership;
 
     public String getIsbn() {
@@ -38,6 +40,14 @@ public class BookPagingCriteria extends PagingCriteria {
 
     public void setIncludeOwnership(boolean includeOwnership) {
         this.includeOwnership = includeOwnership;
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
 }

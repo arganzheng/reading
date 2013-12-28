@@ -1,17 +1,22 @@
 package me.arganzheng.project.reading.controller;
 
+import me.arganzheng.project.reading.common.Page;
 import me.arganzheng.project.reading.common.WebUser;
+import me.arganzheng.project.reading.criteria.BookPagingCriteria;
 import me.arganzheng.project.reading.facade.BookFacade;
 import me.arganzheng.project.reading.model.Book;
+import me.arganzheng.project.reading.model.BookOwnership;
 import me.arganzheng.project.reading.service.BookService;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/my")
@@ -50,5 +55,37 @@ public class MyController {
         bookFacade.shareBook(isbn, user.getUsername());
 
         return "redirect:/book";
+    }
+
+    @RequestMapping(value = "/book", method = RequestMethod.GET)
+    public String myBooks(@RequestParam(value = "pageIndex", required = false)
+    Integer pageIndex, @RequestParam(value = "pageSize", required = false)
+    Integer pageSize, Model model) {
+        if (pageIndex == null || pageIndex.intValue() == 0) {
+            pageIndex = 1;
+        }
+        if (pageSize == null || pageSize.intValue() < 1 || pageSize.intValue() > 20) {
+            pageSize = 10;
+        }
+
+        BookPagingCriteria bookPagingCriteria = new BookPagingCriteria();
+        bookPagingCriteria.setOwner(user.getUsername());
+        bookPagingCriteria.setPageIndex(pageIndex);
+        bookPagingCriteria.setPageSize(pageSize);
+        bookPagingCriteria.setIncludeOwnership(false);
+        Page<BookOwnership> myBookOwnerships = bookService.listMyBookOwnership(bookPagingCriteria);
+
+        model.addAttribute("pageIndex", pageIndex);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("myBookOwnerships", myBookOwnerships);
+
+        return "my_book";
+    }
+
+    @RequestMapping(value = "/book/{id}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public boolean deleteEvent(@PathVariable("id")
+    int id) {
+        return bookService.deleteOwnership(id, user.getUsername());
     }
 }
