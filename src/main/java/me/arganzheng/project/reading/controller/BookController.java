@@ -49,6 +49,7 @@ public class BookController {
         bookPagingCriteria.setIsbn(searchText);
         bookPagingCriteria.setPageIndex(pageIndex);
         bookPagingCriteria.setPageSize(pageSize);
+        bookPagingCriteria.setIncludeOwnership(true);
         books = bookService.search(bookPagingCriteria);
 
         model.addAttribute("q", searchText);

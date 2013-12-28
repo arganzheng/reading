@@ -49,6 +49,6 @@ public class MyController {
     int bookId) {
         bookFacade.shareBook(isbn, user.getUsername());
 
-        return "list";
+        return "redirect:/book";
     }
 }

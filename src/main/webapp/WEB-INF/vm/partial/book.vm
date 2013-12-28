@@ -1,15 +1,15 @@
 #if($book)
 <div class="media" style="padding-bottom:15px; border-bottom: 1px solid #EBE8D5;">
   <a class="pull-left" #if($showDetail) href="$!book.detailLink" #else href="$request.getContextPath()/my/book/share?isbn=$book.isbn" #end target="_blank">
-	<img class="media-object" data-src="" src="$book.image"></img>
+	<img class="media-object" data-src="" src="$!book.image"></img>
   </a>
   
   <div class="media-body">
-    <h4 class="media-heading">$book.title #if($book.subtitle) -- $!book.subtitle #end 
+    <h4 class="media-heading">$!book.title #if($!{book.subtitle} && $!{book.subtitle} != "") -- $!{book.subtitle} #end 
     	<form class="pull-right" action="/my/book/share" method="POST">
     		<input type="hidden" name="isbn" value="$!book.isbn"/>
     		<input type="hidden" name="bookId" value="$book.id" />
-    		<button class="btn btn-danger btn-small" id="btn-share" type="submit" onClick="confirm('确定要分享吗?')">我要分享</button>
+    		<button class="btn btn-danger btn-small" id="btn-share" type="submit" onClick="return confirm('确定要分享吗?')">我要分享</button>
     	</form>
 	</h4>
 	

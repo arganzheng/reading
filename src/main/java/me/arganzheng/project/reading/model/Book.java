@@ -174,4 +174,13 @@ public class Book {
         this.ownerships = ownerships;
     }
 
+    @Override
+    public String toString() {
+        return "Book [id=" + id + ", createdTime=" + createdTime + ", modifiedTime=" + modifiedTime + ", isbn10="
+               + isbn10 + ", isbn13=" + isbn13 + ", title=" + title + ", subtitle=" + subtitle + ", image=" + image
+               + ", authors=" + authors + ", pubdate=" + pubdate + ", summary=" + summary + ", pageCount=" + pageCount
+               + ", tags=" + tags + ", detailLink=" + detailLink + ", owners=" + owners + ", ownerships=" + ownerships
+               + "]";
+    }
+
 }

@@ -40,7 +40,7 @@ public class BookService {
 
     public Book getBookByISBN(String isbn, boolean includeOwnership) {
         Book book = bookDao.selectBookByISBN(isbn);
-        if (includeOwnership) {
+        if (book != null && includeOwnership) {
             book.setOwnerships(bookOwnershipDao.selectBookOwnershipByBookId(book.getId()));
         }
         return book;
