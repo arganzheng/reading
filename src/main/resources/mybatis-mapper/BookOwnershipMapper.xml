@@ -29,7 +29,7 @@
 		<include refid="BookOwnershipTableName" />
 		where book_id = #{bookId}
 	</select>
-	
+
 	<select id="selectBookOwnershipById" parameterType="int"
 		resultMap="BookOwnershipResultMap">
 		select
@@ -38,6 +38,14 @@
 		<include refid="BookOwnershipTableName" />
 		where id = #{id}
 	</select>
+
+	<update id="updateStatus" parameterType="map">
+		update
+		<include refid="BookOwnershipTableName" />
+		set modified_time=now(),
+		status=#{status}
+		where id = #{id}
+	</update>
 
 	<select id="listBookOwnership"
 		parameterType="me.arganzheng.project.reading.criteria.PagingCriteria"

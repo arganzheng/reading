@@ -31,6 +31,7 @@
     </thead>
     <tbody>
 	#foreach($bookOwnership in $myBookOwnerships.getRecords())
+		<input type="hidden" name="id" value="$!{bookOwnership.id}"/>
         <tr>
 			<td>${bookOwnership.book.isbn}</td>
             <td>${bookOwnership.book.title}</td>
@@ -39,20 +40,43 @@
             <td>
 				#set($status = $ownership.status)
 				#if($status == "OnShelf")
-					<a class="btn btn-small btn-success" onclick="lent({id: '${event.id}', topic: '${event.topic}', name: '${event.name}'});">借出</a>
-            		<a class="btn btn-small btn-warning" onclick="offShelf('$!{bookOwnership.id}');">下架 </a>
-					<a class="btn btn-small btn-danger" onclick="deleteBook('$!{bookOwnership.id}');">删除</a>
+					<a class="btn btn-small btn-success" onclick="lend($!{bookOwnership.id});">借出</a>
+            		<a class="btn btn-small btn-warning" onclick="offShelf($!{bookOwnership.id});">下架 </a>
+					<a class="btn btn-small btn-danger" onclick="deleteBook($!{bookOwnership.id});">删除</a>
             	#elseif($status == "OffShelf")
-            		<a class="btn btn-small btn-success" onclick="onShelf({id: '${event.id}', topic: '${event.topic}', name: '${event.name}'});">上架 </a>
-					<a class="btn btn-small btn-danger" onclick="deleteBook('$!{bookOwnership.id}');">删除</a>
+            		<a class="btn btn-small btn-success" onclick="onShelf($!{bookOwnership.id});">上架 </a>
+					<a class="btn btn-small btn-danger" onclick="deleteBook($!{bookOwnership.id});">删除</a>
             	#elseif($status == "Lent")
-					<a class="btn btn-small btn-success" onclick="confirmReturn('$!{bookOwnership.id}');">确认归还 </a>
+					<a class="btn btn-small btn-success" onclick="confirmReturn($!{bookOwnership.id});">确认归还 </a>
             	#end
             </td>
         </tr>
     </tbody>
     #end
 </table>
+
+<div id="modal" class="modal fade" style="width: 480px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"> 
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4>借出记录</h4>
+            </div> ## .modal-header
+            <div class="modal-body"> 
+                <table>
+                    <tr>
+                        <td>借阅人名称</td>
+                        <td><input type="text" name="borrower" class="form-control" onkeyup="value=value.replace(/[^\w-]/ig,'')" /></td>
+                    </tr>
+                </table>
+            </div> ## .modal-body
+            <div class="modal-footer">
+                <button name="save" type="button" class="btn btn-primary">确认借出</button>
+                <button name="cancel" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div> ## .modal-footer
+        </div> ## .modal-content
+    </div> ## .modal-dialog 
+</div> ## .modal
 
 #end
 

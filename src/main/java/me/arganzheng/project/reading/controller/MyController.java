@@ -9,6 +9,7 @@ import me.arganzheng.project.reading.model.BookOwnership;
 import me.arganzheng.project.reading.service.BookService;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,14 +23,16 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/my")
 public class MyController {
 
-    @Autowired
-    private BookFacade  bookFacade;
+    public static final Logger logger = Logger.getLogger(MyController.class);
 
     @Autowired
-    private BookService bookService;
+    private BookFacade         bookFacade;
 
     @Autowired
-    private WebUser     user;
+    private BookService        bookService;
+
+    @Autowired
+    private WebUser            user;
 
     @RequestMapping(value = "/account/login", method = RequestMethod.GET)
     public String login() {
@@ -88,4 +91,26 @@ public class MyController {
     int id) {
         return bookService.deleteOwnership(id, user.getUsername());
     }
+
+    @RequestMapping(value = "/book/{id}", method = RequestMethod.POST)
+    @ResponseBody
+    public boolean handleOwnershipAction(@PathVariable("id")
+    int id, @RequestParam("action")
+    String action, @RequestParam(value = "borrower", required = false)
+    String borrower) {
+        if (StringUtils.equalsIgnoreCase("onShelf", action)) {
+            return bookService.onShelf(id, user.getUsername());
+        } else if (StringUtils.equalsIgnoreCase("offShelf", action)) {
+            return bookService.offShelf(id, user.getUsername());
+        } else if (StringUtils.equalsIgnoreCase("confirmReturn", action)) {
+            return bookService.confirmReturn(id, user.getUsername());
+        } else if ((StringUtils.equalsIgnoreCase("lead", action))) {
+            // FIXME 借出逻辑
+            return true;
+        } else {
+            logger.error("unsupported action! action=" + action);
+            return false;
+        }
+    }
+
 }

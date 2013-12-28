@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.arganzheng.project.reading.common.Page;
+import me.arganzheng.project.reading.constants.BookStatus;
 import me.arganzheng.project.reading.criteria.BookPagingCriteria;
 import me.arganzheng.project.reading.dao.BookDao;
 import me.arganzheng.project.reading.dao.BookOwnershipDao;
@@ -135,6 +136,27 @@ public class BookService {
         BookOwnership target = bookOwnershipDao.selectBookOwnershipById(id);
         if (target != null && target.getUsername().equals(owner)) {
             return true;
+        }
+        return false;
+    }
+
+    public boolean onShelf(int id, String owner) {
+        if (canManage(id, owner)) {
+            return bookOwnershipDao.updateStatus(id, BookStatus.OnShelf);
+        }
+        return false;
+    }
+
+    public boolean offShelf(int id, String owner) {
+        if (canManage(id, owner)) {
+            return bookOwnershipDao.updateStatus(id, BookStatus.OffShelf);
+        }
+        return false;
+    }
+
+    public boolean confirmReturn(int id, String owner) {
+        if (canManage(id, owner)) {
+            return bookOwnershipDao.updateStatus(id, BookStatus.OnShelf);
         }
         return false;
     }

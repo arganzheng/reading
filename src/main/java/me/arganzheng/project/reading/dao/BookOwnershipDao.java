@@ -3,9 +3,11 @@ package me.arganzheng.project.reading.dao;
 import java.util.List;
 
 import me.arganzheng.project.reading.common.Page;
+import me.arganzheng.project.reading.constants.BookStatus;
 import me.arganzheng.project.reading.criteria.BookPagingCriteria;
 import me.arganzheng.project.reading.criteria.PagingCriteria;
 import me.arganzheng.project.reading.model.BookOwnership;
+import me.arganzheng.project.reading.util.IBatisParameterMap;
 
 import org.springframework.stereotype.Repository;
 
@@ -48,6 +50,14 @@ public class BookOwnershipDao extends BaseDao {
 
     public boolean delete(int id) {
         int count = sqlSession.delete("me.arganzheng.project.reading.mapper.BookOwnershipMapper.delete", id);
+        return count == 1 ? true : false;
+    }
+
+    public boolean updateStatus(int id, BookStatus status) {
+        IBatisParameterMap params = new IBatisParameterMap();
+        params.put("id", id);
+        params.put("status", status);
+        int count = sqlSession.update("me.arganzheng.project.reading.mapper.BookOwnershipMapper.updateStatus", params);
         return count == 1 ? true : false;
     }
 
