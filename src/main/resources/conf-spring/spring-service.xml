@@ -19,18 +19,18 @@
 	<!-- 事务配置 -->
 	<tx:advice id="txAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
-			<tx:method name="get*" read-only="true" />
-			<tx:method name="find*" read-only="true" />
-			<tx:method name="is*" read-only="true" />
-			<tx:method name="list*" read-only="true" />
-			<tx:method name="query*" read-only="true" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="is*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="list*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="query*" propagation="SUPPORTS" read-only="true" />
 			<tx:method name="*" />
 		</tx:attributes>
 	</tx:advice>
 
 	<aop:config proxy-target-class="true">
 		<aop:pointcut id="serviceOperation"
-			expression="execution(* me.arganzheng.project.reading..*.service.*.*(..))" />
+			expression="execution(* me.arganzheng.project.reading.service.*.*(..))" />
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
 	</aop:config>
 

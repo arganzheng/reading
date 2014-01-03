@@ -10,7 +10,7 @@
 	<!-- Enables @Controller 另外：配置了mvc:resources就必须配置这个选项，否则handler mapping都失效了 
 		@see http://stackoverflow.com/questions/7910845/the-handler-mapping-from-the-mvcresource-override-other-mappings-which-defined -->
 	<mvc:annotation-driven />
-	<context:component-scan base-package="me.arganzheng.project.reading" />
+	<context:component-scan base-package="me.arganzheng.project.reading.controller" />
 
 	<!-- Enables @Autowired -->
 	<context:annotation-config />
