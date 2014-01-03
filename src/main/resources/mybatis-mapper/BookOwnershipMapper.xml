@@ -10,13 +10,15 @@
 		<result column="id" property="id" />
 		<result column="created_time" property="createdTime" />
 		<result column="modified_time" property="modifiedTime" />
-		<result column="username" property="username" />
+		<result column="owner" property="owner" />
 		<result column="book_id" property="book.id" />
+		<result column="book_title" property="book.title" />
 		<result column="status" property="status" />
 	</resultMap>
 
 	<sql id="BookOwnershipColumnList">
-		id, created_time, modified_time, username, book_id, status
+		id, created_time, modified_time, owner, book_id,
+		book_title, status
 	</sql>
 
 	<sql id="BookOwnershipTableName">t_reading_book_ownership</sql>
@@ -80,7 +82,7 @@
 		<include refid="BookOwnershipColumnList" />
 		from
 		<include refid="BookOwnershipTableName" />
-		where username=#{owner} order by modified_time
+		where owner=#{owner} order by modified_time
 		desc
 		<include refid="SqlMapper.Pagination" />
 	</select>
@@ -91,7 +93,7 @@
 		select count(0)
 		from
 		<include refid="BookOwnershipTableName" />
-		where username=#{owner} order by modified_time
+		where owner=#{owner} order by modified_time
 		desc
 	</select>
 
@@ -102,7 +104,8 @@
 		<include refid="BookOwnershipColumnList" />
 		)
 		values
-		(null, now(), now(), #{username}, #{bookId}, #{status}
+		(null, now(), now(), #{owner}, #{bookId}, #{bookTitle},
+		#{status}
 		)
 		<selectKey resultType="int" keyProperty="id">
 			SELECT @@IDENTITY

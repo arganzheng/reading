@@ -52,7 +52,7 @@ public class BookFacade {
 
         BookOwnership ownership = new BookOwnership();
         ownership.setBook(book);
-        ownership.setUsername(username);
+        ownership.setOwner(username);
 
         int id = bookService.addBookOwnership(ownership);
 

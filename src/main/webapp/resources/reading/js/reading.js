@@ -70,6 +70,10 @@ function onShelf(id){
 }
 
 function confirmReturn(id){
+	if(!confirm("确定书已经归还了吗？")){
+	    return;
+	}
+	
 	var data = {};
 	data['action']='confirmReturn';
 	
@@ -91,7 +95,7 @@ function confirmReturn(id){
 	});
 }
 
-function lend(id, successCallback){
+function lend(id){
 	var dlg = $("#modal");  
 		
 	$("[name=save]", dlg).click(function(){
@@ -106,7 +110,8 @@ function lend(id, successCallback){
 			success: function(d, s){
 				if(d){
 					dlg.modal("hide");
-					(successCallback || new Function())(event);
+					alert("借出成功！")
+					setTimeout(window.location.href = contextPath + "/my/book", 2000);
 				}else{
 					alert("借出失败！");
 				}

@@ -35,11 +35,29 @@ CREATE TABLE `t_reading_book_ownership` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_time` datetime DEFAULT NULL,
   `modified_time` datetime DEFAULT NULL,
-  `username` varchar(45) DEFAULT NULL,
+  `owner` varchar(45) DEFAULT NULL,
   `book_id` int(11) DEFAULT NULL,
+  `book_title` varchar(128) DEFAULT NULL COMMENT '书标题，冗余字段。',
   `status` varchar(32) DEFAULT NULL COMMENT '拥有关系的状态：上架(正常)、下架、借出、已归还(默认就是上架)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='书以作者的拥有关系，书与拥有者（user）是多对多的关系，所以需要一张映射表。';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='书以作者的拥有关系，书与拥有者（user）是多对多的关系，所以需要一张映射表。'
+
+
+
+CREATE TABLE `t_reading_book_leading` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_time` datetime DEFAULT NULL,
+  `modified_time` datetime DEFAULT NULL,
+  `borrower` varchar(45) DEFAULT NULL,
+  `borrow_time` datetime DEFAULT NULL,
+  `return_time` datetime DEFAULT NULL,
+  `status` varchar(32) DEFAULT NULL,
+  `owner` varchar(45) DEFAULT NULL,
+  `book_title` varchar(45) DEFAULT NULL,
+  `book_id` int(11) DEFAULT NULL,
+  `book_ownership_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借阅关系表，记录谁在什么时候借阅了什么书，又是在什么时候归还。'
 
 
 CREATE TABLE `t_reading_book_tag` (

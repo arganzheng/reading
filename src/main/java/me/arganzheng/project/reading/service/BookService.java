@@ -9,9 +9,11 @@ import me.arganzheng.project.reading.common.Page;
 import me.arganzheng.project.reading.constants.BookStatus;
 import me.arganzheng.project.reading.criteria.BookPagingCriteria;
 import me.arganzheng.project.reading.dao.BookDao;
+import me.arganzheng.project.reading.dao.BookLeadingDao;
 import me.arganzheng.project.reading.dao.BookOwnershipDao;
 import me.arganzheng.project.reading.exception.ResourceAlreadyExistException;
 import me.arganzheng.project.reading.model.Book;
+import me.arganzheng.project.reading.model.BookLeading;
 import me.arganzheng.project.reading.model.BookOwnership;
 
 import org.apache.commons.lang.StringUtils;
@@ -32,6 +34,9 @@ public class BookService {
     private BookDao             bookDao;
     @Autowired
     private BookOwnershipDao    bookOwnershipDao;
+
+    @Autowired
+    private BookLeadingDao      bookLeadingDao;
 
     public Book getBookById(int id, boolean includeOwnership) {
         Book book = bookDao.selectBookById(id);
@@ -134,7 +139,7 @@ public class BookService {
 
     public boolean canManage(int id, String owner) {
         BookOwnership target = bookOwnershipDao.selectBookOwnershipById(id);
-        if (target != null && target.getUsername().equals(owner)) {
+        if (target != null && target.getOwner().equals(owner)) {
             return true;
         }
         return false;
@@ -156,7 +161,29 @@ public class BookService {
 
     public boolean confirmReturn(int id, String owner) {
         if (canManage(id, owner)) {
-            return bookOwnershipDao.updateStatus(id, BookStatus.OnShelf);
+            bookOwnershipDao.updateStatus(id, BookStatus.OnShelf);
+            bookLeadingDao.updateStatus(id, BookStatus.Return);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean lead(int id, String borrower, String owner) {
+        if (canManage(id, owner)) {
+
+            bookOwnershipDao.updateStatus(id, BookStatus.Lent);
+
+            BookLeading bookLeading = new BookLeading();
+            BookOwnership bookOwnership = bookOwnershipDao.selectBookOwnershipById(id);
+            bookLeading.setBookId(bookOwnership.getBookId());
+            bookLeading.setBookOwnershipId(id);
+            bookLeading.setBookTitle(bookOwnership.getBook().getTitle());
+            bookLeading.setBorrower(borrower);
+            bookLeading.setOwner(owner);
+            bookLeading.setStatus(BookStatus.Lent);
+            bookLeadingDao.insert(bookLeading);
+
+            return true;
         }
         return false;
     }

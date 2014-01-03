@@ -105,8 +105,7 @@ public class MyController {
         } else if (StringUtils.equalsIgnoreCase("confirmReturn", action)) {
             return bookService.confirmReturn(id, user.getUsername());
         } else if ((StringUtils.equalsIgnoreCase("lead", action))) {
-            // FIXME 借出逻辑
-            return true;
+            return bookService.lead(id, borrower, user.getUsername());
         } else {
             logger.error("unsupported action! action=" + action);
             return false;

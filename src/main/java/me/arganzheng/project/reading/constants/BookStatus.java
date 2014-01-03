@@ -9,5 +9,6 @@ package me.arganzheng.project.reading.constants;
 public enum BookStatus {
     OnShelf, // 上架，归还
     OffShelf, // 下架
-    Lent;// 借出
+    Lent, // 借出
+    Return;// 归还，主要用于借阅关系表中。
 }

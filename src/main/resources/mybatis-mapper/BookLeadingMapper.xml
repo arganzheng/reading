@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 说明：这里用这么长的namespace，而且是BookLeadingMapper.java的全路径名，其实是规范来的，如果要使用Mapper的话。 
+	see http://mybatis.github.io/mybatis-3/getting-started.html -->
+<mapper namespace="me.arganzheng.project.reading.mapper.BookLeadingMapper">
+	<resultMap id="BookLeadingResultMap" type="BookLeading">
+		<result column="id" property="id" />
+		<result column="created_time" property="createdTime" />
+		<result column="modified_time" property="modifiedTime" />
+		<result column="owner" property="owner" />
+		<result column="borrower" property="borrower" />
+		<result column="borrow_time" property="borrowTime" />
+		<result column="return_time" property="returnTime" />
+		<result column="book_title" property="bookTitle" />
+		<result column="book_id" property="bookId" />
+		<result column="book_ownership_id" property="bookOwnershipId" />
+		<result column="status" property="status" />
+	</resultMap>
+
+	<sql id="BookLeadingColumnList">
+		id, created_time, modified_time, borrower, borrow_time,
+		return_time, owner, book_title, book_id, book_ownership_id, status
+	</sql>
+
+	<sql id="BookLeadingTableName">t_reading_book_leading</sql>
+
+	<select id="selectBookLeadingByBookId" parameterType="int"
+		resultMap="BookLeadingResultMap">
+		select
+		<include refid="BookLeadingColumnList" />
+		from
+		<include refid="BookLeadingTableName" />
+		where book_id = #{bookId}
+	</select>
+
+	<select id="selectBookLeadingById" parameterType="int"
+		resultMap="BookLeadingResultMap">
+		select
+		<include refid="BookLeadingColumnList" />
+		from
+		<include refid="BookLeadingTableName" />
+		where id = #{id}
+	</select>
+
+	<update id="updateStatus" parameterType="map">
+		update
+		<include refid="BookLeadingTableName" />
+		set modified_time=now(),
+		status=#{status}
+		where book_ownership_id =
+		#{bookOwnershipId}
+	</update>
+
+	<select id="listBookLeading"
+		parameterType="me.arganzheng.project.reading.criteria.PagingCriteria"
+		resultMap="BookLeadingResultMap">
+		select
+		<include refid="BookLeadingColumnList" />
+		from
+		<include refid="BookLeadingTableName" />
+		where status = 'OnShelf' group by book_id order by max(modified_time)
+		desc
+		<include refid="SqlMapper.Pagination" />
+	</select>
+
+	<select id="countBookLeading"
+		parameterType="me.arganzheng.project.reading.criteria.PagingCriteria"
+		resultType="int">
+		select count(0)
+		from(
+		select
+		<include refid="BookLeadingColumnList" />
+		from
+		<include refid="BookLeadingTableName" />
+		where status = 'OnShelf' group by book_id order by max(modified_time)
+		desc
+		)as bo
+	</select>
+
+	<select id="listMyBookLeading"
+		parameterType="me.arganzheng.project.reading.criteria.BookPagingCriteria"
+		resultMap="BookLeadingResultMap">
+		select
+		<include refid="BookLeadingColumnList" />
+		from
+		<include refid="BookLeadingTableName" />
+		where username=#{owner} order by modified_time
+		desc
+		<include refid="SqlMapper.Pagination" />
+	</select>
+
+	<select id="countMyBookLeading"
+		parameterType="me.arganzheng.project.reading.criteria.BookPagingCriteria"
+		resultType="int">
+		select count(0)
+		from
+		<include refid="BookLeadingTableName" />
+		where username=#{owner} order by modified_time
+		desc
+	</select>
+
+	<insert id="insert" parameterType="BookLeading">
+		insert into
+		<include refid="BookLeadingTableName" />
+		(
+		<include refid="BookLeadingColumnList" />
+		)
+		values
+		(null, now(), now(), #{borrower}, now(), null, #{owner},
+		#{bookTitle}, #{bookId}, #{bookOwnershipId}, #{status}
+		)
+		<selectKey resultType="int" keyProperty="id">
+			SELECT @@IDENTITY
+			AS
+			ID
+		</selectKey>
+	</insert>
+
+	<delete id="delete" parameterType="int">
+		delete from
+		<include refid="BookLeadingTableName" />
+		where id = #{id}
+	</delete>
+</mapper>

@@ -50,7 +50,7 @@ public class BookOwnershipDaoTest extends BaseSpringTestCase {
 
         BookOwnership bookOwnership = new BookOwnership();
         bookOwnership.setBook(book);
-        bookOwnership.setUsername("guocaili");
+        bookOwnership.setOwner("guocaili");
 
         int id = bookOwnershipDao.insert(bookOwnership);
         Assert.isTrue(id > 0);

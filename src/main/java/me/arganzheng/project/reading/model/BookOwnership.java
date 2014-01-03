@@ -16,23 +16,27 @@ public class BookOwnership {
     private Date       createdTime;
     private Date       modifiedTime;
 
-    private String     username;
+    private String     owner;
     // Book:BookOwnerShip=1:N
     private Book       book;
 
     // 默认上架
     private BookStatus status = BookStatus.OnShelf;
 
-    public String getUsername() {
-        return username;
+    public String getOwner() {
+        return owner;
     }
 
     public int getBookId() {
         return book == null ? 0 : book.getId();
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public String getBookTitle() {
+        return book == null ? null : book.getTitle();
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 
     public BookStatus getStatus() {
@@ -78,7 +82,7 @@ public class BookOwnership {
     @Override
     public String toString() {
         return "BookOwnership [id=" + id + ", createdTime=" + createdTime + ", modifiedTime=" + modifiedTime
-               + ", username=" + username + ", book=" + book + ", status=" + status + "]";
+               + ", owner=" + owner + ", book=" + book + ", status=" + status + "]";
     }
 
 }
