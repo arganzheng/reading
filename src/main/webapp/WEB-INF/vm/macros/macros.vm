@@ -66,7 +66,8 @@
 		<a class="btn btn-small btn-danger" onclick="deleteBook($!bookOwnershipId);">删除</a>
 	#elseif($status == "Lent")
 		<a class="btn btn-small btn-success" onclick="confirmReturn($!bookOwnershipId);">确认归还 </a>
-   	#end
+	#end
+		<a class="btn btn-small btn-info" href="$request.getContextPath()/my/sharing?bookOwnershipId=$!bookOwnershipId" target="_blank">借阅记录</a>
 #end
 
 #macro (showBookOwnershipAction $bookOwnership)
@@ -89,4 +90,30 @@
 
 #macro(getUserAvatar $username)
 	http://dayu.oa.com/avatars/$username/profile.jpg
+#end
+
+#macro(showPaginator $page)
+    <div id="paginator"></div>
+    <script type='text/javascript'>
+        var options = {
+            currentPage: $page.pageIndex,
+            totalPages: $page.pageCount,
+    		numberOfPages: '$!{page.pageSize}' || 10,
+    		size: "small",
+    		alignment: "right",
+			itemContainerClass: function (type, page, current) {
+                return (page === current) ? "active" : "pointer-cursor";
+            },
+    		onPageClicked: function(e,originalEvent,type,page){
+    			$('#pageIndex').val(page)
+        		$('#pageSize').val('$!{page.pageSize}' || 10)
+        		$(".form-search").submit()
+            }
+        }
+    
+        $('#paginator').bootstrapPaginator(options);
+    	// 增加totalRecord信息
+    	$("#paginator>ul").append('<li><a href="javascript:void(0);">共$page.pageCount页, $page.recordCount条记录</a></li>');
+    	
+    </script>
 #end

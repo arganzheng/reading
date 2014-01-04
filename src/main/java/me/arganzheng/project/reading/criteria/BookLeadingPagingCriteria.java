@@ -4,6 +4,8 @@ import me.arganzheng.project.reading.constants.BookStatus;
 
 public class BookLeadingPagingCriteria extends PagingCriteria {
 
+    private Integer    bookOwnershipId;
+
     private String     owner;
     private String     borrower;
     private BookStatus status;
@@ -30,6 +32,14 @@ public class BookLeadingPagingCriteria extends PagingCriteria {
 
     public void setStatus(BookStatus status) {
         this.status = status;
+    }
+
+    public Integer getBookOwnershipId() {
+        return bookOwnershipId;
+    }
+
+    public void setBookOwnershipId(Integer bookOwnershipId) {
+        this.bookOwnershipId = bookOwnershipId;
     }
 
 }

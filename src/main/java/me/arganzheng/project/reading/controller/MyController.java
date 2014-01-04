@@ -63,25 +63,13 @@ public class MyController {
     }
 
     @RequestMapping(value = "/book", method = RequestMethod.GET)
-    public String myBooks(@RequestParam(value = "pageIndex", required = false)
-    Integer pageIndex, @RequestParam(value = "pageSize", required = false)
-    Integer pageSize, Model model) {
-        if (pageIndex == null || pageIndex.intValue() == 0) {
-            pageIndex = 1;
-        }
-        if (pageSize == null || pageSize.intValue() < 1 || pageSize.intValue() > 20) {
-            pageSize = 10;
-        }
+    public String myBooks(BookPagingCriteria paginCriteria, Model model) {
+        paginCriteria.setOwner(user.getUsername());
+        paginCriteria.setIncludeOwnership(false);
 
-        BookPagingCriteria bookPagingCriteria = new BookPagingCriteria();
-        bookPagingCriteria.setOwner(user.getUsername());
-        bookPagingCriteria.setPageIndex(pageIndex);
-        bookPagingCriteria.setPageSize(pageSize);
-        bookPagingCriteria.setIncludeOwnership(false);
-        Page<BookOwnership> myBookOwnerships = bookService.listMyBookOwnership(bookPagingCriteria);
+        Page<BookOwnership> myBookOwnerships = bookService.listMyBookOwnership(paginCriteria);
 
-        model.addAttribute("pageIndex", pageIndex);
-        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("paginCriteria", paginCriteria);
         model.addAttribute("myBookOwnerships", myBookOwnerships);
 
         return "my_book";
@@ -91,24 +79,12 @@ public class MyController {
      * 我的借出
      */
     @RequestMapping(value = "/sharing", method = RequestMethod.GET)
-    public String mySharing(@RequestParam(value = "pageIndex", required = false)
-    Integer pageIndex, @RequestParam(value = "pageSize", required = false)
-    Integer pageSize, Model model) {
-        if (pageIndex == null || pageIndex.intValue() == 0) {
-            pageIndex = 1;
-        }
-        if (pageSize == null || pageSize.intValue() < 1 || pageSize.intValue() > 20) {
-            pageSize = 10;
-        }
-
-        BookLeadingPagingCriteria paginCriteria = new BookLeadingPagingCriteria();
+    public String mySharing(BookLeadingPagingCriteria paginCriteria, Model model) {
         paginCriteria.setOwner(user.getUsername());
-        paginCriteria.setPageIndex(pageIndex);
-        paginCriteria.setPageSize(pageSize);
+
         Page<BookLeading> mySharing = bookService.listMyBookSharing(paginCriteria);
 
-        model.addAttribute("pageIndex", pageIndex);
-        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("paginCriteria", paginCriteria);
         model.addAttribute("mySharing", mySharing);
 
         return "my_sharing";
@@ -118,24 +94,12 @@ public class MyController {
      * 我的借阅
      */
     @RequestMapping(value = "/reading", method = RequestMethod.GET)
-    public String myReading(@RequestParam(value = "pageIndex", required = false)
-    Integer pageIndex, @RequestParam(value = "pageSize", required = false)
-    Integer pageSize, Model model) {
-        if (pageIndex == null || pageIndex.intValue() == 0) {
-            pageIndex = 1;
-        }
-        if (pageSize == null || pageSize.intValue() < 1 || pageSize.intValue() > 20) {
-            pageSize = 10;
-        }
-
-        BookLeadingPagingCriteria paginCriteria = new BookLeadingPagingCriteria();
+    public String myReading(BookLeadingPagingCriteria paginCriteria, Model model) {
         paginCriteria.setBorrower(user.getUsername());
-        paginCriteria.setPageIndex(pageIndex);
-        paginCriteria.setPageSize(pageSize);
+
         Page<BookLeading> myReading = bookService.listMyBookSharing(paginCriteria);
 
-        model.addAttribute("pageIndex", pageIndex);
-        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("paginCriteria", paginCriteria);
         model.addAttribute("myReading", myReading);
 
         return "my_reading";

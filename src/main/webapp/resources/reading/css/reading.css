@@ -7,6 +7,10 @@ body, td, th {
 	text-indent: 2em;
 }
 
+.pointer-cursor{
+	cursor: pointer;
+}
+
 /* Footer
 -------------------------------------------------- */
 .footer {

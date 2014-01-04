@@ -43,26 +43,8 @@
     #end
 </table>
 
+#showPaginator($myReading)
+
 #end
 
-<div id="paginator"></div>
-<script type='text/javascript'>
-    var options = {
-        currentPage: $myBookOwnerships.getPageIndex(),
-        totalPages: $myBookOwnerships.getPageCount(),
-		numberOfPages: '$!pageSize' || 10,
-		size: "small",
-		alignment: "right",
-		onPageClicked: function(e,originalEvent,type,page){
-			$('#pageIndex').val(page)
-    		$('#pageSize').val('$!pageSize' || 10)
-    		$(".form-search").submit()
-        }
-    }
-
-    $('#paginator').bootstrapPaginator(options);
-	// 增加totalRecord信息
-	$("#paginator>ul").append('<li><a href="javascript:void(0);">共$myBookOwnerships.getPageCount()页, $myBookOwnerships.getRecordCount()本书</a></li>');
-	
-</script>
 

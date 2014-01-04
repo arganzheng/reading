@@ -51,7 +51,7 @@ public class PagingCriteria {
     }
 
     public void setPageSize(int pageSize) {
-        if (pageSize < 1) {
+        if (pageSize < 1 || pageSize > 20) {
             throw new IllegalArgumentException("Invalid pageSize: " + pageSize);
         }
 

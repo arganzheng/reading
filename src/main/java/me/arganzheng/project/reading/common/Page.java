@@ -12,6 +12,7 @@ public class Page<T> {
     private int               recordCount = 0;
     private int               pageIndex   = 1;
     private int               pageCount   = 0;
+    private int               pageSize    = 10;
     private List<T>           records     = Collections.emptyList();
 
     @SuppressWarnings("rawtypes")
@@ -62,6 +63,7 @@ public class Page<T> {
         page.recordCount = recordCount;
         page.pageIndex = pageIndex;
         page.pageCount = pageCount;
+        page.pageSize = pageSize;
         return page;
     }
 
@@ -73,6 +75,7 @@ public class Page<T> {
         page.recordCount = templatePage.recordCount;
         page.pageIndex = templatePage.pageIndex;
         page.pageCount = templatePage.pageCount;
+        page.pageSize = templatePage.pageSize;
         return page;
     }
 
@@ -92,6 +95,14 @@ public class Page<T> {
     public static <T> Page<T> createInstance(List<T> recordsInAPage, int recordCount, PagingCriteria pagingCriteria) {
         return Page.createInstance(recordsInAPage, recordCount, pagingCriteria.getPageIndex(),
                                    pagingCriteria.getPageSize());
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
 }
