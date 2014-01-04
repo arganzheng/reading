@@ -50,13 +50,20 @@
 	</update>
 
 	<select id="listBookOwnership"
-		parameterType="me.arganzheng.project.reading.criteria.PagingCriteria"
+		parameterType="me.arganzheng.project.reading.criteria.BookPagingCriteria"
 		resultMap="BookOwnershipResultMap">
 		select
 		<include refid="BookOwnershipColumnList" />
 		from
 		<include refid="BookOwnershipTableName" />
-		where status = 'OnShelf' group by book_id order by max(modified_time)
+		<if test="statusSet.size() > 0">
+			where status in
+			<foreach item="status" index="index" collection="statusSet"
+				open="(" separator="," close=")">
+				#{status}
+			</foreach>
+		</if>
+		group by book_id order by max(modified_time)
 		desc
 		<include refid="SqlMapper.Pagination" />
 	</select>
@@ -70,7 +77,14 @@
 		<include refid="BookOwnershipColumnList" />
 		from
 		<include refid="BookOwnershipTableName" />
-		where status = 'OnShelf' group by book_id order by max(modified_time)
+		<if test="statusSet.size() > 0">
+			where status in
+			<foreach item="status" index="index" collection="statusSet"
+				open="(" separator="," close=")">
+				#{status}
+			</foreach>
+		</if>
+		group by book_id order by max(modified_time)
 		desc
 		)as bo
 	</select>

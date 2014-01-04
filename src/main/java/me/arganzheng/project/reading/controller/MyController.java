@@ -2,9 +2,11 @@ package me.arganzheng.project.reading.controller;
 
 import me.arganzheng.project.reading.common.Page;
 import me.arganzheng.project.reading.common.WebUser;
+import me.arganzheng.project.reading.criteria.BookLeadingPagingCriteria;
 import me.arganzheng.project.reading.criteria.BookPagingCriteria;
 import me.arganzheng.project.reading.facade.BookFacade;
 import me.arganzheng.project.reading.model.Book;
+import me.arganzheng.project.reading.model.BookLeading;
 import me.arganzheng.project.reading.model.BookOwnership;
 import me.arganzheng.project.reading.service.BookService;
 
@@ -85,9 +87,36 @@ public class MyController {
         return "my_book";
     }
 
+    /**
+     * 我的借出
+     */
+    @RequestMapping(value = "/sharing", method = RequestMethod.GET)
+    public String mySharing(@RequestParam(value = "pageIndex", required = false)
+    Integer pageIndex, @RequestParam(value = "pageSize", required = false)
+    Integer pageSize, Model model) {
+        if (pageIndex == null || pageIndex.intValue() == 0) {
+            pageIndex = 1;
+        }
+        if (pageSize == null || pageSize.intValue() < 1 || pageSize.intValue() > 20) {
+            pageSize = 10;
+        }
+
+        BookLeadingPagingCriteria paginCriteria = new BookLeadingPagingCriteria();
+        paginCriteria.setOwner(user.getUsername());
+        paginCriteria.setPageIndex(pageIndex);
+        paginCriteria.setPageSize(pageSize);
+        Page<BookLeading> mySharing = bookService.listMyBookSharing(paginCriteria);
+
+        model.addAttribute("pageIndex", pageIndex);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("mySharing", mySharing);
+
+        return "my_sharing";
+    }
+
     @RequestMapping(value = "/book/{id}", method = RequestMethod.DELETE)
     @ResponseBody
-    public boolean deleteEvent(@PathVariable("id")
+    public boolean deleteOwnership(@PathVariable("id")
     int id) {
         return bookService.deleteOwnership(id, user.getUsername());
     }

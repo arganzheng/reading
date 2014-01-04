@@ -27,24 +27,6 @@
 
 	<sql id="BookLeadingTableName">t_reading_book_leading</sql>
 
-	<select id="selectBookLeadingByBookId" parameterType="int"
-		resultMap="BookLeadingResultMap">
-		select
-		<include refid="BookLeadingColumnList" />
-		from
-		<include refid="BookLeadingTableName" />
-		where book_id = #{bookId}
-	</select>
-
-	<select id="selectBookLeadingById" parameterType="int"
-		resultMap="BookLeadingResultMap">
-		select
-		<include refid="BookLeadingColumnList" />
-		from
-		<include refid="BookLeadingTableName" />
-		where id = #{id}
-	</select>
-
 	<update id="updateStatus" parameterType="map">
 		update
 		<include refid="BookLeadingTableName" />
@@ -54,51 +36,35 @@
 		#{bookOwnershipId}
 	</update>
 
-	<select id="listBookLeading"
-		parameterType="me.arganzheng.project.reading.criteria.PagingCriteria"
-		resultMap="BookLeadingResultMap">
-		select
-		<include refid="BookLeadingColumnList" />
-		from
-		<include refid="BookLeadingTableName" />
-		where status = 'OnShelf' group by book_id order by max(modified_time)
-		desc
-		<include refid="SqlMapper.Pagination" />
-	</select>
-
-	<select id="countBookLeading"
-		parameterType="me.arganzheng.project.reading.criteria.PagingCriteria"
-		resultType="int">
-		select count(0)
-		from(
-		select
-		<include refid="BookLeadingColumnList" />
-		from
-		<include refid="BookLeadingTableName" />
-		where status = 'OnShelf' group by book_id order by max(modified_time)
-		desc
-		)as bo
-	</select>
-
 	<select id="listMyBookLeading"
-		parameterType="me.arganzheng.project.reading.criteria.BookPagingCriteria"
+		parameterType="me.arganzheng.project.reading.criteria.BookLeadingPagingCriteria"
 		resultMap="BookLeadingResultMap">
 		select
 		<include refid="BookLeadingColumnList" />
 		from
 		<include refid="BookLeadingTableName" />
-		where username=#{owner} order by modified_time
+		where 1=1
+		<if test="owner != null and owner != '' ">
+			and owner=#{owner}
+		</if>
+		<if test="borrower != null and borrower != '' ">
+			and borrower=#{borrower}
+		</if>
+		<if test="status != null">
+			and status=#{status}
+		</if>
+		order by modified_time
 		desc
 		<include refid="SqlMapper.Pagination" />
 	</select>
 
 	<select id="countMyBookLeading"
-		parameterType="me.arganzheng.project.reading.criteria.BookPagingCriteria"
+		parameterType="me.arganzheng.project.reading.criteria.BookLeadingPagingCriteria"
 		resultType="int">
 		select count(0)
 		from
 		<include refid="BookLeadingTableName" />
-		where username=#{owner} order by modified_time
+		where owner=#{owner} order by modified_time
 		desc
 	</select>
 
@@ -118,10 +84,4 @@
 			ID
 		</selectKey>
 	</insert>
-
-	<delete id="delete" parameterType="int">
-		delete from
-		<include refid="BookLeadingTableName" />
-		where id = #{id}
-	</delete>
 </mapper>

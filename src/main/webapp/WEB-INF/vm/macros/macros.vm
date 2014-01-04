@@ -42,16 +42,46 @@
 <script src='$!{scriptsServer}$!{target}?v=$!{buildVersion.version}' type="text/javascript" charset="iso-8859-1"></script>
 #end
 
-#macro (showBookOwnershipStatus $ownership)
-	#set($status = $ownership.status)
-	
+#macro (showBookOwnershipStatus $status)
 	#if($status == "OnShelf")
 		<span class="label label-success">可借阅</span>
 	#elseif($status == "OffShelf")
 		<span class="label label-warning">下架</span>
 	#elseif($status == "Lent")
 		<span class="label label-danger">借出</span>
+	#elseif($status == "Return")
+		<span class="label label-danger">归还</span>
 	#else
 		<span class="label label-danger">未知状态</span>
 	#end
+#end
+
+#macro (showBookOwnershipAction $bookOwnership)
+	#set($status = $bookOwnership.status)
+	
+	#if($status == "OnShelf")
+		<a class="btn btn-small btn-success" onclick="lend($!{bookOwnership.id});">借出</a>
+		<a class="btn btn-small btn-warning" onclick="offShelf($!{bookOwnership.id});">下架 </a>
+		<a class="btn btn-small btn-danger" onclick="deleteBook($!{bookOwnership.id});">删除</a>
+	#elseif($status == "OffShelf")
+		<a class="btn btn-small btn-success" onclick="onShelf($!{bookOwnership.id});">上架 </a>
+		<a class="btn btn-small btn-danger" onclick="deleteBook($!{bookOwnership.id});">删除</a>
+	#elseif($status == "Lent")
+		<a class="btn btn-small btn-success" onclick="confirmReturn($!{bookOwnership.id});">确认归还 </a>
+   	#end
+#end
+
+## velocity的$dateTool如果参数为null，居然是原样显示。。
+#macro(formatDate $date)
+	#if($date)
+	    $dateTool.format($date)
+	#end
+#end
+
+#macro(getUserKMLink $username)
+	http://km.oa.com/user/$username
+#end
+
+#macro(getUserAvatar $username)
+	http://dayu.oa.com/avatars/$username/profile.jpg
 #end

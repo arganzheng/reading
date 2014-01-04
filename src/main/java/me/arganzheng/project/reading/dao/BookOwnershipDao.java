@@ -5,7 +5,6 @@ import java.util.List;
 import me.arganzheng.project.reading.common.Page;
 import me.arganzheng.project.reading.constants.BookStatus;
 import me.arganzheng.project.reading.criteria.BookPagingCriteria;
-import me.arganzheng.project.reading.criteria.PagingCriteria;
 import me.arganzheng.project.reading.model.BookOwnership;
 import me.arganzheng.project.reading.util.IBatisParameterMap;
 
@@ -31,7 +30,7 @@ public class BookOwnershipDao extends BaseDao {
     }
 
     @SuppressWarnings("unchecked")
-    public Page<BookOwnership> listBookOwnership(PagingCriteria pagingCriteria) {
+    public Page<BookOwnership> listBookOwnership(BookPagingCriteria pagingCriteria) {
         return queryForPagination("me.arganzheng.project.reading.mapper.BookOwnershipMapper.listBookOwnership",
                                   "me.arganzheng.project.reading.mapper.BookOwnershipMapper.countBookOwnership",
                                   pagingCriteria);

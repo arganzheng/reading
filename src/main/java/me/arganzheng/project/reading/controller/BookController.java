@@ -1,6 +1,7 @@
 package me.arganzheng.project.reading.controller;
 
 import me.arganzheng.project.reading.common.Page;
+import me.arganzheng.project.reading.constants.BookStatus;
 import me.arganzheng.project.reading.criteria.BookPagingCriteria;
 import me.arganzheng.project.reading.facade.BookFacade;
 import me.arganzheng.project.reading.gateway.BookGateway;
@@ -50,6 +51,7 @@ public class BookController {
         bookPagingCriteria.setPageIndex(pageIndex);
         bookPagingCriteria.setPageSize(pageSize);
         bookPagingCriteria.setIncludeOwnership(true);
+        bookPagingCriteria.setStatusSet(new BookStatus[] { BookStatus.OnShelf, BookStatus.Lent, BookStatus.Return });
         books = bookService.search(bookPagingCriteria);
 
         model.addAttribute("q", searchText);

@@ -7,6 +7,7 @@ import java.util.Map;
 
 import me.arganzheng.project.reading.common.Page;
 import me.arganzheng.project.reading.constants.BookStatus;
+import me.arganzheng.project.reading.criteria.BookLeadingPagingCriteria;
 import me.arganzheng.project.reading.criteria.BookPagingCriteria;
 import me.arganzheng.project.reading.dao.BookDao;
 import me.arganzheng.project.reading.dao.BookLeadingDao;
@@ -186,5 +187,9 @@ public class BookService {
             return true;
         }
         return false;
+    }
+
+    public Page<BookLeading> listMyBookSharing(BookLeadingPagingCriteria pagingCriteria) {
+        return bookLeadingDao.listMyBookLeading(pagingCriteria);
     }
 }

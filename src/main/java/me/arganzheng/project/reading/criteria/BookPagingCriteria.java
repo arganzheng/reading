@@ -1,14 +1,24 @@
 package me.arganzheng.project.reading.criteria;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import me.arganzheng.project.reading.constants.BookStatus;
+
+/**
+ * 图书查询对象
+ */
 public class BookPagingCriteria extends PagingCriteria {
 
-    private String  isbn;
-    private String  author;
-    private String  name;
+    private String          isbn;
+    private String          author;
+    private String          name;
 
-    private String  owner;
+    private String          owner;
 
-    private boolean includeOwnership;
+    private boolean         includeOwnership;
+
+    private Set<BookStatus> statusSet = new HashSet<BookStatus>();
 
     public String getIsbn() {
         return isbn;
@@ -50,4 +60,21 @@ public class BookPagingCriteria extends PagingCriteria {
         this.owner = owner;
     }
 
+    public Set<BookStatus> getStatusSet() {
+        return statusSet;
+    }
+
+    public void setStatusSet(Set<BookStatus> statusSet) {
+        this.statusSet = statusSet;
+    }
+
+    public void addStatus(BookStatus status) {
+        this.statusSet.add(status);
+    }
+
+    public void setStatusSet(BookStatus... statusList) {
+        for (BookStatus status : statusList) {
+            this.statusSet.add(status);
+        }
+    }
 }

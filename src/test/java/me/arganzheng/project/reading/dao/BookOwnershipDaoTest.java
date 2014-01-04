@@ -4,7 +4,7 @@ import java.util.List;
 
 import me.arganzheng.project.reading.BaseSpringTestCase;
 import me.arganzheng.project.reading.common.Page;
-import me.arganzheng.project.reading.criteria.PagingCriteria;
+import me.arganzheng.project.reading.criteria.BookPagingCriteria;
 import me.arganzheng.project.reading.model.Book;
 import me.arganzheng.project.reading.model.BookOwnership;
 
@@ -35,7 +35,7 @@ public class BookOwnershipDaoTest extends BaseSpringTestCase {
 
     @Test
     public void testListBookOwnership() {
-        PagingCriteria pagingCriteria = new PagingCriteria();
+        BookPagingCriteria pagingCriteria = new BookPagingCriteria();
         Page<BookOwnership> bookOwnerships = bookOwnershipDao.listBookOwnership(pagingCriteria);
         Assert.isTrue(bookOwnerships.isNotEmpty());
         System.out.println(bookOwnerships.getRecordCount());

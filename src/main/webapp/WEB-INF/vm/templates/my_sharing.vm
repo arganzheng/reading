@@ -17,27 +17,29 @@
 	</div>
 </div>
 
-#if($myBookOwnerships.isNotEmpty())
+#if($mySharing.isNotEmpty())
 
 <table class="table table-bordered table-hover table-condensed">
     <thead >
         <tr>
-			<th>ISBN</th>
+			<th>借阅者</th>
             <th>书名</th>
-            <th>分享时间</th>
+            <th>借出时间</th>
+			<th>归还时间</th>
             <th>状态</th>
             <th>操作</th>
         </tr>
     </thead>
     <tbody>
-	#foreach($bookOwnership in $myBookOwnerships.getRecords())
-		<input type="hidden" name="id" value="$!{bookOwnership.id}"/>
+	#foreach($share in $mySharing.getRecords())
+		<input type="hidden" name="id" value="$!{share.id}"/>
         <tr>
-			<td>${bookOwnership.book.isbn}</td>
-            <td>${bookOwnership.book.title}</td>
-            <td>#formatDate($!{bookOwnership.createdTime})</td>
-			<td>#showBookOwnershipStatus($bookOwnership.status)</td>
-            <td>#showBookOwnershipAction($bookOwnership)</td>
+			<td>$!{share.borrower}</td>
+            <td>$!{share.bookTitle}</td>
+            <td>#formatDate($share.borrowTime)</td>
+			<td>#formatDate($!{share.returnTime})</td>
+			<td>#showBookOwnershipStatus($share.status)</td>
+            <td>#showBookOwnershipAction($share.status)</td>
         </tr>
     </tbody>
     #end
