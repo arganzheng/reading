@@ -15,7 +15,6 @@
 <table class="table table-bordered table-hover table-condensed">
     <thead >
         <tr>
-			<th>ISBN</th>
             <th>书名</th>
             <th>分享时间</th>
             <th>状态</th>
@@ -26,8 +25,7 @@
 	#foreach($bookOwnership in $myBookOwnerships.getRecords())
 		<input type="hidden" name="id" value="$!{bookOwnership.id}"/>
         <tr>
-			<td>${bookOwnership.book.isbn}</td>
-            <td>${bookOwnership.book.title}</td>
+            <td><a href=#getBookDetailLink($bookOwnership.book) target="_blank">${bookOwnership.book.title}</a></td>
             <td>#formatDate($!{bookOwnership.createdTime})</td>
 			<td>#showBookOwnershipStatus($bookOwnership.status)</td>
             <td>#showBookOwnershipAction($bookOwnership)</td>

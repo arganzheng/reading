@@ -46,10 +46,10 @@ public class BookController {
         return "list";
     }
 
-    @RequestMapping(value = "/book/{isbn}")
+    @RequestMapping(value = "/book/{id}")
     public String detail(@PathVariable
-    String isbn, Model model) {
-        Book book = bookService.getBookByISBN(isbn, true);
+    Integer id, Model model) {
+        Book book = bookService.getBookById(id, true);
         model.addAttribute("book", book);
         return "detail";
     }

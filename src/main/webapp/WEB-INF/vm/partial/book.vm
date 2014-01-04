@@ -1,6 +1,6 @@
 #if($book)
 <div class="media" style="padding-bottom:15px; border-bottom: 1px solid #EBE8D5;">
-  <a class="pull-left" href=#getBookDetailLink($book) target="_blank">
+  <a class="pull-left" href=#if($showDetail) $!{book.detailLink} #else #getBookDetailLink($!{book.id}) #end target="_blank">
 	<img class="media-object" data-src="" src="$!book.image"></img>
   </a>
   

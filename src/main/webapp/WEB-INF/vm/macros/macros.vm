@@ -92,17 +92,13 @@
 	http://dayu.oa.com/avatars/$username/profile.jpg
 #end
 
-#macro(getBookDetailLink $book)
-	#if($showDetail) 
-		$!{book.detailLink}
-	#else 
-		$request.getContextPath()/book/$!{book.isbn}
-	#end
+#macro(getBookDetailLink $bookId)
+	$request.getContextPath()/book/$!{bookId}
 #end
 
 #macro(showPaginator $page)
     <div id="paginator"></div>
-	<form id="form-paginator" style="display:none;">
+	<form id="form-paginator" style="display:none;" method="POST">
 		<input type="hidden" id="pageIndex" name="pageIndex"/>
 		<input type="hidden" id="pageSize" name="pageSize"/>
 	</form>

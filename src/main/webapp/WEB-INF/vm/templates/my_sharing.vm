@@ -34,7 +34,7 @@
 	#foreach($share in $mySharing.getRecords())
 		<input type="hidden" name="id" value="$!{share.id}"/>
         <tr>
-            <td>$!{share.bookTitle}</td>
+            <td><a href=#getBookDetailLink($share.bookId) target="_blank">$!{share.bookTitle}</a></td>
 			<td>$!{share.borrower}</td>
             <td>#formatDate($share.borrowTime)</td>
 			<td>#formatDate($!{share.returnTime})</td>
