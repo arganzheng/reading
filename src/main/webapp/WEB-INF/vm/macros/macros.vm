@@ -94,15 +94,15 @@
 
 #macro(getBookDetailLink $book)
 	#if($showDetail) 
-		$!book.detailLink
+		$!{book.detailLink}
 	#else 
-		$request.getContextPath()/my/book/share?isbn=$book.isbn
+		$request.getContextPath()/book/$!{book.isbn}
 	#end
 #end
 
 #macro(showPaginator $page)
     <div id="paginator"></div>
-	<form id="form-paginator" style="display:none;" >
+	<form id="form-paginator" style="display:none;">
 		<input type="hidden" id="pageIndex" name="pageIndex"/>
 		<input type="hidden" id="pageSize" name="pageSize"/>
 	</form>

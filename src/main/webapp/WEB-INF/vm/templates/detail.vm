@@ -1,0 +1,6 @@
+#set( $layout = "layout/default.vm" )
+
+#set($showDetail=true)
+
+#parse("/partial/book.vm")
+
