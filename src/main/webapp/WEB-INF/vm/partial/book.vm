@@ -1,6 +1,6 @@
 #if($book)
 <div class="media" style="padding-bottom:15px; border-bottom: 1px solid #EBE8D5;">
-  <a class="pull-left" #if($showDetail) href="$!book.detailLink" #else href="$request.getContextPath()/my/book/share?isbn=$book.isbn" #end target="_blank">
+  <a class="pull-left" href=#getBookDetailLink($book) target="_blank">
 	<img class="media-object" data-src="" src="$!book.image"></img>
   </a>
   

@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("/book")
@@ -33,30 +32,13 @@ public class BookController {
      * @return
      */
     @RequestMapping(value = "/**", method = RequestMethod.GET)
-    public String search(@RequestParam(value = "q", required = false)
-    String searchText, @RequestParam(value = "pageIndex", required = false)
-    Integer pageIndex, @RequestParam(value = "pageSize", required = false)
-    Integer pageSize, Model model) {
-        if (pageIndex == null || pageIndex.intValue() == 0) {
-            pageIndex = 1;
-        }
-        if (pageSize == null || pageSize.intValue() < 1 || pageSize.intValue() > 20) {
-            pageSize = 10;
-        }
-
+    public String search(BookPagingCriteria pagingCriteria, Model model) {
         Page<Book> books = Page.emptyPage();
+        pagingCriteria.setIncludeOwnership(true);
+        pagingCriteria.setStatusSet(new BookStatus[] { BookStatus.OnShelf, BookStatus.Lent, BookStatus.Return });
+        books = bookService.search(pagingCriteria);
 
-        BookPagingCriteria bookPagingCriteria = new BookPagingCriteria();
-        bookPagingCriteria.setIsbn(searchText);
-        bookPagingCriteria.setPageIndex(pageIndex);
-        bookPagingCriteria.setPageSize(pageSize);
-        bookPagingCriteria.setIncludeOwnership(true);
-        bookPagingCriteria.setStatusSet(new BookStatus[] { BookStatus.OnShelf, BookStatus.Lent, BookStatus.Return });
-        books = bookService.search(bookPagingCriteria);
-
-        model.addAttribute("q", searchText);
-        model.addAttribute("pageIndex", pageIndex);
-        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("pagingCriteria", pagingCriteria);
         model.addAttribute("books", books);
         return "list";
     }

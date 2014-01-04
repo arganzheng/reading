@@ -92,8 +92,20 @@
 	http://dayu.oa.com/avatars/$username/profile.jpg
 #end
 
+#macro(getBookDetailLink $book)
+	#if($showDetail) 
+		$!book.detailLink
+	#else 
+		$request.getContextPath()/my/book/share?isbn=$book.isbn
+	#end
+#end
+
 #macro(showPaginator $page)
     <div id="paginator"></div>
+	<form id="form-paginator" style="display:none;" >
+		<input type="hidden" id="pageIndex" name="pageIndex"/>
+		<input type="hidden" id="pageSize" name="pageSize"/>
+	</form>
     <script type='text/javascript'>
         var options = {
             currentPage: $page.pageIndex,
@@ -107,7 +119,7 @@
     		onPageClicked: function(e,originalEvent,type,page){
     			$('#pageIndex').val(page)
         		$('#pageSize').val('$!{page.pageSize}' || 10)
-        		$(".form-search").submit()
+        		$("#form-paginator").submit()
             }
         }
     

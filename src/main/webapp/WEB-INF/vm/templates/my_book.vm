@@ -2,13 +2,6 @@
 
 <script src="$request.getContextPath()/resources/bootstrap/js/bootstrap-paginator.min.js"></script>
 
-<form class="form-search">
-	<fieldset>
-		<input type="hidden" id="pageIndex" name="pageIndex" value="$!pageIndex"/>
-		<input type="hidden" id="pageSize" name="pageSize" value="$!pageSize"/>
-	</fieldset>
-</form>
-
 <div class="row" style="margin:20px">
 	<div class="btn-group">
 		<a class="btn btn-success" href="$request.getContextPath()/my/book/share">分享新的书籍</a>
