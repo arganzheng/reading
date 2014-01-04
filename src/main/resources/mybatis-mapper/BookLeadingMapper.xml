@@ -27,12 +27,14 @@
 
 	<sql id="BookLeadingTableName">t_reading_book_leading</sql>
 
-	<update id="updateStatus" parameterType="map">
+	<update id="confirmReturn" parameterType="int">
 		update
 		<include refid="BookLeadingTableName" />
 		set modified_time=now(),
-		status=#{status}
-		where book_ownership_id =
+		status='Return',
+		return_time=now()
+		where
+		book_ownership_id =
 		#{bookOwnershipId}
 	</update>
 

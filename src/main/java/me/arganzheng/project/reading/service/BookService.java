@@ -131,9 +131,21 @@ public class BookService {
         return bookOwnerships;
     }
 
+    /**
+     * 不删除书籍，即使是唯一的一个分享者。
+     */
     public boolean deleteOwnership(int id, String owner) {
-        if (canManage(id, owner)) {
+        if (canManage(id, owner) && canDelete(id)) {
             return bookOwnershipDao.delete(id);
+        }
+        return false;
+    }
+
+    private boolean canDelete(int id) {
+        BookOwnership ownership = bookOwnershipDao.selectBookOwnershipById(id);
+        if (ownership == null || BookStatus.OffShelf.equals(ownership.getStatus())
+            || BookStatus.OnShelf.equals(ownership.getStatus()) || BookStatus.Return.equals(ownership.getStatus())) {
+            return true;
         }
         return false;
     }
@@ -163,7 +175,7 @@ public class BookService {
     public boolean confirmReturn(int id, String owner) {
         if (canManage(id, owner)) {
             bookOwnershipDao.updateStatus(id, BookStatus.OnShelf);
-            bookLeadingDao.updateStatus(id, BookStatus.Return);
+            bookLeadingDao.confirmReturn(id);
             return true;
         }
         return false;

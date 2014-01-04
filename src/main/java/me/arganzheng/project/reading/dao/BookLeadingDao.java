@@ -1,10 +1,8 @@
 package me.arganzheng.project.reading.dao;
 
 import me.arganzheng.project.reading.common.Page;
-import me.arganzheng.project.reading.constants.BookStatus;
 import me.arganzheng.project.reading.criteria.BookLeadingPagingCriteria;
 import me.arganzheng.project.reading.model.BookLeading;
-import me.arganzheng.project.reading.util.IBatisParameterMap;
 
 import org.springframework.stereotype.Repository;
 
@@ -28,11 +26,9 @@ public class BookLeadingDao extends BaseDao {
         return sqlSession.insert("me.arganzheng.project.reading.mapper.BookLeadingMapper.insert", bookOwnership);
     }
 
-    public boolean updateStatus(int bookOwnershipId, BookStatus status) {
-        IBatisParameterMap params = new IBatisParameterMap();
-        params.put("bookOwnershipId", bookOwnershipId);
-        params.put("status", status);
-        int count = sqlSession.update("me.arganzheng.project.reading.mapper.BookLeadingMapper.updateStatus", params);
+    public boolean confirmReturn(int bookOwnershipId) {
+        int count = sqlSession.update("me.arganzheng.project.reading.mapper.BookLeadingMapper.confirmReturn",
+                                      bookOwnershipId);
         return count == 1 ? true : false;
     }
 

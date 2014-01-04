@@ -22,8 +22,8 @@
 <table class="table table-bordered table-hover table-condensed">
     <thead >
         <tr>
-			<th>借阅者</th>
             <th>书名</th>
+			<th>借阅者</th>
             <th>借出时间</th>
 			<th>归还时间</th>
             <th>状态</th>
@@ -34,39 +34,16 @@
 	#foreach($share in $mySharing.getRecords())
 		<input type="hidden" name="id" value="$!{share.id}"/>
         <tr>
-			<td>$!{share.borrower}</td>
             <td>$!{share.bookTitle}</td>
+			<td>$!{share.borrower}</td>
             <td>#formatDate($share.borrowTime)</td>
 			<td>#formatDate($!{share.returnTime})</td>
 			<td>#showBookOwnershipStatus($share.status)</td>
-            <td>#showBookOwnershipAction($share.status)</td>
+            <td>#showBookOwnershipActionInner($!{share.status}, $!{share.bookOwnershipId})</td>
         </tr>
     </tbody>
     #end
 </table>
-
-<div id="modal" class="modal fade" style="width: 480px;">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header"> 
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4>借出记录</h4>
-            </div> ## .modal-header
-            <div class="modal-body"> 
-                <table>
-                    <tr>
-                        <td>借阅人名称</td>
-                        <td><input type="text" name="borrower" class="form-control" onkeyup="value=value.replace(/[^\w-]/ig,'')" /></td>
-                    </tr>
-                </table>
-            </div> ## .modal-body
-            <div class="modal-footer">
-                <button name="save" type="button" class="btn btn-primary">确认借出</button>
-                <button name="cancel" type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            </div> ## .modal-footer
-        </div> ## .modal-content
-    </div> ## .modal-dialog 
-</div> ## .modal
 
 #end
 

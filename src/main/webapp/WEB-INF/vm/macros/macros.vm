@@ -56,19 +56,24 @@
 	#end
 #end
 
+#macro (showBookOwnershipActionInner $status $bookOwnershipId)
+	#if($status == "OnShelf")
+		<a class="btn btn-small btn-success" onclick="lend($!bookOwnershipId);">借出</a>
+		<a class="btn btn-small btn-warning" onclick="offShelf($!bookOwnershipId);">下架 </a>
+		<a class="btn btn-small btn-danger" onclick="deleteBook($!bookOwnershipId);">删除</a>
+	#elseif($status == "OffShelf")
+		<a class="btn btn-small btn-success" onclick="onShelf($!bookOwnershipId);">上架 </a>
+		<a class="btn btn-small btn-danger" onclick="deleteBook($!bookOwnershipId);">删除</a>
+	#elseif($status == "Lent")
+		<a class="btn btn-small btn-success" onclick="confirmReturn($!bookOwnershipId);">确认归还 </a>
+   	#end
+#end
+
 #macro (showBookOwnershipAction $bookOwnership)
 	#set($status = $bookOwnership.status)
+	#set($bookOwnershipId = $bookOwnership.id)
 	
-	#if($status == "OnShelf")
-		<a class="btn btn-small btn-success" onclick="lend($!{bookOwnership.id});">借出</a>
-		<a class="btn btn-small btn-warning" onclick="offShelf($!{bookOwnership.id});">下架 </a>
-		<a class="btn btn-small btn-danger" onclick="deleteBook($!{bookOwnership.id});">删除</a>
-	#elseif($status == "OffShelf")
-		<a class="btn btn-small btn-success" onclick="onShelf($!{bookOwnership.id});">上架 </a>
-		<a class="btn btn-small btn-danger" onclick="deleteBook($!{bookOwnership.id});">删除</a>
-	#elseif($status == "Lent")
-		<a class="btn btn-small btn-success" onclick="confirmReturn($!{bookOwnership.id});">确认归还 </a>
-   	#end
+	#showBookOwnershipActionInner($status, $bookOwnershipId)
 #end
 
 ## velocity的$dateTool如果参数为null，居然是原样显示。。
