@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
  */
 public class Book {
 
+    private static final int    MAX_SUMMARY_LENGTH = 1000;
     private int                 id;
     private Date                createdTime;
     private Date                modifiedTime;
@@ -26,7 +27,7 @@ public class Book {
     private List<String>        authors;
     private Date                pubdate;
     private String              summary;
-    private int                 pageCount;
+    private String              pageCount;
 
     private List<String>        tags;
 
@@ -107,14 +108,19 @@ public class Book {
     }
 
     public void setSummary(String summary) {
-        this.summary = summary;
+        // summary截断保存1k
+        if (summary.length() > MAX_SUMMARY_LENGTH) {
+            this.summary = summary.substring(0, MAX_SUMMARY_LENGTH - 3) + "...";
+        } else {
+            this.summary = summary;
+        }
     }
 
-    public int getPageCount() {
+    public String getPageCount() {
         return pageCount;
     }
 
-    public void setPageCount(int pageCount) {
+    public void setPageCount(String pageCount) {
         this.pageCount = pageCount;
     }
 

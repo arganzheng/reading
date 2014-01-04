@@ -23,7 +23,7 @@ CREATE TABLE `t_reading_book` (
   `authors` varchar(256) DEFAULT NULL COMMENT '作者。可能有多个，以逗号分割。',
   `pubdate` date DEFAULT NULL,
   `tags` varchar(256) DEFAULT NULL,
-  `page_count` int(11) DEFAULT NULL,
+  `page_count` varchar(60) DEFAULT NULL,
   `summary` varchar(1000) DEFAULT NULL COMMENT '简要描述，最长是1000个字符，存入时候截断。',
   `detail_link` varchar(256) DEFAULT NULL COMMENT '详情链接（目前是调整到豆瓣去，取自alt返回字段）',
   `owners` varchar(256) DEFAULT NULL COMMENT '书的拥有者(冗余字段,逗号分割)',

@@ -1,0 +1,68 @@
+#set( $layout = "layout/default.vm" )
+
+<script src="$request.getContextPath()/resources/bootstrap/js/bootstrap-paginator.min.js"></script>
+
+<form class="form-search">
+	<fieldset>
+		<input type="hidden" id="pageIndex" name="pageIndex" value="$!pageIndex"/>
+		<input type="hidden" id="pageSize" name="pageSize" value="$!pageSize"/>
+	</fieldset>
+</form>
+
+<div class="row" style="margin:20px">
+	<div class="btn-group">
+		<a class="btn btn-success" href="$request.getContextPath()/my/book/share">分享新的书籍</a>
+		<a class="btn btn-success" href="$request.getContextPath()/my/sharing">我的借出</a>
+		<a class="btn btn-success" href="$request.getContextPath()/my/reading">我的阅读</a>
+	</div>
+</div>
+
+#if($myReading.isNotEmpty())
+
+<table class="table table-bordered table-hover table-condensed">
+    <thead >
+        <tr>
+            <th>书名</th>
+			<th>分享者</th>
+            <th>借阅时间</th>
+			<th>归还时间</th>
+            <th>状态</th>
+        </tr>
+    </thead>
+    <tbody>
+	#foreach($share in $myReading.getRecords())
+		<input type="hidden" name="id" value="$!{share.id}"/>
+        <tr>
+            <td>$!{share.bookTitle}</td>
+			<td>$!{share.owner}</td>
+            <td>#formatDate($share.borrowTime)</td>
+			<td>#formatDate($!{share.returnTime})</td>
+			<td>#showBookOwnershipStatus($share.status)</td>
+        </tr>
+    </tbody>
+    #end
+</table>
+
+#end
+
+<div id="paginator"></div>
+<script type='text/javascript'>
+    var options = {
+        currentPage: $myBookOwnerships.getPageIndex(),
+        totalPages: $myBookOwnerships.getPageCount(),
+		numberOfPages: '$!pageSize' || 10,
+		size: "small",
+		alignment: "right",
+		onPageClicked: function(e,originalEvent,type,page){
+			$('#pageIndex').val(page)
+    		$('#pageSize').val('$!pageSize' || 10)
+    		$(".form-search").submit()
+        }
+    }
+
+    $('#paginator').bootstrapPaginator(options);
+	// 增加totalRecord信息
+	$("#paginator>ul").append('<li><a href="javascript:void(0);">共$myBookOwnerships.getPageCount()页, $myBookOwnerships.getRecordCount()本书</a></li>');
+	
+</script>
+

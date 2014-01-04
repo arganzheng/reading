@@ -114,6 +114,33 @@ public class MyController {
         return "my_sharing";
     }
 
+    /**
+     * 我的借阅
+     */
+    @RequestMapping(value = "/reading", method = RequestMethod.GET)
+    public String myReading(@RequestParam(value = "pageIndex", required = false)
+    Integer pageIndex, @RequestParam(value = "pageSize", required = false)
+    Integer pageSize, Model model) {
+        if (pageIndex == null || pageIndex.intValue() == 0) {
+            pageIndex = 1;
+        }
+        if (pageSize == null || pageSize.intValue() < 1 || pageSize.intValue() > 20) {
+            pageSize = 10;
+        }
+
+        BookLeadingPagingCriteria paginCriteria = new BookLeadingPagingCriteria();
+        paginCriteria.setBorrower(user.getUsername());
+        paginCriteria.setPageIndex(pageIndex);
+        paginCriteria.setPageSize(pageSize);
+        Page<BookLeading> myReading = bookService.listMyBookSharing(paginCriteria);
+
+        model.addAttribute("pageIndex", pageIndex);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("myReading", myReading);
+
+        return "my_reading";
+    }
+
     @RequestMapping(value = "/book/{id}", method = RequestMethod.DELETE)
     @ResponseBody
     public boolean deleteOwnership(@PathVariable("id")

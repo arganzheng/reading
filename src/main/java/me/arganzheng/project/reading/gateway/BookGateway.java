@@ -69,10 +69,7 @@ public class BookGateway {
             book.setTitle((String) bookMap.get("title"));
             book.setSubtitle(StringUtils.trimToNull((String) bookMap.get("subtitle")));
             book.setImage((String) bookMap.get("image"));
-            String pageCount = (String) bookMap.get("pages");
-            if (StringUtils.isNotEmpty(pageCount)) {
-                book.setPageCount(Integer.valueOf(pageCount));
-            }
+            book.setPageCount((String) bookMap.get("pages"));
             book.setPubdate(DateUtils.parseDate((String) bookMap.get("pubdate"), new String[] { "yyyy-MM-dd",
                     "yyyy-MM", "yyyy.MM" }));
             book.setSummary((String) bookMap.get("summary"));
@@ -103,7 +100,8 @@ public class BookGateway {
         book.setTitle((String) bookMap.get("title"));
         book.setSubtitle((String) bookMap.get("subtitle"));
         book.setImage((String) bookMap.get("image"));
-        book.setPageCount(Integer.parseInt((String) bookMap.get("pages")));
+        // 终于明白为什么叫做 pages了。。可能返回多个。。 pages:"531；706；583"。。只能无语。。改成String吧。。
+        book.setPageCount((String) bookMap.get("pages"));
         book.setPubdate(DateUtils.parseDate((String) bookMap.get("pubdate"), new String[] { "yyyy-MM-dd" }));
         book.setSummary((String) bookMap.get("summary"));
         book.setAuthors((List) bookMap.get("author"));
