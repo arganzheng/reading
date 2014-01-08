@@ -96,6 +96,11 @@
 	$request.getContextPath()/book/$!{bookId}
 #end
 
+
+#macro(getUserRTXLink $username)
+	RTXLite.HotLink://UserName=$!username
+#end
+
 #macro(showPaginator $page)
     <div id="paginator"></div>
 	<form id="form-paginator" style="display:none;" method="POST">

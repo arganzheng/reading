@@ -7,6 +7,8 @@
 		<a class="btn btn-success" href="$request.getContextPath()/my/book/share">分享新的书籍</a>
 		<a class="btn btn-success" href="$request.getContextPath()/my/sharing">我的借出</a>
 		<a class="btn btn-success" href="$request.getContextPath()/my/reading">我的阅读</a>
+		<a class="btn btn-success" href="$request.getContextPath()/my/reading">我的当前在读书籍</a>
+		<a class="btn btn-success" href="$request.getContextPath()/my/reading">我的当前借出书籍</a>
 	</div>
 </div>
 

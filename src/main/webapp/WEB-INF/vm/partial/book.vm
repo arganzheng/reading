@@ -29,8 +29,8 @@
 	
 	#if($book.ownerships)
     	#foreach( $ownership in $book.ownerships)
-        <img class="img-rounded" width="20" height="20" src="#getUserAvatar($!{ownership.owner})" title="${ownership.username}" />
-    		<a href="#getUserKMLink($ownership.owner)" target="_blank">$ownership.owner</a> 分享于 #formatDate($!{ownership.createdTime}) #showBookOwnershipStatus($ownership.status) 
+		<a href="#getUserRTXLink($ownership.owner)"><img class="img-rounded" width="20" height="20" src="#getUserAvatar($!{ownership.owner})" title="$!{ownership.owner}" /></a>
+    	<a href="#getUserKMLink($ownership.owner)" target="_blank">$ownership.owner</a> 分享于 #formatDate($!{ownership.createdTime}) #showBookOwnershipStatus($ownership.status) 
 			#if( $foreach.hasNext ) | #end
     	#end
 	#end
