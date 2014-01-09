@@ -95,10 +95,12 @@
 #end
 
 #macro(getLink $link)
-	#if($link)
-		$request.getContextPath()${link}
+	#if($link && $link !="" )
+		$request.getContextPath()$!{link}
+	#elseif($request.getContextPath() && $request.getContextPath() !="" )
+		$request.getContextPath()$link
 	#else
-		$request.getContextPath()
+		/
 	#end
 #end
 

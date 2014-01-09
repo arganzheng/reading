@@ -9,6 +9,7 @@
 		<a href=#getLink("/my/book/share")>我要分享</a>
 	  </li>
 	  <li #if($requestTool.isCurrentLink($request, "/my/book")) class="active" #end><a href=#getLink("/my/book")>我的书籍</a></li>
+	  
 	  <li #if($requestTool.isCurrentLink($request, "/my/sharing")) class="active" #end>
 		<a href=#getLink("/my/sharing")>我的借出</a>
       </li>
