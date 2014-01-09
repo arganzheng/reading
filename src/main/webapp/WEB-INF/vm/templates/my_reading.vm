@@ -30,7 +30,7 @@
 			<td>$!{share.owner}</td>
             <td>#formatDate($share.borrowTime)</td>
 			<td>#formatDate($!{share.returnTime})</td>
-			<td>#showBookOwnershipStatus($share.status)</td>
+			<td>#showBookOwnershipStatusForBorrower($share.status)</td>
         </tr>
     </tbody>
     #end

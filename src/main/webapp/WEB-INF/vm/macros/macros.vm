@@ -42,6 +42,14 @@
 <script src='$!{scriptsServer}$!{target}?v=$!{buildVersion.version}' type="text/javascript" charset="iso-8859-1"></script>
 #end
 
+#macro (showBookOwnershipStatusForBorrower $status)
+	#if($status == "Lent")
+		<span class="label label-danger">在读</span>
+	#elseif($status == "Return")
+		<span class="label label-danger">已读</span>
+	#end
+#end
+
 #macro (showBookOwnershipStatus $status)
 	#if($status == "OnShelf")
 		<span class="label label-success">可借阅</span>
@@ -67,7 +75,9 @@
 	#elseif($status == "Lent")
 		<a class="btn btn-small btn-success" onclick="confirmReturn($!bookOwnershipId);">确认归还 </a>
 	#end
+	#if($showSharingRecord)
 		<a class="btn btn-small btn-info" href="$request.getContextPath()/my/sharing?bookOwnershipId=$!bookOwnershipId" target="_blank">借阅记录</a>
+	#end
 #end
 
 #macro (showBookOwnershipAction $bookOwnership)

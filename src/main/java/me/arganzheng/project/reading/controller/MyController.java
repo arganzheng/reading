@@ -62,15 +62,17 @@ public class MyController {
         return "redirect:/book";
     }
 
-    @RequestMapping(value = "/book", method = RequestMethod.GET)
-    public String myBooks(BookPagingCriteria paginCriteria, Model model) {
-        paginCriteria.setOwner(user.getUsername());
-        paginCriteria.setIncludeOwnership(false);
+    @RequestMapping(value = "/book")
+    public String myBooks(BookPagingCriteria pagingCriteria, Model model) {
+        pagingCriteria.setOwner(user.getUsername());
+        pagingCriteria.setIncludeOwnership(false);
 
-        Page<BookOwnership> myBookOwnerships = bookService.listMyBookOwnership(paginCriteria);
+        Page<BookOwnership> myBookOwnerships = bookService.listMyBookOwnership(pagingCriteria);
 
-        model.addAttribute("paginCriteria", paginCriteria);
+        model.addAttribute("paginCriteria", pagingCriteria);
         model.addAttribute("myBookOwnerships", myBookOwnerships);
+
+        model.addAttribute("showSharingRecord", true);
 
         return "my_book";
     }
@@ -78,13 +80,19 @@ public class MyController {
     /**
      * 我的借出
      */
-    @RequestMapping(value = "/sharing", method = RequestMethod.GET)
-    public String mySharing(BookLeadingPagingCriteria paginCriteria, Model model) {
-        paginCriteria.setOwner(user.getUsername());
+    @RequestMapping(value = "/sharing")
+    public String mySharing(BookLeadingPagingCriteria pagingCriteria, Model model) {
+        pagingCriteria.setOwner(user.getUsername());
 
-        Page<BookLeading> mySharing = bookService.listMyBookSharing(paginCriteria);
+        Page<BookLeading> mySharing = bookService.listMyBookSharing(pagingCriteria);
 
-        model.addAttribute("paginCriteria", paginCriteria);
+        if (pagingCriteria.getBookOwnershipId() == null || pagingCriteria.getBookOwnershipId() == 0) {
+            model.addAttribute("showSharingRecord", true);
+        } else {
+            model.addAttribute("showSharingRecord", false);
+        }
+
+        model.addAttribute("pagingCriteria", pagingCriteria);
         model.addAttribute("mySharing", mySharing);
 
         return "my_sharing";
@@ -93,13 +101,13 @@ public class MyController {
     /**
      * 我的借阅
      */
-    @RequestMapping(value = "/reading", method = RequestMethod.GET)
-    public String myReading(BookLeadingPagingCriteria paginCriteria, Model model) {
-        paginCriteria.setBorrower(user.getUsername());
+    @RequestMapping(value = "/reading")
+    public String myReading(BookLeadingPagingCriteria pagingCriteria, Model model) {
+        pagingCriteria.setBorrower(user.getUsername());
 
-        Page<BookLeading> myReading = bookService.listMyBookSharing(paginCriteria);
+        Page<BookLeading> myReading = bookService.listMyBookSharing(pagingCriteria);
 
-        model.addAttribute("paginCriteria", paginCriteria);
+        model.addAttribute("paginCriteria", pagingCriteria);
         model.addAttribute("myReading", myReading);
 
         return "my_reading";
