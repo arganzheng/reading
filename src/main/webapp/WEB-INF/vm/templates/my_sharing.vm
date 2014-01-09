@@ -9,12 +9,8 @@
 	</fieldset>
 </form>
 
-<div class="row" style="margin:20px">
-	<div class="btn-group">
-		<a class="btn btn-success" href="$request.getContextPath()/my/book/share">分享新的书籍</a>
-		<a class="btn btn-success" href="$request.getContextPath()/my/sharing">我的借出</a>
-		<a class="btn btn-success" href="$request.getContextPath()/my/reading">我的阅读</a>
-	</div>
+<div class="row" style="margin:10px">
+	<h4><a href=#getLink("/my/sharing?status=Lent")>我的当前借出书籍</a></h4>
 </div>
 
 #if($mySharing.isNotEmpty())

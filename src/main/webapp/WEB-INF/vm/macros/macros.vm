@@ -94,6 +94,15 @@
 	#end
 #end
 
+#macro(getLink $link)
+	#if($link)
+		$request.getContextPath()${link}
+	#else
+		$request.getContextPath()
+	#end
+#end
+
+
 #macro(getUserKMLink $username)
 	http://km.oa.com/user/$username
 #end

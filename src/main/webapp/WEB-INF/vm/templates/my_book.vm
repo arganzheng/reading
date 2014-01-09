@@ -2,16 +2,6 @@
 
 <script src="$request.getContextPath()/resources/bootstrap/js/bootstrap-paginator.min.js"></script>
 
-<div class="row" style="margin:20px">
-	<div class="btn-group">
-		<a class="btn btn-success" href="$request.getContextPath()/my/book/share">分享新的书籍</a>
-		<a class="btn btn-success" href="$request.getContextPath()/my/sharing">我的借出</a>
-		<a class="btn btn-success" href="$request.getContextPath()/my/reading">我的阅读</a>
-		<a class="btn btn-success" href="$request.getContextPath()/my/sharing?status=Lent">我的当前借出书籍</a>
-		<a class="btn btn-success" href="$request.getContextPath()/my/reading?status=Lent">我的当前在读书籍</a>
-	</div>
-</div>
-
 #if($myBookOwnerships.isNotEmpty())
 
 <table class="table table-bordered table-hover table-condensed">

@@ -38,7 +38,7 @@ public class MyController {
 
     @RequestMapping(value = "/account/login", method = RequestMethod.GET)
     public String login() {
-        return "index";
+        return "redirect:/";
     }
 
     @RequestMapping(value = "/book/share", method = RequestMethod.GET)
