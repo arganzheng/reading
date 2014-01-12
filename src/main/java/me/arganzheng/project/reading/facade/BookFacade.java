@@ -47,7 +47,7 @@ public class BookFacade {
         Book book = searchByISBN(isbn, false);
 
         if (book == null) {
-            throw new ResourceNotFoundException("Can not book with isbn: " + isbn);
+            throw new ResourceNotFoundException("Can not find book with isbn: " + isbn);
         }
 
         BookOwnership ownership = new BookOwnership();

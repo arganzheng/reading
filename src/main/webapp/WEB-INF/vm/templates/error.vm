@@ -3,7 +3,7 @@
 <div class="hero-unit container">
 	<p class="alert alert-error">系统错误!</p>
 	<p class="pull-right">
-		<a class="btn btn-primary btn-large" href="/index"> 跳转首页 </a>&nbsp;&nbsp;
+		<a class="btn btn-primary btn-large" href="/"> 跳转首页 </a>&nbsp;&nbsp;
 		<a class="btn btn-primary btn-large" href="javascript:history.back();"> 返回前页 </a>	
 	</p>
 </div>

@@ -56,10 +56,12 @@ public class MyController {
     @RequestMapping(value = "/book/share", method = RequestMethod.POST)
     public String share(@RequestParam(value = "isbn")
     String isbn, @RequestParam(value = "bookId")
-    int bookId) {
-        bookFacade.shareBook(isbn, user.getUsername());
+    int bookId, Model model) {
+        boolean shareSuccess = bookFacade.shareBook(isbn, user.getUsername());
 
-        return "redirect:/book";
+        model.addAttribute("shareSuccess", shareSuccess);
+
+        return "share_result";
     }
 
     @RequestMapping(value = "/book")

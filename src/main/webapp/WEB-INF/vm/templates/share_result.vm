@@ -1,0 +1,16 @@
+#set( $layout = "layout/default.vm" )
+
+#if($shareSuccess)
+<div class="alert alert-success alert-block"">
+	<p>分享成功！非常感谢您的分享^_^</p>
+	<p>您可以&nbsp;<a href=#getLink("/my/book/share")>继续分享 </a>&nbsp;或者&nbsp;<a href=#getLink("/my/book")>查看我的书籍 </a>。</p>	
+</div>
+#else
+<div class="hero-unit container">
+	<p class="alert alert-error">分享失败:(。请稍后再试，如果还有问题请联系<a href="mailto:arganzheng@gmail.com??subject=Reading">arganzheng</a></p>
+	<p class="pull-right">
+		<a class="btn btn-primary btn-large" href="/"> 跳转首页 </a>&nbsp;&nbsp;
+		<a class="btn btn-primary btn-large" href="javascript:history.back();"> 返回前页 </a>	
+	</p>
+</div>	
+#end

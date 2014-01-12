@@ -1,6 +1,7 @@
 <div class="masthead">
     <ul class="nav nav-pills pull-right">
       <li #if($requestTool.isCurrentLink($request, "$request.getContextPath()")) class="active" #end><a href=#getLink("$request.getContextPath()")>Home</a></li>
+	  <li #if($requestTool.isCurrentLink($request, "/about")) class="active" #end><a href=#getLink("/about")>About</a></li>
 	  <li #if($requestTool.isCurrentLink($request, "/book")) class="active" #end>
 		<a href=#getLink("/book")>我要借阅</a>
 	  </li>	
@@ -8,7 +9,6 @@
 	  <li #if($requestTool.isCurrentLink($request, "/my/book/share")) class="active" #end>
 		<a href=#getLink("/my/book/share")>我要分享</a>
 	  </li>
-	  <li #if($requestTool.isCurrentLink($request, "/about")) class="active" #end><a href=#getLink("/about")>About</a></li>
       <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">$user.username<b class="caret"></b></a>
           <ul class="dropdown-menu">
@@ -17,7 +17,7 @@
             <li><a href=#getLink("/my/sharing")>我的借出</a></li>
             <li class="divider"></li>
             <li class="nav-header"></li>
-            <li><a href="javascript:logout()">退出</a></li>
+            <li><a href="javascript:logout()"><i class="icon-off"></i>退出</a></li>
           </ul>
       </li>
       #else
