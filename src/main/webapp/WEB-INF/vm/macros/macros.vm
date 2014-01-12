@@ -44,9 +44,9 @@
 
 #macro (showBookOwnershipStatusForBorrower $status)
 	#if($status == "Lent")
-		<span class="label label-danger">在读</span>
+		<span class="label label-important">在读</span>
 	#elseif($status == "Return")
-		<span class="label label-danger">已读</span>
+		<span class="label label-success">已读</span>
 	#end
 #end
 
@@ -56,11 +56,11 @@
 	#elseif($status == "OffShelf")
 		<span class="label label-warning">下架</span>
 	#elseif($status == "Lent")
-		<span class="label label-danger">借出</span>
+		<span class="label label-important">借出</span>
 	#elseif($status == "Return")
-		<span class="label label-danger">归还</span>
+		<span class="label label-info">归还</span>
 	#else
-		<span class="label label-danger">未知状态</span>
+		<span class="label label-important">未知状态</span>
 	#end
 #end
 
