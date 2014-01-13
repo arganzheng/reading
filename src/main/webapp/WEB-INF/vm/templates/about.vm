@@ -1,19 +1,56 @@
 #set( $layout = "layout/default.vm" )
 
 <div class="container">
-    <div class="span5">
-        <img class="featurette-image pull-left img-polaroid" src="$request.getContextPath()/resources/reading/img/QGQM.png">
+
+	<div class="container">
+    	<h2 class="featurette-heading muted">关于这个网站</h2>
+    	<p class="lead">这个网站是arganzheng通过业务时间做的。意在公司内部互相分享自己的书籍，培养读书的风气。阿甘深知这个作品离完美还有很大的距离，也深感到在如此忙碌的工作中孤军奋战的孤单和疲惫。So You Are Wanted! Welcome to Join Me!</p>
+		<img class="img-polaroid" src="$request.getContextPath()/resources/reading/img/wanted_small.jpg">
+			
+		<hr />	
+		<h3>待完善的功能</h3>	
+		<p>下面是阿甘为这个作品构想的功能点。如果你对其中的某项功能感兴趣，或者你有更好的想法，都欢迎你加入进来，我们一起把这个作品做的更好！</p>
+		
+		<ol>
+            <li>为了方便上传图书，提供手机端的扫描上传图书。这个是接下来最迫切的需求，可以大大的方便用户分享家里的书籍。(难点在于需要获取OA登陆信息，考虑自己实现用户管理模块，不走公司的敏感权限系统)</li>
+            <li>书名、作者、拥有者、ISBN搜索功能（目前只支持ISBN精确搜索）</li>
+            <li>提供更多纬度的浏览：
+    			<ol>
+        			<li>按照借阅次数排序(热门阅读);</li>
+        			<li>按照出版日期排序?</li>
+        			<li>编辑推荐?</li>
+    			</ol>
+            </li>
+            <li>书籍越来越多，需要增加tag分类，方便浏览。</li>
+            <li>手机应用</li>
+            <li>支持PDF和PPT分享，PPT最好能够在线预览。像<a href="http://www.slideshare.net" target="_blank">slideshare</a></li>
+            <li>我喜欢(赞)</li>
+            <li>书评 && 阅读心得</li>
+            <li>我想读(阅读心愿)</li>
+            <li>推荐阅读(数据挖掘)</li>
+            <li>书友活动</li>
+        </ol>
 	</div>
-    <div class="span5">    
-		<h2 class="featurette-heading muted">About arganzheng</h2>
-    	<p class="lead">天造之才，皆有其用；展翅高飞，无须在梦中！</p>
-		<ul>
-			<li><a href="http://blog.arganzheng.me" target="_blank">My Blog: http://blog.arganzheng.me</a></li>
-        	<li><a href="http://weibo.com/argan1985">My Weibo: http://weibo.com/arganzheng</a></li>
-        	<li><a href="https://github.com/arganzheng">My Github: https://github.com/arganzheng</a></li>
-        	<li><a href="https://github.com/arganzheng">My Eemail: arganzheng@gmail.com</a></li>
-		</ul>
-    </div>
+
+	<hr />
+	
+	<div class="container">
+    	<h2 class="featurette-heading muted">关于arganzheng</h2>
+        <div class="span5">
+            <img class="featurette-image pull-left img-polaroid" src="$request.getContextPath()/resources/reading/img/QGQM.png">
+    	</div>
+        <div class="span6">    
+        	<p class="lead">好读书，不求甚解，每有会意，便欣然忘食。</p>
+    		<ul>
+    			<li><a href="http://blog.arganzheng.me" target="_blank">My Blog: http://blog.arganzheng.me</a></li>
+            	<li><a href="http://weibo.com/argan1985">My Weibo: http://weibo.com/arganzheng</a></li>
+            	<li><a href="https://github.com/arganzheng">My Github: https://github.com/arganzheng</a></li>
+            	<li><a href="https://github.com/arganzheng">My Eemail: arganzheng@gmail.com</a></li>
+    		</ul>
+        </div>
+		
+	</div>
+	
 </div>
 
 
