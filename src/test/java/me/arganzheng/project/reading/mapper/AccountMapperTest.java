@@ -1,7 +1,7 @@
 package me.arganzheng.project.reading.mapper;
 
 import me.arganzheng.project.reading.BaseSpringTestCase;
-import me.arganzheng.project.reading.model.Account;
+import me.arganzheng.project.reading.model.User;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +10,11 @@ import org.springframework.util.Assert;
 public class AccountMapperTest extends BaseSpringTestCase {
 
     @Autowired
-    private AccountMapper userMapper;
+    private UserMapper userMapper;
 
     @Test
     public void testSelectUserByUsername() {
-        Account user = userMapper.selectAccountByName("arganzheng");
+        User user = userMapper.selectByUsername("arganzheng");
         Assert.notNull(user);
     }
 

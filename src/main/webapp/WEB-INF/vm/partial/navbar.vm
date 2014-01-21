@@ -21,7 +21,7 @@
           </ul>
       </li>
       #else
-      <li><a href="/my/account/login" class="navbar-link">登录</a></li>
+      <li #if($requestTool.isCurrentLink($request, "/user/login")) class="active" #end><a href="/user/login" class="navbar-link">登录</a></li>
 	  #end
     </ul>
     <h1 class="muted">以书会友</h1>

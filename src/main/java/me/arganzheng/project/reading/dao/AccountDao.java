@@ -1,6 +1,6 @@
 package me.arganzheng.project.reading.dao;
 
-import me.arganzheng.project.reading.model.Account;
+import me.arganzheng.project.reading.model.User;
 
 import org.springframework.stereotype.Repository;
 
@@ -17,8 +17,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class AccountDao extends BaseDao {
 
-    public Account selectAccountByName(String name) {
-        return (Account) sqlSession.selectOne("me.arganzheng.project.reading.mapper.AccountMapper.selectAccountByName",
+    public User selectAccountByName(String name) {
+        return (User) sqlSession.selectOne("me.arganzheng.project.reading.mapper.UserMapper.selectAccountByName",
                                               name);
     }
 }

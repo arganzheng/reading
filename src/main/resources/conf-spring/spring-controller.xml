@@ -87,7 +87,7 @@
 	<!-- Configures Handler Interceptors -->
 	<mvc:interceptors>
 		<bean
-			class="me.arganzheng.project.reading.interceptor.SensitiveAuthInterceptor" />
+			class="me.arganzheng.project.reading.interceptor.TokenBasedAuthInterceptor" />
 	</mvc:interceptors>
 
 </beans>

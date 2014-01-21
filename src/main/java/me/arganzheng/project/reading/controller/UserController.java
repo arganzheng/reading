@@ -1,75 +1,71 @@
 package me.arganzheng.project.reading.controller;
 
-import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import java.util.HashMap;
-import java.util.Map;
+import me.arganzheng.project.reading.model.User;
+import me.arganzheng.project.reading.service.UserService;
+import me.arganzheng.project.reading.util.HttpServletRequestTool;
+import me.arganzheng.project.reading.util.LoginUtils;
 
-import me.arganzheng.project.reading.common.RestResponse;
-import me.arganzheng.project.reading.exception.UnknownResourceException;
-import me.arganzheng.project.reading.model.Account;
-
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    private static Map<String, Account> users = new HashMap<String, Account>();
+    @Autowired
+    private UserService userService;
 
-    static {
-        users.put("argan", new Account("Argan Zheng", "arganzheng@gmail.com"));
-        users.put("magi", new Account("Magi Forrest", "magiforrest@qq.com"));
+    @Value(value = "secretKey")
+    private String      secretKey;
+
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String signUp() {
+        return "signup";
     }
 
-    @RequestMapping(value = "/{username}", method = GET)
-    @ResponseBody
-    public RestResponse<Account> getUser(@PathVariable
-    String username) {
-        Account user = findUser(username);
-        return new RestResponse<Account>(user);
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String signUp(User user, @RequestParam(value = "returnUrl", required = false)
+    String returnUrl, HttpServletRequest request, HttpServletResponse response) {
+        userService.addUser(user);
+        User authUser = userService.getByUsername(user.getUsername());
+
+        // Simple Hash-Based Token Approach @see
+        // http://docs.spring.io/spring-security/site/docs/3.0.x/reference/remember-me.html
+        LoginUtils.loginSuccess(request, response, authUser, secretKey);
+
+        String url = StringUtils.isBlank(returnUrl) ? HttpServletRequestTool.urlFor(request, "/") : returnUrl;
+        return "redirect:" + url;
     }
 
-    private Account findUser(String username) throws UnknownResourceException {
-        if (!StringUtils.hasText(username)) {
-            throw new IllegalArgumentException("Username is required.");
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login() {
+        return "login";
+    }
+
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public String login(User user, @RequestParam(value = "returnUrl", required = false)
+    String returnUrl, HttpServletRequest request, HttpServletResponse response, Model model) {
+        User authUser = userService.verifyPassword(user.getUsername(), user.getPassword());
+        // Simple Hash-Based Token Approach @see
+        // http://docs.spring.io/spring-security/site/docs/3.0.x/reference/remember-me.html
+        if (authUser == null) {
+            LoginUtils.loginFail(request, response);
+            return "redirect:" + HttpServletRequestTool.getLoginUrl(request);
+        } else {
+            LoginUtils.loginSuccess(request, response, authUser, secretKey);
+
+            String url = StringUtils.isBlank(returnUrl) ? HttpServletRequestTool.urlFor(request, "/") : returnUrl;
+            return "redirect:" + url;
         }
-
-        if (users.containsKey(username)) {
-            return users.get(username);
-        }
-
-        throw new UnknownResourceException("Unable to find user with username '" + username + "'");
-    }
-
-    @RequestMapping(method = RequestMethod.POST)
-    @ResponseBody
-    public RestResponse<Account> addUser(@RequestBody
-    Account user) {
-        users.put(user.getName(), user);
-        RestResponse<Account> resp = new RestResponse<Account>();
-        resp.setData(user);
-        return resp;
-    }
-
-    @RequestMapping(value = "{username}", method = RequestMethod.POST)
-    @ResponseBody
-    public RestResponse<Account> updateUser(@RequestBody
-    Account user, @RequestParam("timestamp")
-    String timestamp, @RequestParam("noice")
-    String noice, @RequestParam("signature")
-    String signature) {
-        Account thisUser = findUser(user.getName());
-        users.put(user.getName(), user);
-
-        return new RestResponse<Account>(thisUser);
     }
 
 }

@@ -1,6 +1,6 @@
 package me.arganzheng.project.reading.mapper;
 
-import me.arganzheng.project.reading.model.Account;
+import me.arganzheng.project.reading.model.User;
 
 /**
  * <pre>
@@ -14,13 +14,13 @@ import me.arganzheng.project.reading.model.Account;
  * @author arganzheng
  * @date 2013-12-09
  */
-public interface AccountMapper {
+public interface UserMapper {
 
-    public Account selectAccountByName(String name);
+    public User selectByUsername(String username);
 
-    public Integer insertAccount(Account account);
+    public Integer insert(User user);
 
-    public boolean updateAccount(Account account);
+    public boolean update(User user);
 
-    public int deleteAccount(Integer id);
+    public int delete(Integer id);
 }

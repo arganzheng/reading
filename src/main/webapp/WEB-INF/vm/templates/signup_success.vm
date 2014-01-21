@@ -1,0 +1,3 @@
+#set( $layout = "layout/default.vm" )
+
+<h2>SignUp Success!</h2>

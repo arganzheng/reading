@@ -12,12 +12,10 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
-import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.TopScoreDocCollector;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.RAMDirectory;
@@ -39,11 +37,13 @@ public class HelloLucene {
         addDoc(w, "Lucene in Action", "193398817");
         addDoc(w, "Lucene for Dummies", "55320055Z");
         addDoc(w, "Managing Gigabytes", "55063554A");
+        addDoc(w, "HBase in Action", "9781617290527");
+        addDoc(w, "HBase in Test Action", "9781617290527");
         addDoc(w, "The Art of Computer Science", "9900333X");
         w.close();
 
         // 2. query
-        String querystr = args.length > 0 ? args[0] : "Lucene in Action";
+        String querystr = args.length > 0 ? args[0] : "in Action";
 
         // the "title" arg specifies the default field to use
         // when no field is explicitly specified in the query.

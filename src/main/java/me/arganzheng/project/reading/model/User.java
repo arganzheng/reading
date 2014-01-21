@@ -2,7 +2,6 @@ package me.arganzheng.project.reading.model;
 
 import java.util.Date;
 
-import me.arganzheng.project.reading.constants.AccountStatus;
 import me.arganzheng.project.reading.constants.Role;
 
 /**
@@ -11,29 +10,29 @@ import me.arganzheng.project.reading.constants.Role;
  * @author arganzheng
  * @date 2013-12-7
  */
-public class Account {
+public class User {
 
-    private Integer       id;
+    private Integer id;
 
-    private Date          createdTime;
+    private Date    createdTime;
 
-    private Date          modifiedTime;
+    private Date    modifiedTime;
 
-    private String        name;
+    private String  username;
 
-    private String        email;
+    private String  email;
 
-    private Role          role   = Role.User;
+    private Role    role    = Role.User;
 
-    private AccountStatus status = AccountStatus.Active;
+    private boolean enabled = true;
 
-    private String        password;
+    private String  password;
 
-    public Account(){
+    public User(){
     }
 
-    public Account(String username, String email){
-        this.name = username;
+    public User(String username, String email){
+        this.username = username;
         this.email = email;
     }
 
@@ -61,12 +60,12 @@ public class Account {
         this.modifiedTime = modifiedTime;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -85,14 +84,6 @@ public class Account {
         this.role = role;
     }
 
-    public AccountStatus getStatus() {
-        return status;
-    }
-
-    public void setStatus(AccountStatus status) {
-        this.status = status;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -103,8 +94,16 @@ public class Account {
 
     @Override
     public String toString() {
-        return "Account [id=" + id + ", createdTime=" + createdTime + ", modifiedTime=" + modifiedTime + ", name="
-               + name + ", email=" + email + ", role=" + role + ", status=" + status + ", password=" + password + "]";
+        return "User [id=" + id + ", createdTime=" + createdTime + ", modifiedTime=" + modifiedTime + ", username="
+               + username + ", email=" + email + ", role=" + role + ", password=" + password + "]";
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
 }

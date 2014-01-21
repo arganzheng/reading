@@ -1,7 +1,7 @@
 package me.arganzheng.project.reading.dao;
 
 import me.arganzheng.project.reading.BaseSpringTestCase;
-import me.arganzheng.project.reading.model.Account;
+import me.arganzheng.project.reading.model.User;
 
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
@@ -15,7 +15,7 @@ public class MyBatisSqlSessionTest extends BaseSpringTestCase {
 
     @Test
     public void testSelectUserByUsernameWithDao() {
-        Account user = (Account) sqlSession.selectOne("me.arganzheng.project.reading.mapper.AccountMapper.selectAccountByName",
+        User user = (User) sqlSession.selectOne("me.arganzheng.project.reading.mapper.UserMapper.selectAccountByName",
                                                       "arganzheng");
         Assert.notNull(user);
     }
