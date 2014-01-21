@@ -1,6 +1,7 @@
 package me.arganzheng.project.reading.util;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpUtils;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -20,6 +21,10 @@ public class HttpServletRequestTool {
 
     public static String getLoginUrl(HttpServletRequest request) {
         return HttpServletRequestTool.getRequestURLForRedirect(request, "/user/login");
+    }
+
+    public static String getCurrentURLForRedirect(HttpServletRequest req) {
+        return HttpUtils.getRequestURL(req).toString();
     }
 
     public static String getRequestURLForRedirect(HttpServletRequest req, String urlPath) {

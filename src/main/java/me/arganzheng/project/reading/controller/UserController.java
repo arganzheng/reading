@@ -52,14 +52,18 @@ public class UserController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(User user, @RequestParam(value = "returnUrl", required = false)
+    public String login(@RequestParam
+    String username, @RequestParam
+    String password, @RequestParam(value = "returnUrl", required = false)
     String returnUrl, HttpServletRequest request, HttpServletResponse response, Model model) {
-        User authUser = userService.verifyPassword(user.getUsername(), user.getPassword());
+        User authUser = userService.verifyPassword(username, password);
         // Simple Hash-Based Token Approach @see
         // http://docs.spring.io/spring-security/site/docs/3.0.x/reference/remember-me.html
         if (authUser == null) {
             LoginUtils.loginFail(request, response);
-            return "redirect:" + HttpServletRequestTool.getLoginUrl(request);
+            model.addAttribute("username", username);
+            model.addAttribute("failed", true);
+            return "login";
         } else {
             LoginUtils.loginSuccess(request, response, authUser, secretKey);
 

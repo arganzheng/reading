@@ -12,10 +12,10 @@ import me.arganzheng.project.reading.constants.Constants;
 import me.arganzheng.project.reading.exception.InvalidCookieException;
 import me.arganzheng.project.reading.model.User;
 import me.arganzheng.project.reading.service.UserService;
-import me.arganzheng.project.reading.util.Base64;
 import me.arganzheng.project.reading.util.HttpServletRequestTool;
 import me.arganzheng.project.reading.util.LoginUtils;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -108,7 +108,7 @@ public class TokenBasedAuthInterceptor extends HandlerInterceptorAdapter {
             throw new RuntimeException("Cookie token was not Base64 encoded; value was '" + cookieValue + "'");
         }
 
-        String cookieAsPlainText = new String(Base64.decode(cookieValue.getBytes()));
+        String cookieAsPlainText = new String(Base64.decodeBase64(cookieValue));
 
         String[] tokens = StringUtils.delimitedListToStringArray(cookieAsPlainText, DELIMITER);
 

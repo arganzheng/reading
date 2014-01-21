@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import me.arganzheng.project.reading.constants.Constants;
 import me.arganzheng.project.reading.model.User;
 
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.codec.binary.Hex;
 import org.apache.log4j.Logger;
 import org.springframework.util.StringUtils;
 
@@ -61,7 +63,7 @@ public class LoginUtils {
             throw new IllegalStateException("No MD5 algorithm available!");
         }
 
-        return new String(Hex.encode(digest.digest(data.getBytes())));
+        return new String(Hex.encodeHex(digest.digest(data.getBytes())));
     }
 
     /**
@@ -114,7 +116,7 @@ public class LoginUtils {
 
         String value = sb.toString();
 
-        sb = new StringBuilder(new String(Base64.encode(value.getBytes())));
+        sb = new StringBuilder(Base64.encodeBase64String(value.getBytes()));
 
         while (sb.charAt(sb.length() - 1) == '=') {
             sb.deleteCharAt(sb.length() - 1);
