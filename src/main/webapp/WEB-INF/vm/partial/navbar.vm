@@ -1,6 +1,6 @@
 <div class="masthead">
     <ul class="nav nav-pills pull-right">
-      <li #if($requestTool.isCurrentLink($request, "$request.getContextPath()")) class="active" #end><a href=#getLink("$request.getContextPath()")>主页</a></li>
+      <li #if($requestTool.isCurrentLink($request, "$request.getContextPath()")) class="active" #end><a href=#getLink("")>主页</a></li>
 	  <li #if($requestTool.isCurrentLink($request, "/about")) class="active" #end><a href=#getLink("/about")>关于</a></li>
 	  <li #if($requestTool.isCurrentLink($request, "/book")) class="active" #end>
 		<a href=#getLink("/book")>我要借阅</a>

@@ -5,6 +5,9 @@
 
 .metadata
 
+# lucene index
+*.idx
+
 *.class
 target
 
@@ -12,3 +15,6 @@ target
 *.jar
 *.war
 *.ear
+
+# log file
+log
