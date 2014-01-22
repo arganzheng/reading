@@ -3,6 +3,7 @@ package me.arganzheng.project.reading.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import me.arganzheng.project.reading.exception.ResourceAlreadyExistException;
 import me.arganzheng.project.reading.model.User;
 import me.arganzheng.project.reading.service.UserService;
 import me.arganzheng.project.reading.util.HttpServletRequestTool;
@@ -34,8 +35,16 @@ public class UserController {
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public String signUp(User user, @RequestParam(value = "returnUrl", required = false)
-    String returnUrl, HttpServletRequest request, HttpServletResponse response) {
-        userService.addUser(user);
+    String returnUrl, HttpServletRequest request, HttpServletResponse response, Model model) {
+        try {
+            userService.addUser(user);
+        } catch (Exception ex) {
+            model.addAttribute("error", ex.getMessage());
+            model.addAttribute("username", user.getUsername());
+            user = null;
+            return "signup";
+        }
+
         User authUser = userService.getByUsername(user.getUsername());
 
         // Simple Hash-Based Token Approach @see
