@@ -76,7 +76,12 @@ public class UserController {
         if (authUser == null) {
             LoginUtils.loginFail(request, response);
             model.addAttribute("username", username);
-            model.addAttribute("failed", true);
+            model.addAttribute("error", "用户名或者密码错误。");
+            return "login";
+        } else if (!authUser.isEnabled()) {
+            LoginUtils.loginFail(request, response);
+            model.addAttribute("username", username);
+            model.addAttribute("error", "对不起，你当前处于冻结状态，请联系管理员。");
             return "login";
         } else {
             LoginUtils.loginSuccess(request, response, authUser, secretKey);
@@ -85,5 +90,4 @@ public class UserController {
             return "redirect:" + url;
         }
     }
-
 }

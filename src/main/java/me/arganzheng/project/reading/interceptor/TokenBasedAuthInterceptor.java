@@ -152,8 +152,7 @@ public class TokenBasedAuthInterceptor extends HandlerInterceptorAdapter {
             user = processAutoLoginCookie(cookieTokens, request, response);
 
             logger.debug("ticket cookie accepted");
-
-            return user;
+            return user.isEnabled() ? user : null;
         } catch (RuntimeException e) {
             logger.error(e.getMessage(), e);
         }

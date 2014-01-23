@@ -1,10 +1,10 @@
 、#set( $layout = "layout/default.vm" )
 
 <div class="container">
-		#if($!failed)
+		#if($!error)
 		<div class="alert alert-error">
 			<button type="button" class="close" data-dismiss="alert">×</button>
-			用户名或者密码错误。
+			$error
 		</div>
 		#end
       <form class="form-signin" method="POST">
