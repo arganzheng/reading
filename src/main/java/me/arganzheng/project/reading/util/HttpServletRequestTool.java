@@ -2,9 +2,9 @@ package me.arganzheng.project.reading.util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpUtils;
-import org.apache.velocity.tools.generic.EscapeTool;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.velocity.tools.generic.EscapeTool;
 
 /**
  * 方便在Velocity中操作HTTP的Request对象。
@@ -18,13 +18,23 @@ public class HttpServletRequestTool {
         EscapeTool escape = new EscapeTool();
         String url = HttpServletRequestTool.getRequestURLForRedirect(request, "/user/login");
         if (request.getMethod().equalsIgnoreCase("GET")) {
-            url += "?" + "returnUrl=" + escape.url(getCurrentURLForRedirect(request));
+            url += "?" + "returnUrl=" + escape.url(getRequestURL(request));
         }
         return url;
     }
 
-    public static String getCurrentURLForRedirect(HttpServletRequest req) {
-        return HttpUtils.getRequestURL(req).toString();
+    /**
+     * 获取当前的URL，包括queryString。
+     * 
+     * @param req
+     * @return
+     */
+    public static String getRequestURL(HttpServletRequest req) {
+        StringBuffer sb = HttpUtils.getRequestURL(req);
+        if (StringUtils.isNotEmpty(req.getQueryString())) {
+            sb.append("?").append(req.getQueryString()).toString();
+        }
+        return sb.toString();
     }
 
     public static String getRequestURLForRedirect(HttpServletRequest req, String urlPath) {
