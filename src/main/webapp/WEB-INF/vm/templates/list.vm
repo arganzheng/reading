@@ -2,6 +2,8 @@
 
 <script src="$request.getContextPath()/resources/bootstrap/js/bootstrap-paginator.min.js"></script>
 
+#if($books.isNotEmpty())
+	
 <form class="form-search">
 	<fieldset>
     	<input type="text" name="isbn" placeholder="请输入ISBN" class="input-large search-query" value="$!{pagingCriteria.isbn}"/>
@@ -9,12 +11,14 @@
 	</fieldset>
 </form>
 
-#if($books.isNotEmpty())
-
 #foreach($book in $books.getRecords())
 	#parse("partial/book.vm")
 #end
 
 #showPaginator($books)
 
+#else
+<div class="alert alert-error">
+	<p>抱歉，目前还没有人共享书籍:(。做第一个分享者吧:) &nbsp;<a href=#getLink("/my/book/share")>我要分享 &raquo;</a></p>
+</div>
 #end

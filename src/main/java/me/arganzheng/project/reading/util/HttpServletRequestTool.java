@@ -2,6 +2,7 @@ package me.arganzheng.project.reading.util;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpUtils;
+import org.apache.velocity.tools.generic.EscapeTool;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -13,14 +14,13 @@ import org.apache.commons.lang.StringUtils;
  */
 public class HttpServletRequestTool {
 
-    public static String urlFor(HttpServletRequest request, String path) {
-        String contextPath = request.getContextPath();
-        path = normalizePath(path);
-        return contextPath + path;
-    }
-
     public static String getLoginUrl(HttpServletRequest request) {
-        return HttpServletRequestTool.getRequestURLForRedirect(request, "/user/login");
+        EscapeTool escape = new EscapeTool();
+        String url = HttpServletRequestTool.getRequestURLForRedirect(request, "/user/login");
+        if (request.getMethod().equalsIgnoreCase("GET")) {
+            url += "?" + "returnUrl=" + escape.url(getCurrentURLForRedirect(request));
+        }
+        return url;
     }
 
     public static String getCurrentURLForRedirect(HttpServletRequest req) {
@@ -32,6 +32,8 @@ public class HttpServletRequestTool {
         String scheme = req.getScheme();
         int port = req.getServerPort();
 
+        String contextPath = req.getContextPath();
+
         url.append(scheme); // http, https
         url.append("://");
         url.append(req.getServerName());
@@ -39,6 +41,10 @@ public class HttpServletRequestTool {
             url.append(':');
             url.append(req.getServerPort());
         }
+        if (StringUtils.isNotBlank(contextPath)) {
+            url.append(contextPath);
+        }
+
         url.append(urlPath);
 
         return url.toString();

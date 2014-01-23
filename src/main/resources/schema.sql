@@ -1,16 +1,3 @@
-CREATE TABLE `t_reading_account` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `created_time` datetime DEFAULT NULL,
-  `modified_time` datetime DEFAULT NULL,
-  `name` varchar(45) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `password` varchar(45) DEFAULT NULL,
-  `role` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-
-
 CREATE TABLE `t_reading_user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_time` datetime DEFAULT NULL,

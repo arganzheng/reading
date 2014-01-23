@@ -17,11 +17,11 @@
             <li><a href=#getLink("/my/sharing")>我的借出</a></li>
             <li class="divider"></li>
             <li class="nav-header"></li>
-            <li><a href="javascript:logout()"><i class="icon-off"></i>退出</a></li>
+            <li><a href=#getLink("/user/logout")><i class="icon-off"></i>退出</a></li>
           </ul>
       </li>
       #else
-      <li #if($requestTool.isCurrentLink($request, "/user/login")) class="active" #end><a href=#getLink("/user/login?returnUrl=$escapeTool.url($requestTool.getCurrentURLForRedirect($!request))") class="navbar-link">登录</a></li>
+      <li #if($requestTool.isCurrentLink($request, "/user/login")) class="active" #end><a href="$requestTool.getLoginUrl($!request)") class="navbar-link">登录</a></li>
 	  #end
     </ul>
     <h1 class="muted">以书会友</h1>

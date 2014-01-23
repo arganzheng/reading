@@ -6,7 +6,7 @@
   
   <div class="media-body">
     <h4 class="media-heading">$!book.title #if($!{book.subtitle} && $!{book.subtitle} != "") -- $!{book.subtitle} #end 
-    	<form class="pull-right" action="/my/book/share" method="POST">
+    	<form class="pull-right" action=#getLink("/my/book/share") method="POST">
     		<input type="hidden" name="isbn" value="$!book.isbn"/>
     		<input type="hidden" name="bookId" value="$book.id" />
     		<button class="btn btn-danger btn-small" id="btn-share" type="submit" onClick="return confirm('确定要分享吗?')">我要分享</button>

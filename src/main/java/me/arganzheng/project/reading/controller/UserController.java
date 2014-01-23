@@ -3,7 +3,6 @@ package me.arganzheng.project.reading.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import me.arganzheng.project.reading.exception.ResourceAlreadyExistException;
 import me.arganzheng.project.reading.model.User;
 import me.arganzheng.project.reading.service.UserService;
 import me.arganzheng.project.reading.util.HttpServletRequestTool;
@@ -51,13 +50,19 @@ public class UserController {
         // http://docs.spring.io/spring-security/site/docs/3.0.x/reference/remember-me.html
         LoginUtils.loginSuccess(request, response, authUser, secretKey);
 
-        String url = StringUtils.isBlank(returnUrl) ? HttpServletRequestTool.urlFor(request, "/") : returnUrl;
+        String url = StringUtils.isBlank(returnUrl) ? HttpServletRequestTool.getRequestURLForRedirect(request, "/") : returnUrl;
         return "redirect:" + url;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login() {
         return "login";
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        LoginUtils.cancelCookie(request, response);
+        return "redirect:" + HttpServletRequestTool.getRequestURLForRedirect(request, "/");
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -76,7 +81,7 @@ public class UserController {
         } else {
             LoginUtils.loginSuccess(request, response, authUser, secretKey);
 
-            String url = StringUtils.isBlank(returnUrl) ? HttpServletRequestTool.urlFor(request, "/") : returnUrl;
+            String url = StringUtils.isBlank(returnUrl) ? HttpServletRequestTool.getRequestURLForRedirect(request, "/") : returnUrl;
             return "redirect:" + url;
         }
     }
